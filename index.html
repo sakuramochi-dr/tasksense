@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>TaskSense</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#080a0e;--bg2:#0e1016;--sur:#121520;--sur2:#1a1e2e;
+  --bdr:#252a38;--bdr2:#1e2230;--acc:#c8ff00;--acc-d:#8fb800;
+  --red:#ff4060;--ora:#ff8c00;--grn:#00e87a;--blu:#38b0ff;
+  --txt:#d8dce8;--mut:#4a5268;--mut2:#7a8298;
+  --mono:'DM Mono',monospace;--sans:'Noto Sans JP',sans-serif;
+  --it:env(safe-area-inset-top);--ib:env(safe-area-inset-bottom);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+#app{display:flex;flex-direction:column;height:100%;height:-webkit-fill-available}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;padding-top:calc(12px + var(--it));background:rgba(8,10,14,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr2);flex-shrink:0}
+.tb-logo{font-family:var(--mono);font-size:18px;font-weight:500;letter-spacing:-.5px}
+.tb-logo span{color:var(--acc)}
+.tb-time{font-family:var(--mono);font-size:11px;color:var(--mut2)}
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:calc(66px + var(--ib))}
+.bnav{position:fixed;bottom:0;left:0;right:0;height:calc(58px + var(--ib));background:rgba(8,10,14,.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid var(--bdr2);display:flex;padding-bottom:var(--ib);z-index:90}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:var(--mut);font-size:10px;font-family:var(--sans);font-weight:500;transition:color .15s;-webkit-user-select:none}
+.bni.on{color:var(--acc)}
+.bni .ic{font-size:20px;line-height:1}
+.bni.add .ic{font-size:26px;color:var(--acc)}
+.bni.add span{color:var(--acc)}
+.page{display:none;padding:16px}
+.page.on{display:block}
+.sh{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--mut);margin-bottom:10px;margin-top:22px;display:flex;align-items:center;gap:8px}
+.sh:first-child{margin-top:0}
+.sh::after{content:'';flex:1;height:1px;background:var(--bdr2)}
+.card{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;overflow:hidden}
+.card+.card{margin-top:10px}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:4px}
+.sc{background:var(--sur);border:1px solid var(--bdr);border-radius:12px;padding:12px 14px;position:relative;overflow:hidden}
+.sc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.sc.r::after{background:var(--red)}.sc.o::after{background:var(--ora)}.sc.g::after{background:var(--grn)}.sc.b::after{background:var(--blu)}
+.sc-l{font-size:10px;color:var(--mut2);letter-spacing:.5px;margin-bottom:4px;font-family:var(--mono)}
+.sc-v{font-family:var(--mono);font-size:28px;font-weight:500;line-height:1}
+.sc.r .sc-v{color:var(--red)}.sc.o .sc-v{color:var(--ora)}.sc.g .sc-v{color:var(--grn)}.sc.b .sc-v{color:var(--blu)}
+.overload{background:#ff406018;border:1px solid #ff406040;border-radius:10px;padding:10px 14px;font-size:12px;color:var(--red);display:flex;gap:8px;align-items:center;margin-bottom:12px;line-height:1.5}
+/* gauge */
+.g-wrap{padding:14px 16px}
+.g-row{margin-bottom:12px}
+.g-row:last-child{margin-bottom:0}
+.g-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.g-lbl{font-family:var(--mono);font-size:11px;color:var(--mut2)}
+.g-val{font-family:var(--mono);font-size:13px;font-weight:500}
+.g-bar{height:5px;background:var(--sur2);border-radius:3px;overflow:hidden}
+.g-fill{height:100%;border-radius:3px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.g-fill.r{background:linear-gradient(90deg,var(--red),#ff7090)}.g-fill.o{background:linear-gradient(90deg,var(--ora),#ffcc44)}.g-fill.g{background:linear-gradient(90deg,var(--grn),#44ffaa)}
+.g-sub{font-size:10px;color:var(--mut);margin-top:3px;font-family:var(--mono)}
+/* timeline */
+.tl{padding:4px 16px 8px}
+.tl-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--bdr2)}
+.tl-item:last-child{border-bottom:none}
+.tl-g{display:flex;flex-direction:column;align-items:center;padding-top:4px}
+.tl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.tl-dot.high{background:var(--red);box-shadow:0 0 6px #ff406088}.tl-dot.mid{background:var(--ora);box-shadow:0 0 6px #ff8c0088}.tl-dot.low{background:var(--grn);box-shadow:0 0 6px #00e87a88}
+.tl-ln{width:1px;flex:1;background:var(--bdr2);margin-top:4px}
+.tl-i{flex:1;min-width:0}
+.tl-n{font-size:13px;font-weight:500;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tl-m{font-family:var(--mono);font-size:10px;color:var(--mut2)}
+.tl-d{font-family:var(--mono);font-size:10px;font-weight:500}
+.tl-d.u{color:var(--red)}.tl-d.w{color:var(--ora)}.tl-d.s{color:var(--grn)}
+/* diagnosis */
+.diag-hero{background:linear-gradient(135deg,var(--sur),#0d1a10);border:1px solid var(--bdr);border-radius:16px;padding:20px;text-align:center;margin-bottom:14px}
+.diag-hero .dico{font-size:36px;margin-bottom:8px}
+.diag-hero h2{font-family:var(--mono);font-size:16px;font-weight:500;margin-bottom:4px}
+.diag-hero p{font-size:12px;color:var(--mut2);line-height:1.7}
+.verdict{border-radius:14px;padding:18px 20px;margin-bottom:14px;border:1px solid}
+.verdict.v-danger{background:#ff406012;border-color:#ff406044}.verdict.v-warn{background:#ff8c0012;border-color:#ff8c0044}.verdict.v-ok{background:#00e87a12;border-color:#00e87a44}
+.v-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.v-icon{font-size:28px}
+.v-title{font-family:var(--mono);font-size:15px;font-weight:500}
+.v-danger .v-title{color:var(--red)}.v-warn .v-title{color:var(--ora)}.v-ok .v-title{color:var(--grn)}
+.v-body{font-size:13px;line-height:1.8;color:var(--mut2)}
+.v-body strong{color:var(--txt)}
+.diag-list{display:flex;flex-direction:column;gap:8px}
+.diag-item{background:var(--sur);border:1px solid var(--bdr);border-radius:12px;padding:13px 14px;display:flex;gap:10px;align-items:flex-start;position:relative;overflow:hidden}
+.diag-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px}
+.diag-item.dh::before{background:var(--red)}.diag-item.dm::before{background:var(--ora)}.diag-item.dl::before{background:var(--grn)}
+.di-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.di-body{flex:1;min-width:0}
+.di-name{font-size:13px;font-weight:600;margin-bottom:4px}
+.di-reasons{display:flex;flex-direction:column;gap:3px}
+.di-reason{font-size:11px;color:var(--mut2);line-height:1.5;display:flex;gap:5px;align-items:flex-start}
+.di-reason::before{content:'·';color:var(--mut);flex-shrink:0}
+.di-reason.bad{color:#ff8060}.di-reason.ok{color:#60c880}
+.cap-summary{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;padding:16px;margin-bottom:14px}
+.cap-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--bdr2);font-size:12px}
+.cap-row:last-child{border-bottom:none}
+.cap-label{color:var(--mut2);font-family:var(--mono);font-size:11px}
+.cap-val{font-family:var(--mono);font-weight:500}
+.cap-val.ok{color:var(--grn)}.cap-val.warn{color:var(--ora)}.cap-val.bad{color:var(--red)}
+.sched-list{display:flex;flex-direction:column;gap:0}
+.sched-item{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--bdr2);align-items:flex-start}
+.sched-item:last-child{border-bottom:none}
+.sched-num{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--acc);background:#c8ff0015;border:1px solid #c8ff0030;border-radius:5px;padding:2px 7px;flex-shrink:0;margin-top:1px}
+.sched-info{flex:1;min-width:0}
+.sched-name{font-size:13px;font-weight:500;margin-bottom:3px}
+.sched-meta{font-family:var(--mono);font-size:10px;color:var(--mut2)}
+.sched-by{color:var(--blu)}.sched-warn{color:var(--ora)}
+/* filter */
+.fbar{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px;scrollbar-width:none;padding-bottom:2px}
+.fbar::-webkit-scrollbar{display:none}
+.fc{flex-shrink:0;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;font-family:var(--mono);background:var(--sur);border:1px solid var(--bdr);color:var(--mut2);transition:all .15s;-webkit-user-select:none}
+.fc.on{background:var(--acc);color:#000;border-color:var(--acc)}
+/* task cards */
+.tlist{display:flex;flex-direction:column;gap:8px}
+.tc{background:var(--sur);border:1px solid var(--bdr);border-radius:12px;padding:13px 14px;display:flex;gap:10px;align-items:flex-start;position:relative;overflow:hidden;transition:opacity .2s,transform .15s}
+.tc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px}
+.tc.rh::before{background:var(--red)}.tc.rm::before{background:var(--ora)}.tc.rl::before{background:var(--grn)}
+.tc.rd{opacity:.35}.tc:active{transform:scale(.99)}
+.ck{width:20px;height:20px;border-radius:5px;border:1.5px solid var(--bdr);background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all .15s;margin-top:2px}
+.ck.on{background:var(--grn);border-color:var(--grn)}
+.ck.on::after{content:'✓';font-size:11px;color:#000;font-weight:700}
+.tb2{flex:1;min-width:0}
+.tn{font-size:14px;font-weight:500;margin-bottom:5px;line-height:1.3}
+.tn.done{text-decoration:line-through;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.chip{display:inline-flex;align-items:center;background:var(--sur2);border:1px solid var(--bdr2);border-radius:4px;padding:1px 6px;font-size:10px;font-family:var(--mono);color:var(--mut2)}
+.chip.dl{color:var(--ora);border-color:#ff8c0025}.chip.hr{color:var(--blu)}
+.chip.ph{color:var(--red);border-color:#ff406025}.chip.pm{color:var(--ora);border-color:#ff8c0025}.chip.pl{color:var(--grn);border-color:#00e87a25}
+.rtag{display:inline-flex;align-items:center;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:500;font-family:var(--mono)}
+.rtag.rh{background:#ff406022;color:var(--red)}.rtag.rm{background:#ff8c0022;color:var(--ora)}.rtag.rl{background:#00e87a22;color:var(--grn)}
+.tnote{font-size:11px;color:var(--mut);margin-top:5px;line-height:1.5}
+.tdel{background:none;border:none;color:var(--mut);font-size:16px;cursor:pointer;padding:3px;flex-shrink:0;transition:color .15s}
+.tdel:active{color:var(--red)}
+/* form */
+.fcard{background:var(--sur);border:1px solid var(--bdr);border-radius:16px;padding:18px;margin-bottom:12px}
+.field{margin-bottom:14px}.field:last-child{margin-bottom:0}
+.field label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut2);margin-bottom:7px}
+.field input,.field select,.field textarea{width:100%;background:var(--bg2);border:1px solid var(--bdr);border-radius:10px;color:var(--txt);padding:12px 14px;font-size:15px;font-family:var(--sans);outline:none;transition:border-color .15s;-webkit-appearance:none;appearance:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--acc)}
+.field textarea{resize:none;height:70px}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234a5268' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.brow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.btn{padding:14px;border:none;border-radius:12px;font-size:14px;font-weight:700;font-family:var(--sans);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn:active{transform:scale(.97)}
+.btn-a{background:var(--acc);color:#000}.btn-a:active{background:var(--acc-d)}
+.btn-g{background:var(--sur);color:var(--mut2);border:1px solid var(--bdr)}
+.btn-diag{background:linear-gradient(135deg,#0d1a10,#0d1a18);color:var(--grn);border:1px solid #1a4028;width:100%;margin-bottom:12px}
+/* settings */
+.sg{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;margin-bottom:14px}
+.sr{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--bdr2);cursor:pointer}
+.sr:last-child{border-bottom:none}
+.sr-l{font-size:13px;font-weight:500;margin-bottom:2px}.sr-d{font-size:11px;color:var(--mut2)}
+.sr-inp input{width:68px;text-align:right;background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;color:var(--txt);padding:7px 10px;font-size:14px;font-family:var(--mono);outline:none}
+.sr-inp input:focus{border-color:var(--acc)}
+.sr-arr{color:var(--mut);font-size:16px}
+.sr-red .sr-l{color:var(--red)}
+/* sim */
+.sim-card{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;padding:16px;margin-bottom:14px}
+.sim-title{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mut2);margin-bottom:12px}
+.sim-result{border-radius:10px;padding:10px 14px;font-size:12px;line-height:1.6;display:none}
+.sim-result.show{display:block}
+.sim-result.ok{background:#00e87a12;color:#60c880;border:1px solid #00e87a30}
+.sim-result.warn{background:#ff8c0012;color:#ffaa44;border:1px solid #ff8c0030}
+.sim-result.bad{background:#ff406012;color:#ff6080;border:1px solid #ff406030}
+/* empty & toast */
+.empty{text-align:center;padding:44px 24px;color:var(--mut)}
+.empty .ei{font-size:40px;margin-bottom:10px;opacity:.25}
+.empty p{font-size:13px;line-height:1.7}
+.toast{position:fixed;bottom:calc(66px + var(--ib) + 12px);left:50%;transform:translateX(-50%) translateY(16px);background:var(--sur2);border:1px solid var(--bdr);border-radius:10px;padding:9px 18px;font-size:12px;font-family:var(--mono);opacity:0;transition:all .25s;z-index:500;white-space:nowrap;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="topbar">
+    <div class="tb-logo">Task<span>Sense</span></div>
+    <div class="tb-time" id="clockEl"></div>
+  </div>
+  <div class="scroll" id="scrollEl">
+
+    <!-- HOME -->
+    <div class="page on" id="pg-home">
+      <div id="ovBanner" class="overload" style="display:none;">⚠ <div><strong>作業過多</strong>：今週の必要時間がキャパを超えています</div></div>
+      <div class="stats">
+        <div class="sc r"><div class="sc-l">URGENT</div><div class="sc-v" id="stR">0</div></div>
+        <div class="sc o"><div class="sc-l">WARNING</div><div class="sc-v" id="stO">0</div></div>
+        <div class="sc g"><div class="sc-l">SAFE</div><div class="sc-v" id="stG">0</div></div>
+        <div class="sc b"><div class="sc-l">LOAD</div><div class="sc-v" id="stB">0%</div></div>
+      </div>
+      <div class="sh">WORKLOAD</div>
+      <div class="card"><div class="g-wrap" id="gaugeEl"></div></div>
+      <div class="sh">DEADLINE TIMELINE</div>
+      <div class="card"><div class="tl" id="tlEl"></div></div>
+    </div>
+
+    <!-- TASKS -->
+    <div class="page" id="pg-tasks">
+      <div class="fbar">
+        <div class="fc on" data-f="all" onclick="setF(this)">ALL</div>
+        <div class="fc" data-f="high" onclick="setF(this)">🔴 URGENT</div>
+        <div class="fc" data-f="mid" onclick="setF(this)">🟡 WARN</div>
+        <div class="fc" data-f="active" onclick="setF(this)">ACTIVE</div>
+        <div class="fc" data-f="done" onclick="setF(this)">✅ DONE</div>
+      </div>
+      <div class="tlist" id="tlistEl"></div>
+    </div>
+
+    <!-- ADD -->
+    <div class="page" id="pg-add">
+      <div class="fcard">
+        <div class="field"><label>タスク名 *</label><input type="text" id="fName" placeholder="例：企画書の作成" autocomplete="off"></div>
+        <div class="frow">
+          <div class="field"><label>締め切り *</label><input type="date" id="fDl"></div>
+          <div class="field"><label>推定時間 (h)</label><input type="number" id="fHr" placeholder="5" min="0.5" step="0.5"></div>
+        </div>
+        <div class="field"><label>重要度</label>
+          <select id="fImp">
+            <option value="high">🔴 高 — 絶対に間に合わせる</option>
+            <option value="mid" selected>🟡 中 — できれば間に合わせる</option>
+            <option value="low">🟢 低 — 余裕があれば</option>
+          </select>
+        </div>
+        <div class="field"><label>依存タスク</label><select id="fDep"><option value="">なし</option></select></div>
+        <div class="field"><label>メモ</label><textarea id="fNote" placeholder="備考・詳細など"></textarea></div>
+      </div>
+      <div class="brow">
+        <button class="btn btn-a" onclick="addTask()">＋ 追加</button>
+        <button class="btn btn-g" onclick="clearForm()">クリア</button>
+      </div>
+    </div>
+
+    <!-- DIAGNOSIS -->
+    <div class="page" id="pg-diag">
+      <div class="diag-hero">
+        <div class="dico">📊</div>
+        <h2>SCHEDULE DIAGNOSIS</h2>
+        <p>ルールベースでスケジュールを診断し<br>推奨着手順を自動で提案します</p>
+      </div>
+      <button class="btn btn-diag" onclick="runDiag()">▶ 診断を実行</button>
+      <div id="diagResult"></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="page" id="pg-settings">
+      <div class="sh">WORK SETTINGS</div>
+      <div class="sg">
+        <div class="sr"><div><div class="sr-l">1日の作業可能時間</div><div class="sr-d">残業含む上限時間</div></div><div class="sr-inp"><input type="number" id="sH" value="8" min="1" max="24" step="0.5"></div></div>
+        <div class="sr"><div><div class="sr-l">週の稼働日数</div><div class="sr-d">土日含む場合は7</div></div><div class="sr-inp"><input type="number" id="sD" value="5" min="1" max="7"></div></div>
+        <div class="sr"><div><div class="sr-l">バッファ率 (%)</div><div class="sr-d">割り込み作業の余白</div></div><div class="sr-inp"><input type="number" id="sB" value="20" min="0" max="50"></div></div>
+      </div>
+      <button class="btn btn-a" style="width:100%;margin-bottom:24px" onclick="saveCfg()">設定を保存</button>
+
+      <div class="sh">NEW TASK SIMULATOR</div>
+      <div class="sim-card">
+        <div class="sim-title">新タスクが追加されたら？</div>
+        <div class="frow" style="margin-bottom:10px">
+          <div class="field"><label>追加時間 (h)</label><input type="number" id="simH" placeholder="3" min="0.5" step="0.5"></div>
+          <div class="field"><label>締め切りまで（日）</label><input type="number" id="simD" placeholder="7" min="1"></div>
+        </div>
+        <button class="btn btn-g" style="width:100%;margin-bottom:10px;padding:10px" onclick="simTask()">シミュレート</button>
+        <div class="sim-result" id="simResult"></div>
+      </div>
+
+      <div class="sh">DATA</div>
+      <div class="sg">
+        <div class="sr" onclick="exportData()"><div><div class="sr-l">データをエクスポート</div><div class="sr-d">タスクをクリップボードにコピー</div></div><div class="sr-arr">›</div></div>
+        <div class="sr sr-red" onclick="clearAll()"><div><div class="sr-l">全データを削除</div><div class="sr-d">タスク・設定を完全に消去</div></div><div class="sr-arr">›</div></div>
+      </div>
+    </div>
+
+  </div>
+  <nav class="bnav">
+    <div class="bni on"  id="ni-home"     onclick="go('home')">    <div class="ic">🏠</div><span>ホーム</span></div>
+    <div class="bni"     id="ni-tasks"    onclick="go('tasks')">   <div class="ic">📋</div><span>タスク</span></div>
+    <div class="bni add" id="ni-add"      onclick="go('add')">     <div class="ic">＋</div><span>追加</span></div>
+    <div class="bni"     id="ni-diag"     onclick="go('diag')">    <div class="ic">📊</div><span>診断</span></div>
+    <div class="bni"     id="ni-settings" onclick="go('settings')"><div class="ic">⚙</div><span>設定</span></div>
+  </nav>
+</div>
+<div class="toast" id="toastEl"></div>
+<script>
+let tasks=JSON.parse(localStorage.getItem('ts6_tasks')||'[]');
+let cfg=JSON.parse(localStorage.getItem('ts6_cfg')||'{"h":8,"d":5,"buf":20}');
+let filt='all';
+document.addEventListener('DOMContentLoaded',()=>{
+  const t=new Date().toISOString().split('T')[0];
+  document.getElementById('fDl').value=t;
+  document.getElementById('fDl').min=t;
+  loadCfgForm();renderAll();updateClock();setInterval(updateClock,30000);
+});
+function updateClock(){document.getElementById('clockEl').textContent=new Date().toLocaleDateString('ja-JP',{month:'short',day:'numeric',weekday:'short'})}
+function go(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.bni').forEach(b=>b.classList.remove('on'));
+  document.getElementById('pg-'+n).classList.add('on');
+  const ni=document.getElementById('ni-'+n);if(ni)ni.classList.add('on');
+  document.getElementById('scrollEl').scrollTop=0;
+  if(n==='add')refreshDepSel();
+}
+function setF(el){document.querySelectorAll('.fc').forEach(c=>c.classList.remove('on'));el.classList.add('on');filt=el.dataset.f;renderTasks()}
+function daysLeft(dl){const t=new Date();t.setHours(0,0,0,0);const d=new Date(dl);d.setHours(0,0,0,0);return Math.ceil((d-t)/86400000)}
+function getRisk(task){
+  if(task.done)return'done';
+  const days=daysLeft(task.deadline);
+  const cap=Math.max(days,0)*cfg.h*(1-cfg.buf/100);
+  const need=parseFloat(task.hours)||0;
+  const ratio=need>0?need/Math.max(cap,0.1):0;
+  const dep=tasks.find(t=>t.id===task.depId);
+  const blk=dep&&!dep.done;
+  if(task.imp==='high'){if(days<=1||ratio>0.9||blk)return'high';if(days<=3||ratio>0.6)return'mid';return'low'}
+  if(task.imp==='mid'){if(days<=1||ratio>1.1||blk)return'high';if(days<=4||ratio>0.75)return'mid';return'low'}
+  if(days<=1||blk)return'high';if(days<=7||ratio>1.0)return'mid';return'low';
+}
+function getRiskReasons(task){
+  const days=daysLeft(task.deadline);
+  const cap=Math.max(days,0)*cfg.h*(1-cfg.buf/100);
+  const need=parseFloat(task.hours)||0;
+  const ratio=need>0?need/Math.max(cap,0.1):0;
+  const dep=tasks.find(t=>t.id===task.depId);
+  const blk=dep&&!dep.done;
+  const rs=[];
+  if(days<0)rs.push({text:`締め切りを${Math.abs(days)}日超過`,bad:true});
+  else if(days===0)rs.push({text:'今日が締め切りです',bad:true});
+  else if(days<=2)rs.push({text:`残り${days}日と非常にタイト`,bad:true});
+  else rs.push({text:`締め切りまで${days}日あります`,bad:false});
+  if(need>0){const pct=Math.round(ratio*100);if(ratio>1)rs.push({text:`必要${need}hに対しキャパ不足（${pct}%超過）`,bad:true});else if(ratio>0.7)rs.push({text:`キャパの${pct}%使用（余裕少）`,bad:true});else rs.push({text:`キャパの${pct}%で収まります`,bad:false})}
+  if(blk)rs.push({text:`「${dep.name}」が未完了でブロック中`,bad:true});
+  return rs;
+}
+const RL={high:'🔴 URGENT',mid:'🟡 WARN',low:'🟢 SAFE',done:'✅ DONE'};
+const RC={high:'rh',mid:'rm',low:'rl',done:'rd'};
+function renderAll(){renderStats();renderGauge();renderTL();renderTasks()}
+function renderStats(){
+  const a=tasks.filter(t=>!t.done);
+  const h=a.filter(t=>getRisk(t)==='high').length;
+  const m=a.filter(t=>getRisk(t)==='mid').length;
+  const l=a.filter(t=>getRisk(t)==='low').length;
+  const tot=a.reduce((s,t)=>s+(parseFloat(t.hours)||0),0);
+  const cap=cfg.h*cfg.d*(1-cfg.buf/100);
+  const pct=cap>0?Math.round(tot/cap*100):0;
+  document.getElementById('stR').textContent=h;
+  document.getElementById('stO').textContent=m;
+  document.getElementById('stG').textContent=l;
+  document.getElementById('stB').textContent=pct+'%';
+  document.getElementById('ovBanner').style.display=a.length>0&&tot>cap?'flex':'none';
+}
+function renderGauge(){
+  const el=document.getElementById('gaugeEl');
+  const a=tasks.filter(t=>!t.done);
+  if(!a.length){el.innerHTML='<div style="color:var(--mut);font-size:12px;font-family:var(--mono);text-align:center;padding:16px 0;">NO TASKS</div>';return}
+  const tot=a.reduce((s,t)=>s+(parseFloat(t.hours)||0),0);
+  const cap=cfg.h*cfg.d*(1-cfg.buf/100);
+  const pct=Math.min(Math.round(tot/Math.max(cap,0.1)*100),150);
+  const cls=pct>=100?'r':pct>=70?'o':'g';
+  const clr=pct>=100?'var(--red)':pct>=70?'var(--ora)':'var(--grn)';
+  const hh=k=>a.filter(t=>t.imp===k).reduce((s,t)=>s+(parseFloat(t.hours)||0),0);
+  const row=(lbl,h,c)=>{const p=cap>0?Math.min(h/cap*100,100):0;return`<div class="g-row"><div class="g-h"><div class="g-lbl">${lbl}</div><div class="g-val">${h}h</div></div><div class="g-bar"><div class="g-fill ${c}" style="width:${p}%"></div></div></div>`};
+  el.innerHTML=`<div class="g-row"><div class="g-h"><div class="g-lbl">TOTAL LOAD</div><div class="g-val" style="color:${clr}">${pct}%</div></div><div class="g-bar"><div class="g-fill ${cls}" style="width:${Math.min(pct,100)}%"></div></div><div class="g-sub">必要 ${tot}h ／ キャパ ${cap.toFixed(1)}h（バッファ${cfg.buf}%含む）</div></div>${row('HIGH PRIORITY',hh('high'),'r')}${row('MID PRIORITY',hh('mid'),'o')}${row('LOW PRIORITY',hh('low'),'g')}`;
+}
+function renderTL(){
+  const el=document.getElementById('tlEl');
+  const a=tasks.filter(t=>!t.done).sort((a,b)=>new Date(a.deadline)-new Date(b.deadline));
+  if(!a.length){el.innerHTML='<div style="color:var(--mut);font-size:12px;font-family:var(--mono);text-align:center;padding:16px 0;">NO TASKS</div>';return}
+  el.innerHTML=a.slice(0,8).map((t,i)=>{
+    const r=getRisk(t),d=daysLeft(t.deadline);
+    const dtxt=d<0?`${Math.abs(d)}日超過`:d===0?'TODAY!':`あと${d}日`;
+    const dc=d<=1?'u':d<=4?'w':'s';
+    return`<div class="tl-item"><div class="tl-g"><div class="tl-dot ${r}"></div>${i<a.length-1?'<div class="tl-ln"></div>':''}</div><div class="tl-i"><div class="tl-n">${esc(t.name)}</div><div class="tl-m">${t.deadline} <span class="tl-d ${dc}">· ${dtxt}</span></div></div></div>`;
+  }).join('');
+}
+function renderTasks(){
+  const el=document.getElementById('tlistEl');
+  let list=[...tasks];
+  if(filt==='high')list=list.filter(t=>getRisk(t)==='high');
+  else if(filt==='mid')list=list.filter(t=>getRisk(t)==='mid');
+  else if(filt==='active')list=list.filter(t=>!t.done);
+  else if(filt==='done')list=list.filter(t=>t.done);
+  list.sort((a,b)=>{const o={high:0,mid:1,low:2,done:3};const ra=a.done?'done':getRisk(a),rb=b.done?'done':getRisk(b);return o[ra]!==o[rb]?o[ra]-o[rb]:new Date(a.deadline)-new Date(b.deadline)});
+  if(!list.length){el.innerHTML='<div class="empty"><div class="ei">📋</div><p>タスクがありません。<br>「追加」タブから登録してください。</p></div>';return}
+  const pL={high:'高',mid:'中',low:'低'};const pC={high:'ph',mid:'pm',low:'pl'};
+  el.innerHTML=list.map(t=>{
+    const r=t.done?'done':getRisk(t);const d=daysLeft(t.deadline);const dep=tasks.find(x=>x.id===t.depId);
+    return`<div class="tc ${RC[r]}"><div class="ck ${t.done?'on':''}" onclick="toggle('${t.id}')"></div><div class="tb2"><div class="tn ${t.done?'done':''}">${esc(t.name)}</div><div class="chips"><span class="chip dl">📅 ${t.deadline}（${d<0?'超過':d+'日後'}）</span>${t.hours?`<span class="chip hr">⏱ ${t.hours}h</span>`:''}<span class="chip ${pC[t.imp]}">重要 ${pL[t.imp]}</span>${dep?`<span class="chip">→${esc(dep.name)}</span>`:''}${r!=='done'?`<span class="rtag ${RC[r]}">${RL[r]}</span>`:''}</div>${t.note?`<div class="tnote">${esc(t.note)}</div>`:''}</div><button class="tdel" onclick="del('${t.id}')">🗑</button></div>`;
+  }).join('');
+}
+function runDiag(){
+  const el=document.getElementById('diagResult');
+  const active=tasks.filter(t=>!t.done);
+  if(!active.length){el.innerHTML='<div class="empty"><div class="ei">📊</div><p>タスクがありません。</p></div>';return}
+  const cap=cfg.h*cfg.d*(1-cfg.buf/100);
+  const tot=active.reduce((s,t)=>s+(parseFloat(t.hours)||0),0);
+  const loadPct=cap>0?Math.round(tot/cap*100):0;
+  const highCount=active.filter(t=>getRisk(t)==='high').length;
+  const midCount=active.filter(t=>getRisk(t)==='mid').length;
+  const overdue=active.filter(t=>daysLeft(t.deadline)<0).length;
+  const slack=Math.max(cap-tot,0);
+  let vClass,vIcon,vTitle,vBody;
+  if(overdue>0||highCount>=2||loadPct>110){
+    vClass='v-danger';vIcon='🚨';vTitle='危険：スケジュールが破綻しています';
+    vBody=`<strong>緊急タスクが${highCount}件</strong>あり${overdue>0?`、${overdue}件が期限超過中`:''}。週のキャパに対して<strong>${loadPct}%</strong>の負荷。優先度の低いタスクを延期するか作業時間を増やす必要があります。`;
+  }else if(highCount===1||loadPct>80||midCount>=3){
+    vClass='v-warn';vIcon='⚠️';vTitle='注意：一部に無理が生じています';
+    vBody=`全体的にこなせる範囲ですが<strong>緊急タスクが${highCount}件</strong>あります。現在の負荷は<strong>${loadPct}%</strong>で余裕${slack.toFixed(1)}hが残っています。優先度の高いものから着手することで対応可能です。`;
+  }else{
+    vClass='v-ok';vIcon='✅';vTitle='良好：スケジュールは現実的です';
+    vBody=`現在の負荷は<strong>${loadPct}%</strong>で余裕${slack.toFixed(1)}hが残っています。新しいタスクが追加されても対応できる状態です。`;
+  }
+  const sorted=[...active].sort((a,b)=>{const o={high:0,mid:1,low:2};return o[getRisk(a)]-o[getRisk(b)]||new Date(a.deadline)-new Date(b.deadline)});
+  const diagItems=sorted.map(t=>{
+    const r=getRisk(t);const reasons=getRiskReasons(t);const icon={high:'🔴',mid:'🟡',low:'🟢'}[r];const cls={high:'dh',mid:'dm',low:'dl'}[r];
+    return`<div class="diag-item ${cls}"><div class="di-icon">${icon}</div><div class="di-body"><div class="di-name">${esc(t.name)}</div><div class="di-reasons">${reasons.map(rx=>`<div class="di-reason ${rx.bad?'bad':'ok'}">${esc(rx.text)}</div>`).join('')}</div></div></div>`;
+  }).join('');
+  const reordered=[];const placed=new Set();
+  const place=t=>{if(placed.has(t.id))return;if(t.depId){const d=sorted.find(x=>x.id===t.depId);if(d&&!placed.has(d.id))place(d)}placed.add(t.id);reordered.push(t)};
+  sorted.forEach(place);
+  let runH=0;const dayH=cfg.h*(1-cfg.buf/100);const today=new Date();today.setHours(0,0,0,0);
+  const schedRows=reordered.map((t,i)=>{
+    const need=parseFloat(t.hours)||0;runH+=need;
+    const daysNeeded=dayH>0?Math.ceil(runH/dayH):99;
+    const tgt=new Date(today);tgt.setDate(today.getDate()+daysNeeded-1);
+    const tgtStr=tgt.toLocaleDateString('ja-JP',{month:'numeric',day:'numeric'});
+    const dl=daysLeft(t.deadline);const tight=daysNeeded>dl;
+    const dep=tasks.find(x=>x.id===t.depId);
+    return`<div class="sched-item"><div class="sched-num">${String(i+1).padStart(2,'0')}</div><div class="sched-info"><div class="sched-name">${esc(t.name)}</div><div class="sched-meta">着手目安: <span class="sched-by ${tight?'sched-warn':''}">${tgtStr}までに完了</span>　締切:${t.deadline}${dep?`　※「${esc(dep.name)}」完了後`:''}${tight?'　⚠タイト':''}</div></div></div>`;
+  }).join('');
+  const freeH=Math.max(cap-tot,0);const freeTasks=Math.floor(freeH/3);const capCls=loadPct>=100?'bad':loadPct>=70?'warn':'ok';
+  el.innerHTML=`
+    <div class="verdict ${vClass}"><div class="v-head"><div class="v-icon">${vIcon}</div><div class="v-title">${vTitle}</div></div><div class="v-body">${vBody}</div></div>
+    <div class="sh" style="margin-top:0">CAPACITY</div>
+    <div class="cap-summary">
+      <div class="cap-row"><div class="cap-label">週のキャパ</div><div class="cap-val">${cap.toFixed(1)}h</div></div>
+      <div class="cap-row"><div class="cap-label">現在の必要時間</div><div class="cap-val ${capCls}">${tot}h（${loadPct}%）</div></div>
+      <div class="cap-row"><div class="cap-label">空き時間</div><div class="cap-val ok">${freeH.toFixed(1)}h</div></div>
+      <div class="cap-row"><div class="cap-label">追加タスクの受入余力</div><div class="cap-val ${freeH>0?'ok':'bad'}">${freeH>0?`約${freeTasks}件（目安）`:'なし'}</div></div>
+    </div>
+    <div class="sh">TASK DIAGNOSIS</div>
+    <div class="diag-list">${diagItems}</div>
+    <div class="sh">RECOMMENDED ORDER</div>
+    <div class="card" style="padding:4px 16px 8px"><div class="sched-list">${schedRows}</div></div>`;
+}
+function simTask(){
+  const addH=parseFloat(document.getElementById('simH').value)||0;
+  const addD=parseInt(document.getElementById('simD').value)||0;
+  const el=document.getElementById('simResult');
+  if(!addH||!addD){el.className='sim-result';return}
+  const active=tasks.filter(t=>!t.done);
+  const cap=cfg.h*cfg.d*(1-cfg.buf/100);
+  const tot=active.reduce((s,t)=>s+(parseFloat(t.hours)||0),0);
+  const newTot=tot+addH;const newPct=cap>0?Math.round(newTot/cap*100):999;
+  const localCap=Math.max(addD,0)*cfg.h*(1-cfg.buf/100);
+  const canFit=addH<=localCap;
+  if(newPct>100||!canFit){el.className='sim-result bad show';el.innerHTML=`⚠ <strong>追加は厳しい状態です</strong><br>週負荷が${newPct}%になります。締め切りまでの空きは${localCap.toFixed(1)}hに対し${addH}h必要です。`}
+  else if(newPct>75){el.className='sim-result warn show';el.innerHTML=`△ <strong>追加はできますが余裕が減ります</strong><br>週負荷が${newPct}%になります。他タスクの進捗に注意してください。`}
+  else{el.className='sim-result ok show';el.innerHTML=`✅ <strong>問題なく追加できます</strong><br>週負荷は${newPct}%で余裕をもってこなせます。`}
+}
+function addTask(){
+  const name=document.getElementById('fName').value.trim();
+  const deadline=document.getElementById('fDl').value;
+  if(!name||!deadline){toast('タスク名と締め切りを入力してください');return}
+  tasks.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),name,deadline,hours:document.getElementById('fHr').value||'0',imp:document.getElementById('fImp').value,depId:document.getElementById('fDep').value,note:document.getElementById('fNote').value.trim(),done:false,createdAt:new Date().toISOString()});
+  save();renderAll();clearForm();toast('タスクを追加しました ✓');go('tasks');
+}
+function toggle(id){const t=tasks.find(x=>x.id===id);if(t){t.done=!t.done;save();renderAll()}}
+function del(id){if(!confirm('このタスクを削除しますか？'))return;tasks=tasks.filter(x=>x.id!==id);tasks.forEach(t=>{if(t.depId===id)t.depId=''});save();renderAll();toast('削除しました')}
+function clearForm(){['fName','fHr','fNote'].forEach(id=>document.getElementById(id).value='');document.getElementById('fImp').value='mid';document.getElementById('fDep').value='';document.getElementById('fDl').value=new Date().toISOString().split('T')[0]}
+function refreshDepSel(){const sel=document.getElementById('fDep');const cur=sel.value;sel.innerHTML='<option value="">なし</option>';tasks.filter(t=>!t.done).forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.name;sel.appendChild(o)});sel.value=cur}
+function loadCfgForm(){document.getElementById('sH').value=cfg.h;document.getElementById('sD').value=cfg.d;document.getElementById('sB').value=cfg.buf}
+function saveCfg(){cfg={h:parseFloat(document.getElementById('sH').value)||8,d:parseInt(document.getElementById('sD').value)||5,buf:parseInt(document.getElementById('sB').value)||20};localStorage.setItem('ts6_cfg',JSON.stringify(cfg));renderAll();toast('設定を保存しました ✓')}
+function exportData(){navigator.clipboard.writeText(JSON.stringify({tasks,cfg},null,2)).then(()=>toast('クリップボードにコピーしました')).catch(()=>toast('コピーに失敗しました'))}
+function clearAll(){if(!confirm('全データを削除しますか？'))return;if(!confirm('本当に削除しますか？'))return;tasks=[];cfg={h:8,d:5,buf:20};localStorage.removeItem('ts6_tasks');localStorage.removeItem('ts6_cfg');loadCfgForm();renderAll();toast('削除しました')}
+function save(){localStorage.setItem('ts6_tasks',JSON.stringify(tasks))}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function toast(msg){const el=document.getElementById('toastEl');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500)}
+</script>
+</body>
+</html>
