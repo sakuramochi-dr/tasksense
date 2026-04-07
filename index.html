@@ -12,42 +12,42 @@
 :root{
   --bg:#080a0e;--bg2:#0e1016;--sur:#121520;--sur2:#1a1e2e;
   --bdr:#252a38;--bdr2:#1e2230;--acc:#c8ff00;--acc-d:#8fb800;
-  --red:#ff4060;--ora:#ff8c00;--grn:#00e87a;--blu:#38b0ff;--pur:#a855f7;
+  --red:#ff4060;--ora:#ff8c00;--grn:#00e87a;--blu:#38b0ff;--pur:#a855f7;--yel:#ffe040;
   --txt:#d8dce8;--mut:#4a5268;--mut2:#7a8298;
 }
 [data-theme="light"]{
-  --bg:#f4f6fb;--bg2:#eef0f7;--sur:#ffffff;--sur2:#f0f2f8;
+  --bg:#f4f6fb;--bg2:#eef0f7;--sur:#fff;--sur2:#f0f2f8;
   --bdr:#d0d4e4;--bdr2:#dde0ee;--acc:#4a9400;--acc-d:#3a7800;
-  --red:#d92040;--ora:#c06000;--grn:#007a40;--blu:#1a6fc4;--pur:#7a30c8;
+  --red:#d92040;--ora:#c06000;--grn:#007a40;--blu:#1a6fc4;--pur:#7a30c8;--yel:#a07000;
   --txt:#1a1d28;--mut:#9098b0;--mut2:#5a6280;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden}
 body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif;-webkit-font-smoothing:antialiased;transition:background .2s,color .2s}
 
-/* ── LOCK ── */
-#lockScreen{position:fixed;inset:0;z-index:1000;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px;padding-top:calc(40px + env(safe-area-inset-top))}
-.lock-logo{font-family:'DM Mono',monospace;font-size:26px;font-weight:500;letter-spacing:-1px;margin-bottom:6px}
-.lock-logo span{color:var(--acc)}
-.lock-sub{font-size:11px;color:var(--mut2);margin-bottom:36px;letter-spacing:2px;text-transform:uppercase}
-.lock-icon{width:68px;height:68px;border-radius:20px;background:var(--sur);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:24px}
-.lock-form{width:100%;max-width:300px;display:flex;flex-direction:column;gap:10px}
-.lock-label{font-size:12px;color:var(--mut2);text-align:center}
-.lock-iw{position:relative}
-.lock-inp{width:100%;background:var(--sur);border:1px solid var(--bdr);border-radius:12px;color:var(--txt);padding:14px 44px 14px 16px;font-size:16px;font-family:'Noto Sans JP',sans-serif;outline:none;transition:border-color .15s;letter-spacing:2px;-webkit-appearance:none}
-.lock-inp:focus{border-color:var(--acc)}
-.lock-inp.err{border-color:var(--red);animation:shake .3s}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-.lock-eye{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--mut);cursor:pointer;font-size:17px;padding:4px}
-.lock-btn{padding:14px;border:none;border-radius:12px;background:var(--acc);color:#000;font-size:15px;font-weight:700;cursor:pointer;transition:all .15s}
-.lock-btn:active{transform:scale(.97);background:var(--acc-d)}
-.lock-btn:disabled{opacity:.5;cursor:not-allowed}
-.lock-err{font-size:12px;color:var(--red);text-align:center;min-height:16px}
-.lock-hint{font-size:11px;color:var(--mut);text-align:center;line-height:1.6}
-.setup-note{background:var(--sur);border:1px solid var(--acc);border-radius:12px;padding:14px;text-align:center;font-size:12px;color:var(--mut2);line-height:1.7;margin-bottom:16px;width:100%;max-width:300px}
-.setup-note strong{color:var(--acc);display:block;margin-bottom:4px;font-size:13px}
+/* ═══ PIN LOCK ═══ */
+#lockScreen{position:fixed;inset:0;z-index:1000;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;padding-top:calc(32px + env(safe-area-inset-top))}
+.pin-logo{font-family:'DM Mono',monospace;font-size:24px;font-weight:500;letter-spacing:-1px;margin-bottom:4px}
+.pin-logo span{color:var(--acc)}
+.pin-sub{font-size:11px;color:var(--mut2);margin-bottom:32px;letter-spacing:2px;text-transform:uppercase}
+.pin-dots{display:flex;gap:16px;margin-bottom:32px;justify-content:center}
+.pin-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--bdr);background:transparent;transition:all .15s}
+.pin-dot.filled{background:var(--acc);border-color:var(--acc)}
+.pin-dot.error{background:var(--red);border-color:var(--red);animation:shake .3s}
+.pin-err{font-size:12px;color:var(--red);text-align:center;min-height:18px;margin-bottom:16px}
+.pin-label{font-size:13px;color:var(--mut2);text-align:center;margin-bottom:20px;line-height:1.5}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:240px}
+.pin-key{height:64px;background:var(--sur);border:1px solid var(--bdr);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .12s;-webkit-user-select:none;font-family:'DM Mono',monospace}
+.pin-key:active{transform:scale(.92);background:var(--sur2)}
+.pin-key .pn{font-size:22px;font-weight:500;line-height:1;color:var(--txt)}
+.pin-key .pa{font-size:9px;color:var(--mut);letter-spacing:1px;margin-top:2px}
+.pin-key.del{font-size:20px;color:var(--mut)}
+.pin-key.empty{visibility:hidden}
+.pin-hint{font-size:11px;color:var(--mut);text-align:center;margin-top:20px;line-height:1.6}
+.setup-note{background:var(--sur);border:1px solid var(--acc);border-radius:12px;padding:12px 16px;font-size:12px;color:var(--mut2);line-height:1.7;margin-bottom:16px;width:100%;max-width:280px;text-align:center}
+.setup-note strong{color:var(--acc);display:block;margin-bottom:4px}
 
-/* ── APP ── */
+/* ═══ APP ═══ */
 #app{display:none;flex-direction:column;height:100%;height:-webkit-fill-available}
 #app.open{display:flex}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top));background:var(--bg);border-bottom:1px solid var(--bdr2);flex-shrink:0;transition:background .2s}
@@ -61,8 +61,8 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 .bnav{position:fixed;bottom:0;left:0;right:0;height:calc(58px + env(safe-area-inset-bottom));background:var(--bg);border-top:1px solid var(--bdr2);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:90;transition:background .2s}
 .bni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:var(--mut);font-size:10px;font-weight:500;transition:color .15s;-webkit-user-select:none}
 .bni.on{color:var(--acc)}
-.bni .ic{font-size:20px;line-height:1}
-.bni.add .ic{font-size:26px;color:var(--acc)}
+.bni .ic{font-size:18px;line-height:1}
+.bni.add .ic{font-size:24px;color:var(--acc)}
 .bni.add span{color:var(--acc)}
 .page{display:none;padding:16px}
 .page.on{display:block}
@@ -71,7 +71,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 .sh::after{content:'';flex:1;height:1px;background:var(--bdr2)}
 .card{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;overflow:hidden}
 
-/* ── STATS ── */
+/* ═══ STATS ═══ */
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:4px}
 .sc{background:var(--sur);border:1px solid var(--bdr);border-radius:12px;padding:12px 14px;position:relative;overflow:hidden}
 .sc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
@@ -80,8 +80,42 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 .sc-v{font-family:'DM Mono',monospace;font-size:28px;font-weight:500;line-height:1}
 .sc.r .sc-v{color:var(--red)}.sc.o .sc-v{color:var(--ora)}.sc.g .sc-v{color:var(--grn)}.sc.b .sc-v{color:var(--blu)}
 .overload{background:color-mix(in srgb,var(--red) 12%,transparent);border:1px solid color-mix(in srgb,var(--red) 35%,transparent);border-radius:10px;padding:10px 14px;font-size:12px;color:var(--red);display:flex;gap:8px;align-items:center;margin-bottom:12px;line-height:1.5}
+.alert-banner{background:color-mix(in srgb,var(--ora) 12%,transparent);border:1px solid color-mix(in srgb,var(--ora) 35%,transparent);border-radius:10px;padding:10px 14px;font-size:12px;color:var(--ora);display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;line-height:1.6}
 
-/* ── ACHIEVEMENT SCORE ── */
+/* ═══ FOCUS ═══ */
+.focus-card{background:color-mix(in srgb,var(--grn) 8%,var(--sur));border:1px solid color-mix(in srgb,var(--grn) 20%,var(--bdr));border-radius:14px;padding:16px;margin-bottom:4px}
+.focus-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.focus-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--grn)}
+.focus-date{font-family:'DM Mono',monospace;font-size:10px;color:var(--mut2)}
+.focus-item{display:flex;align-items:center;gap:10px;padding:8px 10px;background:color-mix(in srgb,var(--grn) 6%,transparent);border:1px solid color-mix(in srgb,var(--grn) 15%,transparent);border-radius:8px;margin-bottom:6px}
+.focus-item:last-child{margin-bottom:0}
+.focus-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.focus-dot.high{background:var(--red)}.focus-dot.mid{background:var(--ora)}.focus-dot.wip{background:var(--yel)}.focus-dot.low{background:var(--grn)}
+.focus-name{font-size:13px;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.focus-dl{font-family:'DM Mono',monospace;font-size:10px;color:var(--mut2);flex-shrink:0}
+.focus-empty{font-size:12px;color:var(--mut2);text-align:center;padding:12px 0}
+
+/* ═══ GAUGE ═══ */
+.g-wrap{padding:14px 16px}
+.g-row{margin-bottom:12px}.g-row:last-child{margin-bottom:0}
+.g-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.g-lbl{font-family:'DM Mono',monospace;font-size:11px;color:var(--mut2)}
+.g-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:500}
+.g-bar{height:5px;background:var(--sur2);border-radius:3px;overflow:hidden}
+.g-fill{height:100%;border-radius:3px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.g-fill.r{background:var(--red)}.g-fill.o{background:var(--ora)}.g-fill.g{background:var(--grn)}
+.g-sub{font-size:10px;color:var(--mut);margin-top:3px;font-family:'DM Mono',monospace}
+
+/* ═══ WEEKLY REPORT ═══ */
+.report-card{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;padding:16px;margin-bottom:14px}
+.report-title{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;margin-bottom:12px;color:var(--acc)}
+.report-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--bdr2);font-size:13px}
+.report-row:last-child{border-bottom:none}
+.report-label{color:var(--mut2)}
+.report-val{font-family:'DM Mono',monospace;font-weight:500}
+.report-val.good{color:var(--grn)}.report-val.bad{color:var(--red)}.report-val.warn{color:var(--ora)}
+
+/* ═══ ACHIEVEMENT SCORE ═══ */
 .score-card{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;padding:16px;margin-bottom:4px;display:flex;gap:16px;align-items:center}
 .score-ring{position:relative;width:80px;height:80px;flex-shrink:0}
 .score-ring svg{transform:rotate(-90deg)}
@@ -98,41 +132,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 .score-val{font-family:'DM Mono',monospace;font-weight:500}
 .score-val.good{color:var(--grn)}.score-val.bad{color:var(--red)}.score-val.warn{color:var(--ora)}
 
-/* ── FOCUS ── */
-.focus-card{background:color-mix(in srgb,var(--grn) 8%,var(--sur));border:1px solid color-mix(in srgb,var(--grn) 20%,var(--bdr));border-radius:14px;padding:16px;margin-bottom:4px}
-.focus-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.focus-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--grn)}
-.focus-date{font-family:'DM Mono',monospace;font-size:10px;color:var(--mut2)}
-.focus-item{display:flex;align-items:center;gap:10px;padding:8px 10px;background:color-mix(in srgb,var(--grn) 6%,transparent);border:1px solid color-mix(in srgb,var(--grn) 15%,transparent);border-radius:8px;margin-bottom:6px}
-.focus-item:last-child{margin-bottom:0}
-.focus-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.focus-dot.high{background:var(--red)}.focus-dot.mid{background:var(--ora)}.focus-dot.low{background:var(--grn)}
-.focus-name{font-size:13px;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.focus-dl{font-family:'DM Mono',monospace;font-size:10px;color:var(--mut2);flex-shrink:0}
-.focus-empty{font-size:12px;color:var(--mut2);text-align:center;padding:12px 0}
-.alert-banner{background:color-mix(in srgb,var(--ora) 12%,transparent);border:1px solid color-mix(in srgb,var(--ora) 35%,transparent);border-radius:10px;padding:10px 14px;font-size:12px;color:var(--ora);display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;line-height:1.6}
-
-/* ── GAUGE ── */
-.g-wrap{padding:14px 16px}
-.g-row{margin-bottom:12px}.g-row:last-child{margin-bottom:0}
-.g-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
-.g-lbl{font-family:'DM Mono',monospace;font-size:11px;color:var(--mut2)}
-.g-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:500}
-.g-bar{height:5px;background:var(--sur2);border-radius:3px;overflow:hidden}
-.g-fill{height:100%;border-radius:3px;transition:width .5s cubic-bezier(.4,0,.2,1)}
-.g-fill.r{background:var(--red)}.g-fill.o{background:var(--ora)}.g-fill.g{background:var(--grn)}
-.g-sub{font-size:10px;color:var(--mut);margin-top:3px;font-family:'DM Mono',monospace}
-
-/* ── WEEKLY REPORT ── */
-.report-card{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;padding:16px;margin-bottom:14px}
-.report-title{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;margin-bottom:12px;color:var(--acc)}
-.report-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--bdr2);font-size:13px}
-.report-row:last-child{border-bottom:none}
-.report-label{color:var(--mut2)}
-.report-val{font-family:'DM Mono',monospace;font-weight:500}
-.report-val.good{color:var(--grn)}.report-val.bad{color:var(--red)}.report-val.warn{color:var(--ora)}
-
-/* ── GRAPHS ── */
+/* ═══ GRAPH ═══ */
 .graph-wrap{padding:16px}
 .graph-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mut2);margin-bottom:14px}
 .graph-bars{display:flex;align-items:flex-end;gap:6px;height:80px;margin-bottom:8px}
@@ -147,36 +147,16 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 .gs-item{display:flex;flex-direction:column;gap:2px}
 .gs-val{font-family:'DM Mono',monospace;font-size:18px;font-weight:500;color:var(--grn)}
 .gs-lbl{font-size:10px;color:var(--mut2)}
-/* monthly graph tabs */
 .graph-tabs{display:flex;gap:6px;margin-bottom:12px}
 .graph-tab{padding:4px 12px;border-radius:16px;font-size:11px;font-family:'DM Mono',monospace;cursor:pointer;background:var(--sur2);border:1px solid var(--bdr);color:var(--mut2);transition:all .15s}
 .graph-tab.on{background:var(--acc);color:#000;border-color:var(--acc)}
 
-/* ── CAT LOAD ── */
-.cat-load{padding:14px 16px}
-.cl-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}.cl-row:last-child{margin-bottom:0}
-.cl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.cl-name{font-size:12px;color:var(--mut2);width:70px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cl-bar-wrap{flex:1;height:6px;background:var(--sur2);border-radius:3px;overflow:hidden}
-.cl-bar{height:100%;border-radius:3px;transition:width .5s}
-.cl-val{font-family:'DM Mono',monospace;font-size:10px;color:var(--mut2);width:36px;text-align:right;flex-shrink:0}
-
-/* ── ESTIMATION ── */
-.est-item{background:var(--sur2);border-radius:10px;padding:12px 14px;margin-bottom:8px}
-.est-name{font-size:13px;font-weight:500;margin-bottom:6px}
-.est-bar-row{display:flex;align-items:center;gap:8px;font-size:10px;font-family:'DM Mono',monospace;margin-bottom:4px}
-.est-bar-lbl{width:36px;color:var(--mut2);flex-shrink:0}
-.est-bar-track{flex:1;height:6px;background:var(--bdr2);border-radius:3px;overflow:hidden}
-.est-bar-fill{height:100%;border-radius:3px}
-.est-bar-fill.estimated{background:var(--blu)}.est-bar-fill.actual{background:var(--grn)}.est-bar-fill.over{background:var(--red)}
-.est-diff{font-size:10px;font-family:'DM Mono',monospace;margin-top:2px}
-
-/* ── TIMELINE ── */
+/* ═══ TL ═══ */
 .tl{padding:4px 16px 8px}
 .tl-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--bdr2)}.tl-item:last-child{border-bottom:none}
 .tl-g{display:flex;flex-direction:column;align-items:center;padding-top:4px}
 .tl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.tl-dot.high{background:var(--red)}.tl-dot.mid{background:var(--ora)}.tl-dot.low{background:var(--grn)}
+.tl-dot.high{background:var(--red)}.tl-dot.mid{background:var(--ora)}.tl-dot.low{background:var(--grn)}.tl-dot.wip{background:var(--yel)}
 .tl-ln{width:1px;flex:1;background:var(--bdr2);margin-top:4px}
 .tl-i{flex:1;min-width:0}
 .tl-n{font-size:13px;font-weight:500;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -184,72 +164,75 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 .tl-d{font-family:'DM Mono',monospace;font-size:10px;font-weight:500}
 .tl-d.u{color:var(--red)}.tl-d.w{color:var(--ora)}.tl-d.s{color:var(--grn)}
 
-/* ── CALENDAR ── */
-.cal-wrap{padding:14px 16px}
-.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.cal-month{font-family:'DM Mono',monospace;font-size:14px;font-weight:500}
-.cal-btn{background:var(--sur2);border:1px solid var(--bdr);border-radius:8px;color:var(--txt);width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px}
-.cal-btn:active{background:var(--bdr)}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
-.cal-dow{font-family:'DM Mono',monospace;font-size:9px;color:var(--mut);text-align:center;padding-bottom:4px}
-.cal-day{min-height:42px;border-radius:6px;padding:3px 4px;background:var(--sur2);cursor:pointer;transition:background .15s}
-.cal-day:active{background:var(--bdr)}
-.cal-day.today{background:color-mix(in srgb,var(--acc) 12%,var(--sur2));border:1px solid color-mix(in srgb,var(--acc) 30%,transparent)}
-.cal-day.other-month .cal-dn{opacity:.3}
-.cal-dn{font-family:'DM Mono',monospace;font-size:10px;color:var(--mut2);margin-bottom:2px}
-.cal-day.today .cal-dn{color:var(--acc);font-weight:700}
-.cal-dots{display:flex;flex-wrap:wrap;gap:2px;margin-top:1px}
-.cal-dot{width:5px;height:5px;border-radius:50%}
-.cal-dot.high{background:var(--red)}.cal-dot.mid{background:var(--ora)}.cal-dot.low{background:var(--grn)}
-.cal-detail{background:var(--sur);border:1px solid var(--bdr);border-radius:12px;padding:12px 14px;margin-top:10px}
-.cal-detail-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mut2);margin-bottom:8px}
-.cal-detail-item{display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-bottom:1px solid var(--bdr2);font-size:13px}
-.cal-detail-item:last-child{border-bottom:none}
+/* ═══ PROJECT PAGE ═══ */
+.proj-list{display:flex;flex-direction:column;gap:10px}
+.proj-card{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;overflow:hidden}
+.proj-header{padding:14px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;-webkit-user-select:none}
+.proj-color{width:14px;height:14px;border-radius:4px;flex-shrink:0}
+.proj-name{font-size:15px;font-weight:600;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.proj-meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--mut2);flex-shrink:0}
+.proj-chevron{font-size:14px;color:var(--mut);flex-shrink:0;transition:transform .2s}
+.proj-chevron.open{transform:rotate(90deg)}
+.proj-progress{height:3px;background:var(--sur2);margin:0 16px 14px;border-radius:2px;overflow:hidden}
+.proj-progress-fill{height:100%;border-radius:2px;transition:width .5s}
+.proj-tasks{padding:0 12px 12px}
+.proj-task-item{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;background:var(--sur2);border-radius:8px;margin-bottom:6px}
+.proj-task-item:last-child{margin-bottom:0}
+.proj-ck{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--bdr);background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all .15s;margin-top:1px}
+.proj-ck.on{background:var(--grn);border-color:var(--grn)}
+.proj-ck.on::after{content:'✓';font-size:10px;color:#000;font-weight:700}
+.proj-ck.wip{background:var(--yel);border-color:var(--yel)}
+.proj-ck.wip::after{content:'▶';font-size:9px;color:#000;font-weight:700}
+.proj-task-info{flex:1;min-width:0}
+.proj-task-name{font-size:13px;font-weight:500;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.proj-task-name.done{text-decoration:line-through;color:var(--mut)}
+.proj-task-meta{font-family:'DM Mono',monospace;font-size:10px;color:var(--mut2);display:flex;gap:8px;flex-wrap:wrap}
+.wip-badge{display:inline-flex;align-items:center;gap:3px;background:color-mix(in srgb,var(--yel) 20%,transparent);color:var(--yel);border:1px solid color-mix(in srgb,var(--yel) 30%,transparent);border-radius:4px;padding:1px 6px;font-size:10px;font-family:'DM Mono',monospace;font-weight:500}
+.add-proj-btn{display:flex;align-items:center;gap:8px;padding:14px 16px;border:2px dashed var(--bdr);border-radius:14px;cursor:pointer;color:var(--mut);font-size:13px;transition:all .15s;-webkit-user-select:none}
+.add-proj-btn:active{border-color:var(--acc);color:var(--acc)}
 
-/* ── SEARCH / FILTER ── */
+/* ═══ FILTER / SEARCH ═══ */
 .search-wrap{position:relative;margin-bottom:12px}
 .search-inp{width:100%;background:var(--sur);border:1px solid var(--bdr);border-radius:10px;color:var(--txt);padding:10px 36px 10px 14px;font-size:14px;font-family:'Noto Sans JP',sans-serif;outline:none;transition:border-color .15s;-webkit-appearance:none}
 .search-inp:focus{border-color:var(--acc)}
 .search-ico{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:15px;pointer-events:none}
-.cat-row{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px;scrollbar-width:none;padding-bottom:2px}
-.cat-row::-webkit-scrollbar{display:none}
-.cat-chip{flex-shrink:0;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;font-family:'DM Mono',monospace;background:var(--sur);border:1px solid var(--bdr);color:var(--mut2);transition:all .15s;-webkit-user-select:none;display:flex;align-items:center;gap:5px}
-.cat-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .fbar{display:flex;gap:6px;overflow-x:auto;margin-bottom:10px;scrollbar-width:none;padding-bottom:2px}
 .fbar::-webkit-scrollbar{display:none}
 .fc{flex-shrink:0;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;font-family:'DM Mono',monospace;background:var(--sur);border:1px solid var(--bdr);color:var(--mut2);transition:all .15s;-webkit-user-select:none}
 .fc.on{background:var(--acc);color:#000;border-color:var(--acc)}
+.cat-row{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px;scrollbar-width:none;padding-bottom:2px}
+.cat-row::-webkit-scrollbar{display:none}
+.cat-chip{flex-shrink:0;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;font-family:'DM Mono',monospace;background:var(--sur);border:1px solid var(--bdr);color:var(--mut2);transition:all .15s;-webkit-user-select:none;display:flex;align-items:center;gap:5px}
+.cat-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
-/* ── TASK CARDS ── */
+/* ═══ TASK CARDS ═══ */
 .tlist{display:flex;flex-direction:column;gap:8px}
-/* swipe container */
 .tc-wrap{position:relative;overflow:hidden;border-radius:12px}
 .tc-swipe-bg{position:absolute;inset:0;display:flex;align-items:center;border-radius:12px;transition:opacity .15s}
 .tc-swipe-done{background:var(--grn);justify-content:flex-start;padding-left:18px;opacity:0}
 .tc-swipe-del{background:var(--red);justify-content:flex-end;padding-right:18px;opacity:0}
 .tc-swipe-icon{font-size:20px;color:#000;font-weight:700;pointer-events:none}
 .tc-swipe-del .tc-swipe-icon{color:#fff}
-.tc{background:var(--sur);border:1px solid var(--bdr);border-radius:12px;padding:13px 14px;display:flex;gap:10px;align-items:flex-start;position:relative;overflow:hidden;transition:transform .15s,opacity .2s;touch-action:pan-y;cursor:default;will-change:transform}
+.tc{background:var(--sur);border:1px solid var(--bdr);border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;position:relative;overflow:hidden;transition:transform .15s,opacity .2s;touch-action:pan-y;will-change:transform}
 .tc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px}
-.tc.rh::before{background:var(--red)}.tc.rm::before{background:var(--ora)}.tc.rl::before{background:var(--grn)}
-.tc.rd{opacity:.35}
-.tc.pinned{border-color:color-mix(in srgb,var(--acc) 50%,var(--bdr))}
-/* pin badge */
-.pin-badge{font-size:11px;display:inline-flex;align-items:center;gap:2px;color:var(--acc);font-family:'DM Mono',monospace}
+.tc.rh::before{background:var(--red)}.tc.rm::before{background:var(--ora)}.tc.rl::before{background:var(--grn)}.tc.rwip::before{background:var(--yel)}
+.tc.rd{opacity:.35}.tc.pinned{border-color:color-mix(in srgb,var(--acc) 50%,var(--bdr))}
 .ck{width:20px;height:20px;border-radius:5px;border:1.5px solid var(--bdr);background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all .15s;margin-top:2px}
 .ck.on{background:var(--grn);border-color:var(--grn)}
 .ck.on::after{content:'✓';font-size:11px;color:#000;font-weight:700}
+.ck.wip{background:var(--yel);border-color:var(--yel)}
+.ck.wip::after{content:'▶';font-size:10px;color:#000;font-weight:700}
 .tb2{flex:1;min-width:0}
-.tn{font-size:14px;font-weight:500;margin-bottom:5px;line-height:1.3}
+.tn{font-size:14px;font-weight:500;margin-bottom:4px;line-height:1.3;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .tn.done{text-decoration:line-through;color:var(--mut)}
 .chips{display:flex;flex-wrap:wrap;gap:4px}
 .chip{display:inline-flex;align-items:center;background:var(--sur2);border:1px solid var(--bdr2);border-radius:4px;padding:1px 6px;font-size:10px;font-family:'DM Mono',monospace;color:var(--mut2)}
-.chip.dl{color:var(--ora)}.chip.hr{color:var(--blu)}.chip.ph{color:var(--red)}.chip.pm{color:var(--ora)}.chip.pl{color:var(--grn)}.chip.rec{color:var(--pur)}
+.chip.dl{color:var(--ora)}.chip.hr{color:var(--blu)}.chip.ph{color:var(--red)}.chip.pm{color:var(--ora)}.chip.pl{color:var(--grn)}.chip.rec{color:var(--pur)}.chip.period{color:var(--blu)}
 .rtag{display:inline-flex;align-items:center;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:500;font-family:'DM Mono',monospace}
 .rtag.rh{background:color-mix(in srgb,var(--red) 20%,transparent);color:var(--red)}
 .rtag.rm{background:color-mix(in srgb,var(--ora) 20%,transparent);color:var(--ora)}
 .rtag.rl{background:color-mix(in srgb,var(--grn) 20%,transparent);color:var(--grn)}
-/* ── LARGE CAT BADGE ── */
+.rtag.rwip{background:color-mix(in srgb,var(--yel) 20%,transparent);color:var(--yel)}
 .cat-badge-lg{display:inline-flex;align-items:center;gap:5px;border-radius:6px;padding:3px 10px;font-size:11px;font-family:'DM Mono',monospace;font-weight:500;margin-top:5px}
 .cat-badge-icon{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .tnote{font-size:12px;color:var(--mut2);margin-top:6px;line-height:1.6;padding:6px 8px;background:var(--sur2);border-radius:6px;border-left:2px solid var(--bdr)}
@@ -259,18 +242,19 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 .tnote ul{margin-left:14px;margin-top:4px}
 .tnote li{font-size:11px;line-height:1.6}
 .tc-actions{display:flex;gap:2px;flex-shrink:0}
-.tc-btn{background:none;border:none;color:var(--mut);font-size:15px;cursor:pointer;padding:3px 4px;transition:color .15s}
+.tc-btn{background:none;border:none;color:var(--mut);font-size:14px;cursor:pointer;padding:3px;transition:color .15s}
 .tc-btn.del:active{color:var(--red)}
 .tc-btn.pinbtn.active{color:var(--acc)}
 .drag-handle{font-size:14px;color:var(--mut);cursor:grab;padding:3px 2px;flex-shrink:0;margin-top:2px;-webkit-user-select:none}
+.swipe-hint{font-size:11px;color:var(--mut);text-align:center;padding:6px 0;font-family:'DM Mono',monospace}
 
-/* ── FORM ── */
+/* ═══ FORM ═══ */
 .fcard{background:var(--sur);border:1px solid var(--bdr);border-radius:16px;padding:18px;margin-bottom:12px}
 .field{margin-bottom:14px}.field:last-child{margin-bottom:0}
 .field label{display:block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut2);margin-bottom:7px}
 .field input,.field select,.field textarea{width:100%;background:var(--bg2);border:1px solid var(--bdr);border-radius:10px;color:var(--txt);padding:12px 14px;font-size:15px;font-family:'Noto Sans JP',sans-serif;outline:none;transition:border-color .15s;-webkit-appearance:none;appearance:none}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--acc)}
-.field textarea{resize:none;height:90px;font-family:'DM Mono',monospace;font-size:13px}
+.field textarea{resize:none;height:80px;font-family:'DM Mono',monospace;font-size:13px}
 .field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234a5268' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .brow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
@@ -279,23 +263,36 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 .btn-a{background:var(--acc);color:#000}.btn-a:active{background:var(--acc-d)}
 .btn-g{background:var(--sur);color:var(--mut2);border:1px solid var(--bdr)}
 .btn-diag{background:color-mix(in srgb,var(--grn) 10%,var(--sur));color:var(--grn);border:1px solid color-mix(in srgb,var(--grn) 30%,var(--bdr));width:100%;margin-bottom:12px}
-
-/* ── TEMPLATES ── */
+/* period section */
+.period-section{background:var(--sur2);border-radius:10px;padding:12px;margin-bottom:14px}
+.period-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mut2);margin-bottom:10px}
+.period-toggle-btn{flex:1;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;text-align:center;background:var(--bg2);border:1px solid var(--bdr);color:var(--mut2);transition:all .15s;-webkit-user-select:none;font-family:'Noto Sans JP',sans-serif}
+.period-toggle-btn.on{background:var(--acc);color:#000;border-color:var(--acc)}
+.period-toggle-btn:active{transform:scale(.96)}
+.period-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.period-row:last-child{margin-bottom:0}
+.period-lbl{font-size:12px;color:var(--mut2);width:40px;flex-shrink:0}
+.period-row input,.period-row select{flex:1;background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;color:var(--txt);padding:8px 10px;font-size:13px;font-family:'Noto Sans JP',sans-serif;outline:none;-webkit-appearance:none;appearance:none}
+.period-row input:focus,.period-row select:focus{border-color:var(--acc)}
+.period-row select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234a5268' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:28px}
+.allday-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.allday-lbl{font-size:12px;color:var(--mut2)}
+/* template */
 .tpl-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
 .tpl-card{background:var(--sur);border:1px solid var(--bdr);border-radius:12px;padding:12px;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;gap:4px}
 .tpl-card:active{transform:scale(.97);border-color:var(--acc)}
 .tpl-icon{font-size:20px}.tpl-name{font-size:13px;font-weight:500}.tpl-desc{font-size:11px;color:var(--mut2)}
 
-/* ── MODAL ── */
+/* ═══ MODAL ═══ */
 .modal-bg{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center;padding:0 0 env(safe-area-inset-bottom);opacity:0;pointer-events:none;transition:opacity .2s}
 .modal-bg.open{opacity:1;pointer-events:all}
-.modal{background:var(--sur);border:1px solid var(--bdr);border-radius:20px 20px 0 0;padding:20px 18px 28px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto;transform:translateY(30px);transition:transform .25s}
+.modal{background:var(--sur);border:1px solid var(--bdr);border-radius:20px 20px 0 0;padding:20px 18px 28px;width:100%;max-width:520px;max-height:88vh;overflow-y:auto;transform:translateY(30px);transition:transform .25s}
 .modal-bg.open .modal{transform:translateY(0)}
 .modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .modal-title{font-family:'DM Mono',monospace;font-size:14px;font-weight:500}
 .modal-close{background:var(--sur2);border:1px solid var(--bdr);border-radius:8px;color:var(--mut2);width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}
 
-/* ── DIAGNOSIS ── */
+/* ═══ DIAGNOSIS ═══ */
 .diag-hero{background:color-mix(in srgb,var(--grn) 6%,var(--sur));border:1px solid var(--bdr);border-radius:16px;padding:20px;text-align:center;margin-bottom:14px}
 .diag-hero .dico{font-size:36px;margin-bottom:8px}
 .diag-hero h2{font-family:'DM Mono',monospace;font-size:16px;font-weight:500;margin-bottom:4px}
@@ -334,7 +331,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 .sched-meta{font-family:'DM Mono',monospace;font-size:10px;color:var(--mut2)}
 .sched-by{color:var(--blu)}.sched-warn{color:var(--ora)}
 
-/* ── SETTINGS ── */
+/* ═══ SETTINGS ═══ */
 .sg{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;margin-bottom:14px}
 .sr{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--bdr2);cursor:pointer}
 .sr:last-child{border-bottom:none}
@@ -359,10 +356,15 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 .color-opt.sel{border-color:var(--txt);transform:scale(1.15)}
 .pw-section{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;padding:16px;margin-bottom:14px;display:none}
 .pw-section.open{display:block}
-.pw-field{margin-bottom:10px}
-.pw-field label{display:block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut2);margin-bottom:6px}
-.pw-field input{width:100%;background:var(--bg2);border:1px solid var(--bdr);border-radius:10px;color:var(--txt);padding:12px 14px;font-size:15px;font-family:'Noto Sans JP',sans-serif;outline:none;-webkit-appearance:none}
-.pw-field input:focus{border-color:var(--acc)}
+/* PIN change in settings — small keypad */
+.mini-pin-wrap{margin-bottom:12px}
+.mini-pin-dots{display:flex;gap:10px;justify-content:center;margin-bottom:14px}
+.mini-pin-dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--bdr);background:transparent;transition:all .15s}
+.mini-pin-dot.filled{background:var(--acc);border-color:var(--acc)}
+.mini-pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mini-pin-key{height:48px;background:var(--sur2);border:1px solid var(--bdr);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:'DM Mono',monospace;font-size:18px;font-weight:500;transition:all .12s;-webkit-user-select:none}
+.mini-pin-key:active{transform:scale(.92);background:var(--bdr)}
+.mini-pin-key.empty{visibility:hidden}
 .sim-card{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;padding:16px;margin-bottom:14px}
 .sim-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mut2);margin-bottom:12px}
 .sim-result{border-radius:10px;padding:10px 14px;font-size:12px;line-height:1.6;display:none}
@@ -370,10 +372,6 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 .sim-result.ok{background:color-mix(in srgb,var(--grn) 12%,transparent);color:var(--grn);border:1px solid color-mix(in srgb,var(--grn) 30%,transparent)}
 .sim-result.warn{background:color-mix(in srgb,var(--ora) 12%,transparent);color:var(--ora);border:1px solid color-mix(in srgb,var(--ora) 30%,transparent)}
 .sim-result.bad{background:color-mix(in srgb,var(--red) 12%,transparent);color:var(--red);border:1px solid color-mix(in srgb,var(--red) 30%,transparent)}
-.sec-info-card{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;padding:16px;margin-bottom:14px}
-.si-item{display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--mut2);line-height:1.6;margin-bottom:6px}
-.si-item:last-child{margin-bottom:0}
-.si-ico{font-size:14px;flex-shrink:0;margin-top:1px}
 .import-area{width:100%;background:var(--bg2);border:1px solid var(--bdr);border-radius:10px;color:var(--txt);padding:12px 14px;font-size:12px;font-family:'DM Mono',monospace;outline:none;height:100px;resize:vertical;margin-bottom:8px}
 .import-area:focus{border-color:var(--acc)}
 .gcal-step{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--bdr2);font-size:13px}
@@ -389,43 +387,92 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 .notif-info{background:color-mix(in srgb,var(--blu) 10%,var(--sur));border:1px solid color-mix(in srgb,var(--blu) 30%,var(--bdr));border-radius:10px;padding:10px 14px;font-size:12px;color:var(--blu);line-height:1.6;margin-bottom:10px}
 .share-info{background:color-mix(in srgb,var(--pur) 10%,var(--sur));border:1px solid color-mix(in srgb,var(--pur) 30%,var(--bdr));border-radius:10px;padding:10px 14px;font-size:12px;color:var(--pur);line-height:1.6;margin-bottom:10px}
 
-/* swipe hint */
-.swipe-hint{font-size:11px;color:var(--mut);text-align:center;padding:6px 0;font-family:'DM Mono',monospace}
+/* ═══ CALENDAR ═══ */
+.cal-wrap{padding:14px 16px}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.cal-month{font-family:'DM Mono',monospace;font-size:14px;font-weight:500}
+.cal-btn{background:var(--sur2);border:1px solid var(--bdr);border-radius:8px;color:var(--txt);width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px}
+.cal-btn:active{background:var(--bdr)}
+/* Calendar grid — week-row based layout for bar spanning */
+.cal-dow-row{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:4px}
+.cal-dow{font-family:'DM Mono',monospace;font-size:9px;color:var(--mut);text-align:center;padding-bottom:2px}
+.cal-week-row{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:3px;position:relative}
+.cal-day{min-height:52px;border-radius:6px;padding:3px 4px;background:var(--sur2);cursor:pointer;transition:background .15s;position:relative;overflow:visible}
+.cal-day:active{background:var(--bdr)}
+.cal-day.today{background:color-mix(in srgb,var(--acc) 12%,var(--sur2));border:1px solid color-mix(in srgb,var(--acc) 30%,transparent)}
+.cal-day.other-month .cal-dn{opacity:.3}
+.cal-dn{font-family:'DM Mono',monospace;font-size:10px;color:var(--mut2);margin-bottom:2px}
+.cal-day.today .cal-dn{color:var(--acc);font-weight:700}
+/* Bar layer — sits below date number */
+.cal-bars{display:flex;flex-direction:column;gap:2px;margin-top:2px}
+.cal-bar{height:7px;border-radius:2px;font-size:0;position:relative;min-width:100%}
+.cal-bar.bar-start{border-radius:4px 0 0 4px;margin-right:-3px}
+.cal-bar.bar-mid{border-radius:0;margin-right:-3px;margin-left:-3px}
+.cal-bar.bar-end{border-radius:0 4px 4px 0;margin-left:-3px}
+.cal-bar.bar-single{border-radius:4px}
+/* dot fallback for same-day tasks */
+.cal-dots{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px}
+.cal-dot{width:5px;height:5px;border-radius:50%}
+.cal-dot.high{background:var(--red)}.cal-dot.mid{background:var(--ora)}.cal-dot.low{background:var(--grn)}.cal-dot.wip{background:var(--yel)}
+.cal-detail{background:var(--sur);border:1px solid var(--bdr);border-radius:12px;padding:12px 14px;margin-top:10px}
+.cal-detail-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mut2);margin-bottom:8px}
+/* Calendar legend */
+.cal-legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;padding-top:8px;border-top:1px solid var(--bdr2)}
+.cal-legend-item{display:flex;align-items:center;gap:4px;font-size:10px;font-family:'DM Mono',monospace;color:var(--mut2)}
+.cal-legend-bar{width:18px;height:7px;border-radius:4px}
+.cal-detail-item{display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-bottom:1px solid var(--bdr2);font-size:13px}
+.cal-detail-item:last-child{border-bottom:none}
 
-/* ── EMPTY / TOAST ── */
+/* ═══ MISC ═══ */
+.est-item{background:var(--sur2);border-radius:10px;padding:12px 14px;margin-bottom:8px}
+.est-name{font-size:13px;font-weight:500;margin-bottom:6px}
+.est-bar-row{display:flex;align-items:center;gap:8px;font-size:10px;font-family:'DM Mono',monospace;margin-bottom:4px}
+.est-bar-lbl{width:36px;color:var(--mut2);flex-shrink:0}
+.est-bar-track{flex:1;height:6px;background:var(--bdr2);border-radius:3px;overflow:hidden}
+.est-bar-fill{height:100%;border-radius:3px}
+.est-bar-fill.estimated{background:var(--blu)}.est-bar-fill.actual{background:var(--grn)}.est-bar-fill.over{background:var(--red)}
+.est-diff{font-size:10px;font-family:'DM Mono',monospace;margin-top:2px}
 .empty{text-align:center;padding:44px 24px;color:var(--mut)}
 .empty .ei{font-size:40px;margin-bottom:10px;opacity:.25}
 .empty p{font-size:13px;line-height:1.7}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 .toast{position:fixed;bottom:calc(66px + env(safe-area-inset-bottom) + 12px);left:50%;transform:translateX(-50%) translateY(16px);background:var(--sur2);border:1px solid var(--bdr);border-radius:10px;padding:9px 18px;font-size:12px;font-family:'DM Mono',monospace;opacity:0;transition:all .25s;z-index:500;white-space:nowrap;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 
-<!-- ══ LOCK ══ -->
+<!-- ═══ PIN LOCK ═══ -->
 <div id="lockScreen">
-  <div class="lock-logo">Task<span>Sense</span></div>
-  <div class="lock-sub">Personal Task Manager</div>
-  <div class="lock-icon">🔐</div>
+  <div class="pin-logo">Task<span>Sense</span></div>
+  <div class="pin-sub">Personal Task Manager</div>
   <div id="setupNote" class="setup-note" style="display:none">
-    <strong>初回セットアップ</strong>使用するパスワードを設定してください。このパスワードでデータが暗号化されます。
+    <strong>初回セットアップ</strong>4桁のPINコードを設定してください
   </div>
-  <div class="lock-form">
-    <div class="lock-label" id="lockLabel">パスワードを入力</div>
-    <div class="lock-iw">
-      <input type="password" class="lock-inp" id="pwInput" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doUnlock()">
-      <button class="lock-eye" onclick="toggleEye()">👁</button>
-    </div>
-    <div id="pwConfirmWrap" style="display:none">
-      <div class="lock-iw"><input type="password" class="lock-inp" id="pwConfirm" placeholder="確認用パスワード" autocomplete="new-password" onkeydown="if(event.key==='Enter')doUnlock()"></div>
-    </div>
-    <div class="lock-err" id="lockErr"></div>
-    <button class="lock-btn" id="lockBtn" onclick="doUnlock()">ロック解除</button>
-    <div class="lock-hint" id="lockHint">パスワードを忘れるとデータを復元できません</div>
+  <div class="pin-dots" id="pinDots">
+    <div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div>
+    <div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div>
   </div>
+  <div class="pin-err" id="pinErr"></div>
+  <div class="pin-label" id="pinLabel">PINを入力してください</div>
+  <div class="pin-pad" id="pinPad">
+    <div class="pin-key" onclick="pinInput('1')"><div class="pn">1</div></div>
+    <div class="pin-key" onclick="pinInput('2')"><div class="pn">2</div><div class="pa">ABC</div></div>
+    <div class="pin-key" onclick="pinInput('3')"><div class="pn">3</div><div class="pa">DEF</div></div>
+    <div class="pin-key" onclick="pinInput('4')"><div class="pn">4</div><div class="pa">GHI</div></div>
+    <div class="pin-key" onclick="pinInput('5')"><div class="pn">5</div><div class="pa">JKL</div></div>
+    <div class="pin-key" onclick="pinInput('6')"><div class="pn">6</div><div class="pa">MNO</div></div>
+    <div class="pin-key" onclick="pinInput('7')"><div class="pn">7</div><div class="pa">PQRS</div></div>
+    <div class="pin-key" onclick="pinInput('8')"><div class="pn">8</div><div class="pa">TUV</div></div>
+    <div class="pin-key" onclick="pinInput('9')"><div class="pn">9</div><div class="pa">WXYZ</div></div>
+    <div class="pin-key empty"></div>
+    <div class="pin-key" onclick="pinInput('0')"><div class="pn">0</div></div>
+    <div class="pin-key del" onclick="pinDel()">⌫</div>
+  </div>
+  <div class="pin-hint" id="pinHint">PINを忘れた場合はデータがリセットされます</div>
 </div>
 
-<!-- ══ APP ══ -->
+<!-- ═══ APP ═══ -->
 <div id="app">
   <div class="topbar">
     <div class="tb-logo">Task<span>Sense</span></div>
@@ -465,8 +512,6 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
       </div>
       <div class="sh">WORKLOAD</div>
       <div class="card"><div class="g-wrap" id="gaugeEl"></div></div>
-      <div class="sh">CATEGORY LOAD</div>
-      <div class="card"><div class="cat-load" id="catLoadEl"></div></div>
       <div class="sh">DEADLINE TIMELINE</div>
       <div class="card"><div class="tl" id="tlEl"></div></div>
     </div>
@@ -476,9 +521,9 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
       <div class="search-wrap"><input class="search-inp" type="search" id="searchInp" placeholder="タスクを検索..." oninput="renderTasks()"><div class="search-ico">🔍</div></div>
       <div class="fbar">
         <div class="fc on" data-f="all" onclick="setF(this)">ALL</div>
-        <div class="fc" data-f="pinned" onclick="setF(this)">📌 PINNED</div>
+        <div class="fc" data-f="wip" onclick="setF(this)">▶ 進捗中</div>
+        <div class="fc" data-f="pinned" onclick="setF(this)">📌 PIN</div>
         <div class="fc" data-f="high" onclick="setF(this)">🔴 URGENT</div>
-        <div class="fc" data-f="mid" onclick="setF(this)">🟡 WARN</div>
         <div class="fc" data-f="active" onclick="setF(this)">ACTIVE</div>
         <div class="fc" data-f="done" onclick="setF(this)">✅ DONE</div>
       </div>
@@ -494,25 +539,44 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
       <div class="sh">NEW TASK</div>
       <div class="fcard">
         <div class="field"><label>タスク名 *</label><input type="text" id="fName" placeholder="例：企画書の作成" autocomplete="off"></div>
-        <div class="frow">
-          <div class="field"><label>締め切り *</label><input type="date" id="fDl"></div>
-          <div class="field"><label>推定時間 (h)</label><input type="number" id="fHr" placeholder="5" min="0.5" step="0.5"></div>
-        </div>
+        <div class="field"><label>プロジェクト</label><select id="fProj"><option value="">プロジェクトなし</option></select></div>
         <div class="field"><label>重要度</label>
           <select id="fImp"><option value="high">🔴 高</option><option value="mid" selected>🟡 中</option><option value="low">🟢 低</option></select>
         </div>
         <div class="field"><label>カテゴリ</label><select id="fCat"><option value="">なし</option></select></div>
-        <div class="field"><label>繰り返し</label>
-          <select id="fRec"><option value="none">なし</option><option value="daily">毎日</option><option value="weekly">毎週</option><option value="monthly">毎月</option></select>
+        <!-- 作業期間 -->
+        <div class="period-section">
+          <div class="period-title">作業期間</div>
+          <div style="display:flex;gap:6px;margin-bottom:10px">
+            <div id="fAlldayBtn" class="period-toggle-btn on" onclick="setPeriodMode('allday')">☀️ 終日</div>
+            <div id="fTimeBtn" class="period-toggle-btn" onclick="setPeriodMode('time')">🕐 時間指定</div>
+          </div>
+          <div class="period-row"><div class="period-lbl">開始</div><input type="date" id="fStart"></div>
+          <div class="period-row" id="fStartTimeRow" style="display:none"><div class="period-lbl">時刻</div><input type="time" id="fStartTime" value="09:00"></div>
+          <div class="period-row"><div class="period-lbl">終了</div><input type="date" id="fEnd"></div>
+          <div class="period-row" id="fEndTimeRow" style="display:none"><div class="period-lbl">時刻</div><input type="time" id="fEndTime" value="18:00"></div>
         </div>
+        <div class="field"><label>繰り返し</label>
+          <select id="fRec"><option value="none">なし</option><option value="daily">毎日</option><option value="weekly">毎週（同じ曜日）</option><option value="monthly">毎月（同じ日）</option></select>
+        </div>
+        <div class="field"><label>推定時間 (h)</label><input type="number" id="fHr" placeholder="5" min="0.5" step="0.5"></div>
         <div class="field"><label>依存タスク</label><select id="fDep"><option value="">なし</option></select></div>
         <div class="field"><label>メモ（Markdown：**太字** *斜体* - [x] チェック）</label>
-          <textarea id="fNote" placeholder="- [x] 完了項目&#10;- [ ] 未完了項目&#10;**重要**な内容"></textarea>
+          <textarea id="fNote" placeholder="- [x] 完了項目&#10;- [ ] 未完了項目"></textarea>
         </div>
       </div>
       <div class="brow">
         <button class="btn btn-a" onclick="addTask()">＋ 追加</button>
         <button class="btn btn-g" onclick="clearForm()">クリア</button>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="page" id="pg-proj">
+      <div class="proj-list" id="projList"></div>
+      <div class="add-proj-btn" onclick="openAddProject()">
+        <span style="font-size:20px">＋</span>
+        <span>新しいプロジェクトを作成</span>
       </div>
     </div>
 
@@ -525,8 +589,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
     <!-- DIAGNOSIS -->
     <div class="page" id="pg-diag">
       <div class="diag-hero">
-        <div class="dico">📊</div>
-        <h2>SCHEDULE DIAGNOSIS</h2>
+        <div class="dico">📊</div><h2>SCHEDULE DIAGNOSIS</h2>
         <p>ルールベースでスケジュールを診断し<br>推奨着手順を自動で提案します</p>
       </div>
       <div class="sh" style="margin-top:0">ESTIMATION ACCURACY</div>
@@ -541,42 +604,24 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
       <div class="sh">WORK SETTINGS</div>
       <div class="sg">
         <div class="sr"><div><div class="sr-l">1日の作業可能時間</div><div class="sr-d">残業含む上限時間</div></div><div class="sr-inp"><input type="number" id="sH" value="8" min="1" max="24" step="0.5"></div></div>
-        <div class="sr"><div><div class="sr-l">週の稼働日数</div><div class="sr-d">土日含む場合は7</div></div><div class="sr-inp"><input type="number" id="sD" value="5" min="1" max="7"></div></div>
-        <div class="sr"><div><div class="sr-l">バッファ率 (%)</div><div class="sr-d">割り込み作業の余白</div></div><div class="sr-inp"><input type="number" id="sB" value="20" min="0" max="50"></div></div>
+        <div class="sr"><div><div class="sr-l">週の稼働日数</div></div><div class="sr-inp"><input type="number" id="sD" value="5" min="1" max="7"></div></div>
+        <div class="sr"><div><div class="sr-l">バッファ率 (%)</div></div><div class="sr-inp"><input type="number" id="sB" value="20" min="0" max="50"></div></div>
       </div>
       <button class="btn btn-a" style="width:100%;margin-bottom:24px" onclick="saveCfg()">設定を保存</button>
+
       <div class="sh">NOTIFICATIONS</div>
-      <div class="sg"><div class="sr"><div><div class="sr-l">🔔 ブラウザ通知</div><div class="sr-d">締め切り前日に通知を受け取る</div></div>
+      <div class="sg"><div class="sr"><div><div class="sr-l">🔔 ブラウザ通知</div><div class="sr-d">締め切り前日に通知</div></div>
         <label class="sw-wrap"><input type="checkbox" id="notifToggle" class="sw-inp" onchange="toggleNotif(this.checked)"><div class="sw-track"></div><div class="sw-knob"></div></label></div></div>
       <div class="notif-info" id="notifInfo" style="display:none"></div>
+
       <div class="sh">APPEARANCE</div>
-      <div class="sg"><div class="sr"><div><div class="sr-l">🌗 ライトモード</div><div class="sr-d">明るいテーマに切り替え</div></div>
+      <div class="sg"><div class="sr"><div><div class="sr-l">🌗 ライトモード</div></div>
         <label class="sw-wrap"><input type="checkbox" id="lightToggle" class="sw-inp" onchange="toggleTheme()"><div class="sw-track"></div><div class="sw-knob"></div></label></div></div>
-      <div class="sh">KEYBOARD SHORTCUTS</div>
-      <div class="card" style="padding:8px 14px">
-        <div class="shortcut-row"><div class="shortcut-desc">タスク追加</div><div class="kbd"><span class="key">Ctrl</span><span class="key">N</span></div></div>
-        <div class="shortcut-row"><div class="shortcut-desc">検索フォーカス</div><div class="kbd"><span class="key">/</span></div></div>
-        <div class="shortcut-row"><div class="shortcut-desc">ホームへ戻る</div><div class="kbd"><span class="key">Esc</span></div></div>
-        <div class="shortcut-row"><div class="shortcut-desc">診断を実行</div><div class="kbd"><span class="key">Ctrl</span><span class="key">D</span></div></div>
-        <div class="shortcut-row"><div class="shortcut-desc">設定を開く</div><div class="kbd"><span class="key">Ctrl</span><span class="key">,</span></div></div>
-        <div class="shortcut-row"><div class="shortcut-desc">今すぐロック</div><div class="kbd"><span class="key">Ctrl</span><span class="key">L</span></div></div>
-      </div>
-      <div class="sh" style="margin-top:20px">SECURITY</div>
-      <div class="sg">
-        <div class="sr" onclick="togglePwChange()"><div><div class="sr-l">🔑 パスワードを変更</div><div class="sr-d">新しいパスワードを設定する</div></div><div class="sr-arr" id="pwArr">›</div></div>
-        <div class="sr" onclick="lockApp()"><div><div class="sr-l">🔒 今すぐロック</div></div><div class="sr-arr">›</div></div>
-      </div>
-      <div class="pw-section" id="pwSection">
-        <div class="pw-field"><label>現在のパスワード</label><input type="password" id="pwCur" autocomplete="current-password"></div>
-        <div class="pw-field"><label>新しいパスワード（4文字以上）</label><input type="password" id="pwNew" autocomplete="new-password"></div>
-        <div class="pw-field"><label>確認</label><input type="password" id="pwNewC" autocomplete="new-password"></div>
-        <button class="btn btn-a" style="width:100%;margin-top:4px" onclick="changePw()">パスワードを変更</button>
-      </div>
-      <div class="sec-info-card" style="margin-top:10px">
-        <div class="si-item"><span class="si-ico">🔐</span>SHA-256ハッシュ + PBKDF2 + AES-256-GCM（ブラウザ標準Web Crypto API）</div>
-        <div class="si-item"><span class="si-ico">👁</span>30秒以上タブを離れると自動ロック</div>
-        <div class="si-item"><span class="si-ico">📴</span>外部サーバーへのデータ送信なし</div>
-      </div>
+
+      <div class="sh">SECURITY — PIN変更</div>
+      <div class="sg"><div class="sr" onclick="openPinChange()"><div><div class="sr-l">🔑 PINを変更</div><div class="sr-d">新しい4桁のPINを設定</div></div><div class="sr-arr">›</div></div>
+        <div class="sr" onclick="lockApp()"><div><div class="sr-l">🔒 今すぐロック</div></div><div class="sr-arr">›</div></div></div>
+
       <div class="sh">CATEGORIES</div>
       <div class="cat-manager">
         <div class="cat-manager-title">カテゴリ管理</div>
@@ -586,16 +631,19 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
         <div id="colorPick" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px"></div>
         <button class="btn btn-g" style="width:100%;padding:10px" onclick="addCategory()">＋ カテゴリを追加</button>
       </div>
+
       <div class="sh">GOOGLE CALENDAR 連携</div>
       <div class="card" style="padding:8px 14px 14px">
         <div class="gcal-step"><div class="gcal-num">1</div><div class="gcal-txt">下のボタンで<strong>ICSファイルをダウンロード</strong></div></div>
         <div class="gcal-step"><div class="gcal-num">2</div><div class="gcal-txt">Googleカレンダーで<strong>「＋」→「ファイルからインポート」</strong>をクリック</div></div>
-        <div class="gcal-step"><div class="gcal-num">3</div><div class="gcal-txt"><strong>tasksense.ics</strong>を選択して「インポート」を押す</div></div>
+        <div class="gcal-step"><div class="gcal-num">3</div><div class="gcal-txt"><strong>tasksense.ics</strong>を選択して「インポート」</div></div>
         <button class="btn btn-g" style="width:100%;margin-top:10px;padding:10px" onclick="exportICS()">📅 ICSファイルをエクスポート</button>
       </div>
+
       <div class="sh" style="margin-top:20px">SHARE</div>
-      <div class="share-info">タスク一覧をURLで共有。パスワードなしで閲覧できるため内容に注意してください。</div>
-      <div class="sg"><div class="sr" onclick="shareTask()"><div><div class="sr-l">🔗 タスク一覧をURLで共有</div><div class="sr-d">閲覧専用のリンクをコピー</div></div><div class="sr-arr">›</div></div></div>
+      <div class="share-info">タスク一覧をURLで共有できます。パスワードなしで閲覧できます。</div>
+      <div class="sg"><div class="sr" onclick="shareTask()"><div><div class="sr-l">🔗 タスク一覧をURLで共有</div></div><div class="sr-arr">›</div></div></div>
+
       <div class="sh">NEW TASK SIMULATOR</div>
       <div class="sim-card">
         <div class="sim-title">新タスクが追加されたら？</div>
@@ -606,23 +654,25 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
         <button class="btn btn-g" style="width:100%;margin-bottom:10px;padding:10px" onclick="simTask()">シミュレート</button>
         <div class="sim-result" id="simResult"></div>
       </div>
+
       <div class="sh">DATA</div>
       <div class="sg">
         <div class="sr" onclick="exportData()"><div><div class="sr-l">📤 データをエクスポート</div><div class="sr-d">タスクをクリップボードにコピー</div></div><div class="sr-arr">›</div></div>
-        <div class="sr" onclick="toggleImport()"><div><div class="sr-l">📥 データをインポート</div><div class="sr-d">別端末のデータを貼り付けて復元</div></div><div class="sr-arr" id="impArr">›</div></div>
+        <div class="sr" onclick="toggleImport()"><div><div class="sr-l">📥 データをインポート</div><div class="sr-d">別端末のデータを復元</div></div><div class="sr-arr" id="impArr">›</div></div>
       </div>
       <div id="importSec" style="display:none;margin-top:10px">
-        <textarea class="import-area" id="importArea" placeholder="エクスポートしたJSONをここに貼り付けてください"></textarea>
+        <textarea class="import-area" id="importArea" placeholder="エクスポートしたJSONを貼り付けてください"></textarea>
         <button class="btn btn-a" style="width:100%" onclick="importData()">📥 インポート実行</button>
       </div>
-      <div style="margin-top:10px"><div class="sg"><div class="sr sr-red" onclick="clearAll()"><div><div class="sr-l">🗑 全データを削除</div><div class="sr-d">タスク・設定・カテゴリを完全に消去</div></div><div class="sr-arr">›</div></div></div></div>
+      <div style="margin-top:10px"><div class="sg"><div class="sr sr-red" onclick="clearAll()"><div><div class="sr-l">🗑 全データを削除</div></div><div class="sr-arr">›</div></div></div></div>
     </div>
-  </div>
+
+  </div><!-- /scroll -->
   <nav class="bnav">
     <div class="bni on"  id="ni-home"     onclick="go('home')">    <div class="ic">🏠</div><span>ホーム</span></div>
     <div class="bni"     id="ni-tasks"    onclick="go('tasks')">   <div class="ic">📋</div><span>タスク</span></div>
     <div class="bni add" id="ni-add"      onclick="go('add')">     <div class="ic">＋</div><span>追加</span></div>
-    <div class="bni"     id="ni-cal"      onclick="go('cal')">     <div class="ic">📅</div><span>カレンダー</span></div>
+    <div class="bni"     id="ni-proj"     onclick="go('proj')">    <div class="ic">📁</div><span>案件</span></div>
     <div class="bni"     id="ni-settings" onclick="go('settings')"><div class="ic">⚙</div><span>設定</span></div>
   </nav>
 </div>
@@ -632,21 +682,68 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
   <div class="modal">
     <div class="modal-head"><div class="modal-title">✏️ タスクを編集</div><div class="modal-close" onclick="closeEdit()">✕</div></div>
     <div class="field"><label>タスク名 *</label><input type="text" id="eName" autocomplete="off"></div>
-    <div class="frow" style="margin-top:12px">
-      <div class="field"><label>締め切り *</label><input type="date" id="eDl"></div>
-      <div class="field"><label>推定時間 (h)</label><input type="number" id="eHr" min="0.5" step="0.5"></div>
-    </div>
+    <div class="field" style="margin-top:12px"><label>プロジェクト</label><select id="eProj"><option value="">なし</option></select></div>
     <div class="field" style="margin-top:12px"><label>重要度</label>
       <select id="eImp"><option value="high">🔴 高</option><option value="mid">🟡 中</option><option value="low">🟢 低</option></select>
     </div>
     <div class="field" style="margin-top:12px"><label>カテゴリ</label><select id="eCat"><option value="">なし</option></select></div>
+    <!-- 期間（edit） -->
+    <div class="period-section" style="margin-top:12px">
+      <div class="period-title">作業期間</div>
+      <div style="display:flex;gap:6px;margin-bottom:10px">
+        <div id="eAlldayBtn" class="period-toggle-btn on" onclick="setPeriodModeEdit('allday')">☀️ 終日</div>
+        <div id="eTimeBtn" class="period-toggle-btn" onclick="setPeriodModeEdit('time')">🕐 時間指定</div>
+      </div>
+      <div class="period-row"><div class="period-lbl">開始</div><input type="date" id="eStart"></div>
+      <div class="period-row" id="eStartTimeRow"><div class="period-lbl">時刻</div><input type="time" id="eStartTime" value="09:00"></div>
+      <div class="period-row"><div class="period-lbl">終了</div><input type="date" id="eEnd"></div>
+      <div class="period-row" id="eEndTimeRow"><div class="period-lbl">時刻</div><input type="time" id="eEndTime" value="18:00"></div>
+    </div>
     <div class="field" style="margin-top:12px"><label>繰り返し</label>
       <select id="eRec"><option value="none">なし</option><option value="daily">毎日</option><option value="weekly">毎週</option><option value="monthly">毎月</option></select>
     </div>
+    <div class="field" style="margin-top:12px"><label>推定時間 (h)</label><input type="number" id="eHr" min="0.5" step="0.5"></div>
     <div class="field" style="margin-top:12px"><label>メモ（Markdown対応）</label>
-      <textarea id="eNote" style="resize:none;height:80px;font-family:'DM Mono',monospace;font-size:13px"></textarea>
+      <textarea id="eNote" style="resize:none;height:70px;font-family:'DM Mono',monospace;font-size:13px"></textarea>
     </div>
     <button class="btn btn-a" style="width:100%;margin-top:16px" onclick="saveEdit()">保存する</button>
+  </div>
+</div>
+
+<!-- PROJECT MODAL -->
+<div class="modal-bg" id="projModal" onclick="if(event.target===this)closeProjModal()">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title" id="projModalTitle">📁 プロジェクトを作成</div><div class="modal-close" onclick="closeProjModal()">✕</div></div>
+    <div class="field"><label>プロジェクト名 *</label><input type="text" id="pmName" placeholder="例：A社 Webリニューアル" autocomplete="off"></div>
+    <div class="field" style="margin-top:12px"><label>説明</label><input type="text" id="pmDesc" placeholder="プロジェクトの概要（任意）"></div>
+    <div class="field" style="margin-top:12px"><label>カラー</label>
+      <div id="pmColorPick" style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px"></div>
+    </div>
+    <button class="btn btn-a" style="width:100%;margin-top:16px" onclick="saveProject()">保存する</button>
+  </div>
+</div>
+
+<!-- PIN CHANGE MODAL -->
+<div class="modal-bg" id="pinChangeModal" onclick="if(event.target===this)closePinChange()">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title">🔑 PIN変更</div><div class="modal-close" onclick="closePinChange()">✕</div></div>
+    <div id="pinChangeStep1">
+      <div style="font-size:13px;color:var(--mut2);margin-bottom:14px">現在のPINを入力してください</div>
+      <div class="mini-pin-dots" id="mpDots1"><div class="mini-pin-dot" id="mp1d0"></div><div class="mini-pin-dot" id="mp1d1"></div><div class="mini-pin-dot" id="mp1d2"></div><div class="mini-pin-dot" id="mp1d3"></div></div>
+      <div class="mini-pin-pad" id="mpPad1"></div>
+      <div style="font-size:12px;color:var(--red);text-align:center;margin-top:8px;min-height:16px" id="mpErr1"></div>
+    </div>
+    <div id="pinChangeStep2" style="display:none">
+      <div style="font-size:13px;color:var(--mut2);margin-bottom:14px">新しいPINを入力してください</div>
+      <div class="mini-pin-dots" id="mpDots2"><div class="mini-pin-dot" id="mp2d0"></div><div class="mini-pin-dot" id="mp2d1"></div><div class="mini-pin-dot" id="mp2d2"></div><div class="mini-pin-dot" id="mp2d3"></div></div>
+      <div class="mini-pin-pad" id="mpPad2"></div>
+    </div>
+    <div id="pinChangeStep3" style="display:none">
+      <div style="font-size:13px;color:var(--mut2);margin-bottom:14px">新しいPINをもう一度入力してください</div>
+      <div class="mini-pin-dots" id="mpDots3"><div class="mini-pin-dot" id="mp3d0"></div><div class="mini-pin-dot" id="mp3d1"></div><div class="mini-pin-dot" id="mp3d2"></div><div class="mini-pin-dot" id="mp3d3"></div></div>
+      <div class="mini-pin-pad" id="mpPad3"></div>
+      <div style="font-size:12px;color:var(--red);text-align:center;margin-top:8px;min-height:16px" id="mpErr3"></div>
+    </div>
   </div>
 </div>
 
@@ -664,79 +761,118 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 <div class="toast" id="toastEl"></div>
 
 <script>
-// ══════════════════════════════════════════════
-//  WEB CRYPTO API
-// ══════════════════════════════════════════════
-const HK='ts12_hash',DK='ts12_data',FK='ts12_fails',TK='ts12_theme',NK='ts12_notif';
+// ═══════════════════════════════════════════════
+//  WEB CRYPTO + PIN AUTH
+// ═══════════════════════════════════════════════
+const HK='ts13_pin',DK='ts13_data',FK='ts13_fails',TK='ts13_theme',NK='ts13_notif';
 const MAX_FAIL=10,LOCKOUT=5*60*1000;
 let sessionCryptoKey=null;
 const te=s=>new TextEncoder().encode(s);
 const td=b=>new TextDecoder().decode(b);
 async function sha256(str){const h=await crypto.subtle.digest('SHA-256',te(str));return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('')}
-async function deriveCryptoKey(pw){
-  const km=await crypto.subtle.importKey('raw',te(pw),{name:'PBKDF2'},false,['deriveKey']);
-  return crypto.subtle.deriveKey({name:'PBKDF2',salt:te('tasksense-salt-v1'),iterations:100000,hash:'SHA-256'},km,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
-}
+async function deriveCryptoKey(pin){const km=await crypto.subtle.importKey('raw',te(pin),{name:'PBKDF2'},false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt:te('tasksense-pin-v1'),iterations:100000,hash:'SHA-256'},km,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
 async function encryptData(data,ck){const iv=crypto.getRandomValues(new Uint8Array(12));const c=await crypto.subtle.encrypt({name:'AES-GCM',iv},ck,te(JSON.stringify(data)));const b=new Uint8Array(12+c.byteLength);b.set(iv,0);b.set(new Uint8Array(c),12);return btoa(String.fromCharCode(...b))}
 async function decryptData(b64,ck){try{const b=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));const p=await crypto.subtle.decrypt({name:'AES-GCM',iv:b.slice(0,12)},ck,b.slice(12));return JSON.parse(td(p))}catch{return null}}
 function isFirst(){return !localStorage.getItem(HK)}
 function getFS(){try{return JSON.parse(localStorage.getItem(FK)||'{"n":0,"t":0}')}catch{return{n:0,t:0}}}
 function setFS(n,t){localStorage.setItem(FK,JSON.stringify({n,t}))}
-function toggleEye(){const i=document.getElementById('pwInput');i.type=i.type==='password'?'text':'password'}
-function lockErr(msg){document.getElementById('lockErr').textContent=msg;const i=document.getElementById('pwInput');i.classList.add('err');setTimeout(()=>i.classList.remove('err'),400)}
-function setBtnLoading(v){const b=document.getElementById('lockBtn');b.disabled=v;b.textContent=v?'処理中...':'ロック解除'}
+
+// ── PIN LOCK SCREEN ──
+let pinBuffer='',pinSetupPhase=1,pinSetupFirst='';
 window.addEventListener('load',()=>{
   const t=new Date().toISOString().split('T')[0];
-  document.getElementById('fDl').value=t;document.getElementById('fDl').min=t;
-  if(isFirst()){document.getElementById('setupNote').style.display='block';document.getElementById('lockLabel').textContent='新しいパスワードを設定';document.getElementById('pwConfirmWrap').style.display='block';document.getElementById('lockHint').textContent='設定したパスワードでデータが暗号化されます'}
-  document.getElementById('pwInput').focus();
+  ['fStart','fEnd'].forEach(id=>document.getElementById(id).value=t);
+  if(isFirst()){
+    document.getElementById('setupNote').style.display='block';
+    document.getElementById('pinLabel').textContent='新しい4桁のPINを設定してください';
+    document.getElementById('pinHint').textContent='設定したPINでデータが暗号化されます';
+  }
   const p=new URLSearchParams(location.search);if(p.has('share'))handleShareView(p.get('share'));
 });
-async function doUnlock(){
-  const pw=document.getElementById('pwInput').value;
-  if(!pw){lockErr('パスワードを入力してください');return}
+
+async function pinInput(d){
   const fs=getFS();
-  if(fs.n>=MAX_FAIL){const w=Math.ceil((LOCKOUT-(Date.now()-fs.t))/1000);if(w>0){lockErr(`ロックアウト中 — あと${w}秒`);return}else setFS(0,0)}
-  setBtnLoading(true);
-  try{
+  if(!isFirst()&&fs.n>=MAX_FAIL){const w=Math.ceil((LOCKOUT-(Date.now()-fs.t))/1000);if(w>0){document.getElementById('pinErr').textContent=`ロックアウト中 — あと${w}秒`;return}else setFS(0,0)}
+  if(pinBuffer.length>=4)return;
+  pinBuffer+=d;
+  updatePinDots(pinBuffer.length,'pd');
+  if(pinBuffer.length===4){
     if(isFirst()){
-      const conf=document.getElementById('pwConfirm').value;
-      if(pw.length<4){lockErr('4文字以上で設定してください');return}
-      if(pw!==conf){lockErr('パスワードが一致しません');return}
-      localStorage.setItem(HK,await sha256(pw));sessionCryptoKey=await deriveCryptoKey(pw);setFS(0,0);await saveEnc();openApp();
+      if(pinSetupPhase===1){
+        pinSetupFirst=pinBuffer;pinBuffer='';pinSetupPhase=2;
+        document.getElementById('pinLabel').textContent='もう一度入力してください';
+        updatePinDots(0,'pd');
+      }else{
+        if(pinBuffer!==pinSetupFirst){
+          document.getElementById('pinErr').textContent='PINが一致しません';
+          shakePin();pinBuffer='';pinSetupPhase=1;pinSetupFirst='';
+          updatePinDots(0,'pd');
+          document.getElementById('pinLabel').textContent='新しい4桁のPINを設定してください';
+          return;
+        }
+        const h=await sha256(pinBuffer);localStorage.setItem(HK,h);
+        sessionCryptoKey=await deriveCryptoKey(pinBuffer);
+        setFS(0,0);pinBuffer='';await saveEnc();openApp();
+      }
     }else{
-      if(await sha256(pw)!==localStorage.getItem(HK)){const n=fs.n+1;setFS(n,n>=MAX_FAIL?Date.now():fs.t);const r=MAX_FAIL-n;lockErr(r>0?`パスワードが違います（残り${r}回）`:'ロックアウト（5分間）');document.getElementById('pwInput').value='';return}
-      sessionCryptoKey=await deriveCryptoKey(pw);setFS(0,0);await loadEnc();openApp();
+      const h=await sha256(pinBuffer);
+      if(h!==localStorage.getItem(HK)){
+        const n=fs.n+1;setFS(n,n>=MAX_FAIL?Date.now():fs.t);
+        const rem=MAX_FAIL-n;
+        document.getElementById('pinErr').textContent=rem>0?`PINが違います（残り${rem}回）`:'ロックアウト（5分間）';
+        shakePin();pinBuffer='';updatePinDots(0,'pd');return;
+      }
+      sessionCryptoKey=await deriveCryptoKey(pinBuffer);setFS(0,0);pinBuffer='';
+      await loadEnc();openApp();
     }
-  }finally{setBtnLoading(false)}
+  }
 }
+function pinDel(){if(pinBuffer.length>0){pinBuffer=pinBuffer.slice(0,-1);updatePinDots(pinBuffer.length,'pd')}}
+function updatePinDots(n,prefix){for(let i=0;i<4;i++){const el=document.getElementById(prefix+i);if(el){el.classList.toggle('filled',i<n);el.classList.remove('error')}}}
+function shakePin(){for(let i=0;i<4;i++){const el=document.getElementById('pd'+i);if(el){el.classList.add('filled','error')}}setTimeout(()=>{updatePinDots(0,'pd')},400)}
+
 function openApp(){
   document.getElementById('lockScreen').style.display='none';
   document.getElementById('app').classList.add('open');
   loadCfgForm();renderColorPick();renderTplGrid();initTheme();initNotifState();
-  checkRecurring();renderAll();updateClock();setInterval(updateClock,30000);initKbd();
+  checkRecurring();autoMarkWip();renderAll();updateClock();setInterval(updateClock,30000);initKbd();
 }
-function lockApp(){sessionCryptoKey=null;tasks=[];cfg={h:8,d:5,buf:20};categories=[];history=[];document.getElementById('app').classList.remove('open');document.getElementById('lockScreen').style.display='flex';document.getElementById('pwInput').value='';document.getElementById('lockErr').textContent='';document.getElementById('pwInput').focus()}
+function lockApp(){sessionCryptoKey=null;tasks=[];cfg={h:8,d:5,buf:20};categories=[];history=[];projects=[];document.getElementById('app').classList.remove('open');document.getElementById('lockScreen').style.display='flex';pinBuffer='';pinSetupPhase=1;pinSetupFirst='';updatePinDots(0,'pd');document.getElementById('pinErr').textContent=''}
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&sessionCryptoKey)setTimeout(()=>{if(document.hidden)lockApp()},30000)});
-async function saveEnc(){if(!sessionCryptoKey)return;localStorage.setItem(DK,await encryptData({tasks,cfg,categories,history},sessionCryptoKey))}
-async function loadEnc(){const c=localStorage.getItem(DK);if(!c)return;const d=await decryptData(c,sessionCryptoKey);if(d){tasks=d.tasks||[];cfg=d.cfg||{h:8,d:5,buf:20};categories=d.categories||[];history=d.history||[]}}
-function togglePwChange(){const s=document.getElementById('pwSection'),a=document.getElementById('pwArr');s.classList.toggle('open');a.textContent=s.classList.contains('open')?'∧':'›'}
-async function changePw(){
-  const cur=document.getElementById('pwCur').value,nw=document.getElementById('pwNew').value,nwc=document.getElementById('pwNewC').value;
-  if(await sha256(cur)!==localStorage.getItem(HK)){toast('現在のパスワードが違います');return}
-  if(nw.length<4){toast('4文字以上で設定してください');return}
-  if(nw!==nwc){toast('新しいパスワードが一致しません');return}
-  localStorage.setItem(HK,await sha256(nw));sessionCryptoKey=await deriveCryptoKey(nw);await saveEnc();
-  ['pwCur','pwNew','pwNewC'].forEach(id=>document.getElementById(id).value='');togglePwChange();toast('パスワードを変更しました ✓');
+async function saveEnc(){if(!sessionCryptoKey)return;localStorage.setItem(DK,await encryptData({tasks,cfg,categories,history,projects},sessionCryptoKey))}
+async function loadEnc(){const c=localStorage.getItem(DK);if(!c)return;const d=await decryptData(c,sessionCryptoKey);if(d){tasks=d.tasks||[];cfg=d.cfg||{h:8,d:5,buf:20};categories=d.categories||[];history=d.history||[];projects=d.projects||[]}}
+
+// ── PIN CHANGE in settings ──
+let pcBuf1='',pcBuf2='',pcBuf3='',pcStep=1;
+function openPinChange(){
+  pcBuf1='';pcBuf2='';pcBuf3='';pcStep=1;
+  updatePinDots(0,'mp1d');updatePinDots(0,'mp2d');updatePinDots(0,'mp3d');
+  document.getElementById('mpErr1').textContent='';document.getElementById('mpErr3').textContent='';
+  ['pinChangeStep1','pinChangeStep2','pinChangeStep3'].forEach((id,i)=>document.getElementById(id).style.display=i===0?'block':'none');
+  buildMiniPad('mpPad1',1);buildMiniPad('mpPad2',2);buildMiniPad('mpPad3',3);
+  document.getElementById('pinChangeModal').classList.add('open');
+}
+function closePinChange(){document.getElementById('pinChangeModal').classList.remove('open')}
+function buildMiniPad(elId,step){
+  const el=document.getElementById(elId);
+  const keys=['1','2','3','4','5','6','7','8','9','','0','⌫'];
+  el.innerHTML=keys.map(k=>`<div class="mini-pin-key ${k===''?'empty':''}" onclick="miniPinInput(${step},'${k}')">${k}</div>`).join('');
+}
+async function miniPinInput(step,d){
+  if(d==='⌫'){if(step===1)pcBuf1=pcBuf1.slice(0,-1);else if(step===2)pcBuf2=pcBuf2.slice(0,-1);else pcBuf3=pcBuf3.slice(0,-1);updatePinDots(step===1?pcBuf1.length:step===2?pcBuf2.length:pcBuf3.length,`mp${step}d`);return}
+  if(d==='')return;
+  if(step===1&&pcBuf1.length<4){pcBuf1+=d;updatePinDots(pcBuf1.length,'mp1d');if(pcBuf1.length===4){const h=await sha256(pcBuf1);if(h!==localStorage.getItem(HK)){document.getElementById('mpErr1').textContent='現在のPINが違います';setTimeout(()=>{pcBuf1='';updatePinDots(0,'mp1d');document.getElementById('mpErr1').textContent=''},1000);return}document.getElementById('pinChangeStep1').style.display='none';document.getElementById('pinChangeStep2').style.display='block'}}
+  else if(step===2&&pcBuf2.length<4){pcBuf2+=d;updatePinDots(pcBuf2.length,'mp2d');if(pcBuf2.length===4){document.getElementById('pinChangeStep2').style.display='none';document.getElementById('pinChangeStep3').style.display='block'}}
+  else if(step===3&&pcBuf3.length<4){pcBuf3+=d;updatePinDots(pcBuf3.length,'mp3d');if(pcBuf3.length===4){if(pcBuf2!==pcBuf3){document.getElementById('mpErr3').textContent='PINが一致しません';setTimeout(()=>{pcBuf3='';updatePinDots(0,'mp3d');document.getElementById('mpErr3').textContent=''},1000);return}const h=await sha256(pcBuf2);localStorage.setItem(HK,h);sessionCryptoKey=await deriveCryptoKey(pcBuf2);await saveEnc();closePinChange();toast('PINを変更しました ✓')}}
 }
 
-// ══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 //  STATE
-// ══════════════════════════════════════════════
-let tasks=[],cfg={h:8,d:5,buf:20},categories=[],history=[];
-let filt='all',catFilt='',selColor='#38b0ff';
+// ═══════════════════════════════════════════════
+let tasks=[],cfg={h:8,d:5,buf:20},categories=[],history=[],projects=[];
+let filt='all',catFilt='',selColor='#38b0ff',selProjColor='#38b0ff';
 let calYear,calMonth,calSelDate=null,editId=null,actualTaskId=null,dragSrcIdx=null;
-let graphView='weekly'; // 'weekly' | 'monthly'
+let graphView='weekly',editProjId=null;
 const COLORS=['#38b0ff','#00e87a','#ff4060','#ff8c00','#a855f7','#f472b6','#facc15','#22d3ee','#fb923c','#a3e635'];
 const REC_LBL={none:'',daily:'毎日',weekly:'毎週',monthly:'毎月'};
 const DOW=['日','月','火','水','木','金','土'];
@@ -747,9 +883,9 @@ const TEMPLATES=[
   {id:'t4',icon:'📊',name:'月次集計',desc:'毎月の定期作業',imp:'mid',hours:'4',rec:'monthly'},
 ];
 
-// ══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 //  THEME / NAV / KBD
-// ══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 function initTheme(){const lm=localStorage.getItem(TK)==='light';document.documentElement.dataset.theme=lm?'light':'dark';document.getElementById('themeBtn').textContent=lm?'☀️':'🌙';document.getElementById('lightToggle').checked=lm}
 function toggleTheme(){const lm=document.documentElement.dataset.theme==='light';document.documentElement.dataset.theme=lm?'dark':'light';localStorage.setItem(TK,lm?'dark':'light');document.getElementById('themeBtn').textContent=lm?'🌙':'☀️';document.getElementById('lightToggle').checked=!lm}
 function updateClock(){document.getElementById('clockEl').textContent=new Date().toLocaleDateString('ja-JP',{month:'short',day:'numeric',weekday:'short'})}
@@ -759,10 +895,11 @@ function go(name){
   document.getElementById('pg-'+name).classList.add('on');
   const ni=document.getElementById('ni-'+name);if(ni)ni.classList.add('on');
   document.getElementById('scrollEl').scrollTop=0;
-  if(name==='add'){refreshDepSel();refreshCatSel()}
+  if(name==='add'){refreshDepSel();refreshCatSel();refreshProjSel('fProj')}
   if(name==='cal'){const n=new Date();calYear=calYear||n.getFullYear();calMonth=calMonth!==undefined?calMonth:n.getMonth();renderCal()}
   if(name==='settings')renderCatMgr();
   if(name==='diag')renderEstList();
+  if(name==='proj')renderProjects();
 }
 function setF(el){document.querySelectorAll('.fc').forEach(c=>c.classList.remove('on'));el.classList.add('on');filt=el.dataset.f;renderTasks()}
 function setCatFilt(id){catFilt=catFilt===id?'':id;renderCatFilter();renderTasks()}
@@ -780,38 +917,52 @@ function initKbd(){
   });
 }
 
-// ══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 //  NOTIFICATIONS
-// ══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 function initNotifState(){const en=localStorage.getItem(NK)==='1';document.getElementById('notifToggle').checked=en;showNotifInfo(en)}
 function showNotifInfo(en){const el=document.getElementById('notifInfo');if(!en){el.style.display='none';return}el.style.display='block';el.textContent=typeof Notification==='undefined'?'このブラウザは通知に対応していません':Notification.permission==='granted'?'✅ 通知が有効です。':Notification.permission==='denied'?'❌ ブラウザ設定から許可してください。':'⏳ 許可が必要です。'}
 async function toggleNotif(en){if(en){if(typeof Notification==='undefined'){document.getElementById('notifToggle').checked=false;toast('このブラウザは通知に対応していません');return}const p=await Notification.requestPermission();if(p!=='granted'){document.getElementById('notifToggle').checked=false;toast('通知の許可が必要です');return}localStorage.setItem(NK,'1');toast('通知を有効にしました ✓')}else{localStorage.removeItem(NK)}showNotifInfo(en)}
-function checkNotif(){if(localStorage.getItem(NK)!=='1')return;if(typeof Notification==='undefined'||Notification.permission!=='granted')return;const tm=new Date();tm.setDate(tm.getDate()+1);const ts=tm.toISOString().split('T')[0];tasks.filter(t=>!t.done&&t.deadline===ts).forEach(t=>{const key=`ts12_ns_${t.id}_${ts}`;if(localStorage.getItem(key))return;new Notification('TaskSense ⚡',{body:`「${t.name}」の締め切りは明日です`});localStorage.setItem(key,'1')})}
+function checkNotif(){if(localStorage.getItem(NK)!=='1')return;if(typeof Notification==='undefined'||Notification.permission!=='granted')return;const tm=new Date();tm.setDate(tm.getDate()+1);const ts=tm.toISOString().split('T')[0];tasks.filter(t=>!t.done&&t.endDate===ts).forEach(t=>{const key=`ts13_ns_${t.id}_${ts}`;if(localStorage.getItem(key))return;new Notification('TaskSense ⚡',{body:`「${t.name}」の締め切りは明日です`});localStorage.setItem(key,'1')})}
 
-// ══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 //  RISK ENGINE
-// ══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 function daysLeft(dl){const t=new Date();t.setHours(0,0,0,0);const d=new Date(dl);d.setHours(0,0,0,0);return Math.ceil((d-t)/86400000)}
+function getDeadline(task){return task.endDate||task.deadline||''}
 function getRisk(task){
   if(task.done)return'done';
-  const days=daysLeft(task.deadline);const cap=Math.max(days,0)*cfg.h*(1-cfg.buf/100);const need=parseFloat(task.hours)||0;const ratio=need>0?need/Math.max(cap,0.1):0;const dep=tasks.find(t=>t.id===task.depId);const blk=dep&&!dep.done;
+  if(task.wip)return'wip';
+  const dl=getDeadline(task);if(!dl)return'low';
+  const days=daysLeft(dl);const cap=Math.max(days,0)*cfg.h*(1-cfg.buf/100);const need=parseFloat(task.hours)||0;const ratio=need>0?need/Math.max(cap,0.1):0;const dep=tasks.find(t=>t.id===task.depId);const blk=dep&&!dep.done;
   if(task.imp==='high'){if(days<=1||ratio>0.9||blk)return'high';if(days<=3||ratio>0.6)return'mid';return'low'}
   if(task.imp==='mid'){if(days<=1||ratio>1.1||blk)return'high';if(days<=4||ratio>0.75)return'mid';return'low'}
   if(days<=1||blk)return'high';if(days<=7||ratio>1.0)return'mid';return'low';
 }
 function getRiskReasons(task){
-  const days=daysLeft(task.deadline);const cap=Math.max(days,0)*cfg.h*(1-cfg.buf/100);const need=parseFloat(task.hours)||0;const ratio=need>0?need/Math.max(cap,0.1):0;const dep=tasks.find(t=>t.id===task.depId);const rs=[];
-  if(days<0)rs.push({text:`締め切りを${Math.abs(days)}日超過`,bad:true});else if(days===0)rs.push({text:'今日が締め切りです',bad:true});else if(days<=2)rs.push({text:`残り${days}日と非常にタイト`,bad:true});else rs.push({text:`締め切りまで${days}日あります`,bad:false});
+  const dl=getDeadline(task);const days=dl?daysLeft(dl):999;const cap=Math.max(days,0)*cfg.h*(1-cfg.buf/100);const need=parseFloat(task.hours)||0;const ratio=need>0?need/Math.max(cap,0.1):0;const dep=tasks.find(t=>t.id===task.depId);const rs=[];
+  if(task.wip)rs.push({text:'現在進捗中のタスクです',bad:false});
+  if(days<0)rs.push({text:`締め切りを${Math.abs(days)}日超過`,bad:true});else if(days===0)rs.push({text:'今日が締め切りです',bad:true});else if(days<=2)rs.push({text:`残り${days}日と非常にタイト`,bad:true});else if(dl)rs.push({text:`締め切りまで${days}日あります`,bad:false});
   if(need>0){const p=Math.round(ratio*100);if(ratio>1)rs.push({text:`必要${need}hに対しキャパ不足（${p}%超過）`,bad:true});else if(ratio>0.7)rs.push({text:`キャパの${p}%使用（余裕少）`,bad:true});else rs.push({text:`キャパの${p}%で収まります`,bad:false})}
   if(dep&&!dep.done)rs.push({text:`「${dep.name}」が未完了でブロック中`,bad:true});
   return rs;
 }
-const RL={high:'🔴 URGENT',mid:'🟡 WARN',low:'🟢 SAFE',done:'✅ DONE'};
-const RC={high:'rh',mid:'rm',low:'rl',done:'rd'};
+const RL={high:'🔴 URGENT',mid:'🟡 WARN',low:'🟢 SAFE',wip:'▶ 進捗中',done:'✅ DONE'};
+const RC={high:'rh',mid:'rm',low:'rl',wip:'rwip',done:'rd'};
 
-// ══════════════════════════════════════════════
+// ── AUTO WIP: 開始日が今日以前なら自動進捗中 ──
+function autoMarkWip(){
+  const today=new Date().toISOString().split('T')[0];let ch=false;
+  tasks.forEach(t=>{
+    if(t.done||t.wip)return;
+    if(t.startDate&&t.startDate<=today){t.wip=true;ch=true}
+  });
+  if(ch)saveEnc();
+}
+
+// ═══════════════════════════════════════════════
 //  MARKDOWN
-// ══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 function parseMarkdown(text){
   if(!text)return'';let h=esc(text);
   h=h.replace(/- \[x\] (.+)/g,'<li class="checked">$1</li>');h=h.replace(/- \[ \] (.+)/g,'<li class="unchecked">$1</li>');
@@ -821,148 +972,265 @@ function parseMarkdown(text){
   return h.replace(/\n/g,'<br>');
 }
 
-// ══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 //  RECURRING
-// ══════════════════════════════════════════════
-function checkRecurring(){const ts=new Date().toISOString().split('T')[0];let ch=false;tasks.forEach(t=>{if(!t.rec||t.rec==='none'||!t.done)return;const next=calcNext(t.lastGenerated||t.deadline,t.rec);if(next<=ts){tasks.push({...t,id:uid(),done:false,completedAt:null,actualHours:null,deadline:next,lastGenerated:next,createdAt:new Date().toISOString()});t.lastGenerated=next;ch=true}});if(ch)saveEnc()}
+// ═══════════════════════════════════════════════
+function checkRecurring(){
+  const ts=new Date().toISOString().split('T')[0];let ch=false;
+  tasks.forEach(t=>{
+    if(!t.rec||t.rec==='none'||!t.done)return;
+    const base=t.endDate||t.deadline||'';if(!base)return;
+    const next=calcNext(t.lastGenerated||base,t.rec);
+    if(next<=ts){
+      const nt={...t,id:uid(),done:false,wip:false,completedAt:null,actualHours:null,lastGenerated:next,createdAt:new Date().toISOString()};
+      const dur=(t.endDate&&t.startDate)?daysLeft(t.endDate)-daysLeft(t.startDate):0;
+      nt.startDate=next;nt.endDate=calcNext(next,'none');// keep same duration
+      if(t.endDate&&t.startDate){const d=new Date(next);d.setDate(d.getDate()+Math.abs(dur));nt.endDate=d.toISOString().split('T')[0]}
+      nt.deadline=nt.endDate||next;
+      tasks.push(nt);t.lastGenerated=next;ch=true;
+    }
+  });
+  if(ch)saveEnc();
+}
 function calcNext(from,rec){const d=new Date(from);d.setHours(0,0,0,0);if(rec==='daily')d.setDate(d.getDate()+1);if(rec==='weekly')d.setDate(d.getDate()+7);if(rec==='monthly')d.setMonth(d.getMonth()+1);return d.toISOString().split('T')[0]}
 
-// ══════════════════════════════════════════════
-//  ACHIEVEMENT SCORE
-// ══════════════════════════════════════════════
-function calcScore(){
-  // Score = 期限内完了率 × 0.5 + (1-負荷率超過度) × 0.3 + 連続週 × 2(max 20)
-  const allDone=tasks.filter(t=>t.done&&t.completedAt);
-  const onTime=allDone.filter(t=>{const cd=new Date(t.completedAt);cd.setHours(0,0,0,0);const dl=new Date(t.deadline);dl.setHours(0,0,0,0);return cd<=dl});
-  const onTimeRate=allDone.length>0?onTime.length/allDone.length:0;
-  const cap=cfg.h*cfg.d*(1-cfg.buf/100);const tot=tasks.filter(t=>!t.done).reduce((s,t)=>s+(parseFloat(t.hours)||0),0);const loadScore=cap>0?Math.max(0,1-Math.max(0,tot-cap)/Math.max(cap,1)):1;
-  const allDates=new Set([...history.map(h=>h.date),...allDone.map(t=>t.completedAt.split('T')[0])]);
-  let streak=0;const now=new Date();now.setHours(0,0,0,0);
-  for(let i=0;i<52;i++){const ws=new Date(now);ws.setDate(now.getDate()-now.getDay()-i*7);const we=new Date(ws);we.setDate(ws.getDate()+6);const has=[...allDates].some(ds=>{const d=new Date(ds);d.setHours(0,0,0,0);return d>=ws&&d<=we});if(has)streak++;else if(i>0)break}
-  const score=Math.round(onTimeRate*50+loadScore*30+Math.min(streak*2,20));
-  return{score,onTimeRate,streak,onTime:onTime.length,total:allDone.length};
-}
-function renderScore(){
-  const el=document.getElementById('scoreCard');const s=calcScore();
-  const pct=s.score;const r=40;const circ=2*Math.PI*r;const offset=circ-(pct/100)*circ;
-  const color=pct>=70?'var(--grn)':pct>=40?'var(--ora)':'var(--red)';
-  const grade=pct>=90?'S':pct>=75?'A':pct>=60?'B':pct>=40?'C':'D';
-  el.innerHTML=`
-    <div class="score-ring">
-      <svg width="80" height="80" viewBox="0 0 80 80">
-        <circle class="score-ring-bg" cx="40" cy="40" r="${r}"/>
-        <circle class="score-ring-fill" cx="40" cy="40" r="${r}" stroke="${color}"
-          stroke-dasharray="${circ}" stroke-dashoffset="${offset}"/>
-      </svg>
-      <div class="score-center">
-        <div class="score-num" style="color:${color}">${grade}</div>
-        <div class="score-unit">${pct}pt</div>
+// ═══════════════════════════════════════════════
+//  ALLDAY TOGGLE
+// ═══════════════════════════════════════════════
+function setPeriodMode(mode){const isTime=mode==='time';document.getElementById('fAlldayBtn').classList.toggle('on',!isTime);document.getElementById('fTimeBtn').classList.toggle('on',isTime);document.getElementById('fStartTimeRow').style.display=isTime?'flex':'none';document.getElementById('fEndTimeRow').style.display=isTime?'flex':'none'}
+function setPeriodModeEdit(mode){const isTime=mode==='time';document.getElementById('eAlldayBtn').classList.toggle('on',!isTime);document.getElementById('eTimeBtn').classList.toggle('on',isTime);document.getElementById('eStartTimeRow').style.display=isTime?'flex':'none';document.getElementById('eEndTimeRow').style.display=isTime?'flex':'none'}
+function toggleAllday(){const v=document.getElementById('fAllday')?.checked;if(v!==undefined){document.getElementById('fStartTimeRow').style.display=v?'none':'flex';document.getElementById('fEndTimeRow').style.display=v?'none':'flex'}}
+function toggleEditAllday(){const v=document.getElementById('eAllday')?.checked;if(v!==undefined){document.getElementById('eStartTimeRow').style.display=v?'none':'flex';document.getElementById('eEndTimeRow').style.display=v?'none':'flex'}}
+
+// ═══════════════════════════════════════════════
+//  PROJECTS
+// ═══════════════════════════════════════════════
+function renderProjects(){
+  const el=document.getElementById('projList');
+  if(!projects.length){el.innerHTML='<div class="empty" style="padding:20px 0"><div class="ei">📁</div><p>プロジェクトがありません。<br>「新しいプロジェクトを作成」から追加してください。</p></div>';return}
+  el.innerHTML=projects.map(p=>{
+    const ptasks=tasks.filter(t=>t.projId===p.id);
+    const done=ptasks.filter(t=>t.done).length;const total=ptasks.length;
+    const pct=total>0?Math.round(done/total*100):0;
+    const ptEl=document.getElementById(`proj-body-${p.id}`);const open=ptEl&&ptEl.style.display!=='none';
+    return`<div class="proj-card">
+      <div class="proj-header" onclick="toggleProject('${p.id}')">
+        <div class="proj-color" style="background:${p.color}"></div>
+        <div class="proj-name">${esc(p.name)}</div>
+        <div class="proj-meta">${done}/${total}</div>
+        <div class="proj-chevron${open?' open':''}" id="pchev-${p.id}">›</div>
+        <div class="tc-btn" onclick="event.stopPropagation();openEditProject('${p.id}')" style="font-size:13px;color:var(--mut);padding:3px 4px;">✏️</div>
+        <div class="tc-btn del" onclick="event.stopPropagation();delProject('${p.id}')" style="font-size:13px;color:var(--mut);padding:3px 4px;">🗑</div>
       </div>
-    </div>
-    <div class="score-info">
-      <div class="score-title">ACHIEVEMENT SCORE</div>
-      <div class="score-rows">
-        <div class="score-row"><div class="score-label">期限内完了率</div><div class="score-val ${s.onTimeRate>=0.8?'good':s.onTimeRate>=0.5?'warn':'bad'}">${s.total>0?Math.round(s.onTimeRate*100):'-'}%</div></div>
-        <div class="score-row"><div class="score-label">期限内完了数</div><div class="score-val">${s.onTime} / ${s.total}件</div></div>
-        <div class="score-row"><div class="score-label">連続達成週</div><div class="score-val ${s.streak>=4?'good':''}">${s.streak}週</div></div>
+      <div class="proj-progress"><div class="proj-progress-fill" style="width:${pct}%;background:${p.color}"></div></div>
+      <div class="proj-tasks" id="proj-body-${p.id}" style="display:none">
+        ${ptasks.length?ptasks.sort((a,b)=>{if(a.done!==b.done)return a.done?1:-1;return new Date(getDeadline(a)||'9999')-new Date(getDeadline(b)||'9999')}).map(t=>{
+          const r=getRisk(t);const dl=getDeadline(t);const d=dl?daysLeft(dl):null;
+          return`<div class="proj-task-item">
+            <div class="proj-ck ${t.done?'on':t.wip?'wip':''}" onclick="toggle('${t.id}')"></div>
+            <div class="proj-task-info">
+              <div class="proj-task-name ${t.done?'done':''}">${esc(t.name)}</div>
+              <div class="proj-task-meta">
+                ${dl?`<span>📅 ${dl}${d!==null?` (${d<0?'超過':d+'日後'})`:''}</span>`:''}
+                ${t.wip?'<span class="wip-badge">▶ 進捗中</span>':''}
+                ${!t.done&&!t.wip&&r==='high'?'<span style="color:var(--red);font-size:10px">🔴URGENT</span>':''}
+              </div>
+            </div>
+          </div>`;
+        }).join(''):'<div style="font-size:12px;color:var(--mut);padding:8px 0;text-align:center;">このプロジェクトにタスクがありません</div>'}
       </div>
     </div>`;
+  }).join('');
 }
+function toggleProject(id){
+  const body=document.getElementById('proj-body-'+id);const chev=document.getElementById('pchev-'+id);
+  if(!body)return;const open=body.style.display!=='none';
+  body.style.display=open?'none':'block';if(chev)chev.classList.toggle('open',!open);
+}
+function openAddProject(){editProjId=null;document.getElementById('pmName').value='';document.getElementById('pmDesc').value='';selProjColor='#38b0ff';buildProjColorPick();document.getElementById('projModalTitle').textContent='📁 プロジェクトを作成';document.getElementById('projModal').classList.add('open')}
+function openEditProject(id){editProjId=id;const p=projects.find(x=>x.id===id);if(!p)return;document.getElementById('pmName').value=p.name;document.getElementById('pmDesc').value=p.desc||'';selProjColor=p.color;buildProjColorPick();document.getElementById('projModalTitle').textContent='✏️ プロジェクトを編集';document.getElementById('projModal').classList.add('open')}
+function closeProjModal(){document.getElementById('projModal').classList.remove('open');editProjId=null}
+function buildProjColorPick(){const el=document.getElementById('pmColorPick');el.innerHTML=COLORS.map(c=>`<div class="color-opt ${c===selProjColor?'sel':''}" style="background:${c}" onclick="selProjColor='${c}';buildProjColorPick()"></div>`).join('')}
+function saveProject(){const name=document.getElementById('pmName').value.trim();if(!name){toast('プロジェクト名を入力してください');return}if(editProjId){const p=projects.find(x=>x.id===editProjId);if(p){p.name=name;p.desc=document.getElementById('pmDesc').value;p.color=selProjColor}}else{projects.push({id:uid(),name,desc:document.getElementById('pmDesc').value,color:selProjColor})}saveEnc();closeProjModal();renderProjects();refreshProjSel('fProj');refreshProjSel('eProj');toast('プロジェクトを保存しました ✓')}
+function delProject(id){if(!confirm('このプロジェクトを削除しますか？（タスクは削除されません）'))return;projects=projects.filter(x=>x.id!==id);tasks.forEach(t=>{if(t.projId===id)t.projId=''});saveEnc();renderProjects();refreshProjSel('fProj');refreshProjSel('eProj');toast('削除しました')}
+function refreshProjSel(selId){const sel=document.getElementById(selId);if(!sel)return;const cur=sel.value;sel.innerHTML='<option value="">プロジェクトなし</option>';projects.forEach(p=>{const o=document.createElement('option');o.value=p.id;o.textContent=p.name;sel.appendChild(o)});sel.value=cur}
 
-// ══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 //  RENDER ALL
-// ══════════════════════════════════════════════
-function renderAll(){renderStats();renderFocus();renderAlerts();renderScore();renderWeeklyReport();renderGraph();renderGauge();renderCatLoad();renderTL();renderTasks();renderCatFilter();checkNotif()}
+// ═══════════════════════════════════════════════
+function renderAll(){renderStats();renderFocus();renderAlerts();renderScore();renderWeeklyReport();renderGraph();renderGauge();renderTL();renderTasks();renderCatFilter();checkNotif()}
 function renderFocus(){
   const el=document.getElementById('focusCard');const today=new Date().toISOString().split('T')[0];
-  const focus=tasks.filter(t=>!t.done&&(t.deadline===today||getRisk(t)==='high')).sort((a,b)=>{const o={high:0,mid:1,low:2};return o[getRisk(a)]-o[getRisk(b)]||new Date(a.deadline)-new Date(b.deadline)}).slice(0,5);
+  const focus=tasks.filter(t=>!t.done&&(t.wip||(getDeadline(t)===today)||getRisk(t)==='high')).sort((a,b)=>{if(a.wip&&!b.wip)return-1;if(!a.wip&&b.wip)return 1;const o={high:0,mid:1,low:2,wip:-1};return(o[getRisk(a)]||0)-(o[getRisk(b)]||0)||new Date(getDeadline(a)||'9999')-new Date(getDeadline(b)||'9999')}).slice(0,5);
   const fmt=new Date().toLocaleDateString('ja-JP',{month:'long',day:'numeric',weekday:'long'});
-  el.innerHTML=`<div class="focus-head"><div class="focus-title">⚡ TODAY'S FOCUS</div><div class="focus-date">${fmt}</div></div>${focus.length?focus.map(t=>{const r=getRisk(t),d=daysLeft(t.deadline);const cat=categories.find(c=>c.id===t.catId);return`<div class="focus-item"><div class="focus-dot ${r}"></div><div class="focus-name">${cat?`<span style="color:${cat.color}">●</span> `:''}${esc(t.name)}</div><div class="focus-dl">${d===0?'今日':d<0?`${Math.abs(d)}日超過`:`${d}日後`}</div></div>`}).join(''):'<div class="focus-empty">🎉 今日のフォーカスタスクはありません</div>'}`;
+  el.innerHTML=`<div class="focus-head"><div class="focus-title">⚡ TODAY'S FOCUS</div><div class="focus-date">${fmt}</div></div>${focus.length?focus.map(t=>{const r=getRisk(t),dl=getDeadline(t),d=dl?daysLeft(dl):null;const cat=categories.find(c=>c.id===t.catId);return`<div class="focus-item"><div class="focus-dot ${r==='wip'?'wip':r}"></div><div class="focus-name">${cat?`<span style="color:${cat.color}">●</span> `:''}${t.wip?'<span style="font-size:10px">▶</span> ':''}${esc(t.name)}</div><div class="focus-dl">${t.wip?'進捗中':d===null?'':d===0?'今日':d<0?`${Math.abs(d)}日超過`:`${d}日後`}</div></div>`}).join(''):'<div class="focus-empty">🎉 今日のフォーカスタスクはありません</div>'}`;
 }
-function renderAlerts(){const el=document.getElementById('alertBanners');const soon=tasks.filter(t=>!t.done).filter(t=>{const d=daysLeft(t.deadline);return d>=0&&d<=3&&getRisk(t)==='high'});el.innerHTML=soon.map(t=>{const d=daysLeft(t.deadline);return`<div class="alert-banner">⏰ <div><strong>${esc(t.name)}</strong>　${d===0?'今日が締め切りです！':d===1?'明日が締め切りです！':`あと${d}日で締め切りです`}</div></div>`}).join('')}
+function renderAlerts(){const el=document.getElementById('alertBanners');const soon=tasks.filter(t=>!t.done).filter(t=>{const dl=getDeadline(t);if(!dl)return false;const d=daysLeft(dl);return d>=0&&d<=3&&getRisk(t)==='high'});el.innerHTML=soon.map(t=>{const d=daysLeft(getDeadline(t));return`<div class="alert-banner">⏰ <div><strong>${esc(t.name)}</strong>　${d===0?'今日が締め切りです！':d===1?'明日が締め切りです！':`あと${d}日で締め切りです`}</div></div>`}).join('')}
+function renderStats(){
+  const a=tasks.filter(t=>!t.done);const h=a.filter(t=>getRisk(t)==='high').length,m=a.filter(t=>getRisk(t)==='mid').length,l=a.filter(t=>getRisk(t)==='low'||getRisk(t)==='wip').length;const tot=a.reduce((s,t)=>s+(parseFloat(t.hours)||0),0);const cap=cfg.h*cfg.d*(1-cfg.buf/100);const pct=cap>0?Math.round(tot/cap*100):0;
+  document.getElementById('stR').textContent=h;document.getElementById('stO').textContent=m;document.getElementById('stG').textContent=l;document.getElementById('stB').textContent=pct+'%';document.getElementById('ovBanner').style.display=a.length>0&&tot>cap?'flex':'none';
+}
+function calcScore(){
+  const allDone=tasks.filter(t=>t.done&&t.completedAt);const onTime=allDone.filter(t=>{const dl=getDeadline(t);if(!dl)return true;const cd=new Date(t.completedAt);cd.setHours(0,0,0,0);return cd<=new Date(dl)});const onTimeRate=allDone.length>0?onTime.length/allDone.length:0;const cap=cfg.h*cfg.d*(1-cfg.buf/100);const tot=tasks.filter(t=>!t.done).reduce((s,t)=>s+(parseFloat(t.hours)||0),0);const loadScore=cap>0?Math.max(0,1-Math.max(0,tot-cap)/Math.max(cap,1)):1;const allDates=new Set([...history.map(h=>h.date),...allDone.map(t=>t.completedAt.split('T')[0])]);let streak=0;const now=new Date();now.setHours(0,0,0,0);for(let i=0;i<52;i++){const ws=new Date(now);ws.setDate(now.getDate()-now.getDay()-i*7);const we=new Date(ws);we.setDate(ws.getDate()+6);const has=[...allDates].some(ds=>{const d=new Date(ds);d.setHours(0,0,0,0);return d>=ws&&d<=we});if(has)streak++;else if(i>0)break}
+  return{score:Math.round(onTimeRate*50+loadScore*30+Math.min(streak*2,20)),onTimeRate,streak,onTime:onTime.length,total:allDone.length};
+}
+function renderScore(){
+  const el=document.getElementById('scoreCard');const s=calcScore();const r=40;const circ=2*Math.PI*r;const color=s.score>=70?'var(--grn)':s.score>=40?'var(--ora)':'var(--red)';const grade=s.score>=90?'S':s.score>=75?'A':s.score>=60?'B':s.score>=40?'C':'D';
+  el.innerHTML=`<div class="score-ring"><svg width="80" height="80" viewBox="0 0 80 80"><circle class="score-ring-bg" cx="40" cy="40" r="${r}"/><circle class="score-ring-fill" cx="40" cy="40" r="${r}" stroke="${color}" stroke-dasharray="${circ}" stroke-dashoffset="${circ-(s.score/100)*circ}"/></svg><div class="score-center"><div class="score-num" style="color:${color}">${grade}</div><div class="score-unit">${s.score}pt</div></div></div><div class="score-info"><div class="score-title">ACHIEVEMENT SCORE</div><div class="score-rows"><div class="score-row"><div class="score-label">期限内完了率</div><div class="score-val ${s.onTimeRate>=0.8?'good':s.onTimeRate>=0.5?'warn':'bad'}">${s.total>0?Math.round(s.onTimeRate*100):'-'}%</div></div><div class="score-row"><div class="score-label">完了数</div><div class="score-val">${s.onTime}/${s.total}件</div></div><div class="score-row"><div class="score-label">連続達成週</div><div class="score-val ${s.streak>=4?'good':''}">${s.streak}週</div></div></div></div>`;
+}
 function renderWeeklyReport(){
-  const el=document.getElementById('weeklyReport');
-  const now=new Date();now.setHours(0,0,0,0);const ws=new Date(now);ws.setDate(now.getDate()-now.getDay());const we=new Date(ws);we.setDate(ws.getDate()+6);
-  const inW=t=>{if(!t.done||!t.completedAt)return false;const d=new Date(t.completedAt);d.setHours(0,0,0,0);return d>=ws&&d<=we};
-  const thisW=tasks.filter(inW).length;
-  const lws=new Date(ws);lws.setDate(ws.getDate()-7);const lwe=new Date(we);lwe.setDate(we.getDate()-7);
-  const lastW=tasks.filter(t=>{if(!t.done||!t.completedAt)return false;const d=new Date(t.completedAt);d.setHours(0,0,0,0);return d>=lws&&d<=lwe}).length;
-  const active=tasks.filter(t=>!t.done);const urgent=active.filter(t=>getRisk(t)==='high').length;const overdue=active.filter(t=>daysLeft(t.deadline)<0).length;const tot=active.reduce((s,t)=>s+(parseFloat(t.hours)||0),0);const cap=cfg.h*cfg.d*(1-cfg.buf/100);const load=cap>0?Math.round(tot/cap*100):0;const diff=thisW-lastW;const wl=`${ws.toLocaleDateString('ja-JP',{month:'numeric',day:'numeric'})} 〜 ${we.toLocaleDateString('ja-JP',{month:'numeric',day:'numeric'})}`;
-  el.innerHTML=`<div class="report-card"><div class="report-title">📅 WEEKLY REPORT（${wl}）</div><div class="report-row"><div class="report-label">今週の完了タスク</div><div class="report-val ${thisW>0?'good':''}">${thisW}件${diff!==0?` （先週比${diff>0?'+':''}${diff}）`:''}</div></div><div class="report-row"><div class="report-label">現在の緊急タスク</div><div class="report-val ${urgent>0?'bad':''}">${urgent}件</div></div><div class="report-row"><div class="report-label">期限超過タスク</div><div class="report-val ${overdue>0?'bad':''}">${overdue}件</div></div><div class="report-row"><div class="report-label">今週の作業負荷</div><div class="report-val ${load>=100?'bad':load>=70?'warn':'good'}">${load}%</div></div><div class="report-row"><div class="report-label">残りタスク数</div><div class="report-val">${active.length}件</div></div></div>`;
+  const el=document.getElementById('weeklyReport');const now=new Date();now.setHours(0,0,0,0);const ws=new Date(now);ws.setDate(now.getDate()-now.getDay());const we=new Date(ws);we.setDate(ws.getDate()+6);const inW=t=>{if(!t.done||!t.completedAt)return false;const d=new Date(t.completedAt);d.setHours(0,0,0,0);return d>=ws&&d<=we};const thisW=tasks.filter(inW).length;const lws=new Date(ws);lws.setDate(ws.getDate()-7);const lwe=new Date(we);lwe.setDate(we.getDate()-7);const lastW=tasks.filter(t=>{if(!t.done||!t.completedAt)return false;const d=new Date(t.completedAt);d.setHours(0,0,0,0);return d>=lws&&d<=lwe}).length;const active=tasks.filter(t=>!t.done);const urgent=active.filter(t=>getRisk(t)==='high').length;const wip=active.filter(t=>t.wip).length;const overdue=active.filter(t=>{const dl=getDeadline(t);return dl&&daysLeft(dl)<0}).length;const tot=active.reduce((s,t)=>s+(parseFloat(t.hours)||0),0);const cap=cfg.h*cfg.d*(1-cfg.buf/100);const load=cap>0?Math.round(tot/cap*100):0;const diff=thisW-lastW;const wl=`${ws.toLocaleDateString('ja-JP',{month:'numeric',day:'numeric'})} 〜 ${we.toLocaleDateString('ja-JP',{month:'numeric',day:'numeric'})}`;
+  el.innerHTML=`<div class="report-card"><div class="report-title">📅 WEEKLY REPORT（${wl}）</div><div class="report-row"><div class="report-label">今週の完了タスク</div><div class="report-val ${thisW>0?'good':''}">${thisW}件${diff!==0?` （先週比${diff>0?'+':''}${diff}）`:''}</div></div><div class="report-row"><div class="report-label">現在の緊急タスク</div><div class="report-val ${urgent>0?'bad':''}">${urgent}件</div></div><div class="report-row"><div class="report-label">進捗中タスク</div><div class="report-val ${wip>0?'warn':''}">${wip}件</div></div><div class="report-row"><div class="report-label">期限超過タスク</div><div class="report-val ${overdue>0?'bad':''}">${overdue}件</div></div><div class="report-row"><div class="report-label">今週の作業負荷</div><div class="report-val ${load>=100?'bad':load>=70?'warn':'good'}">${load}%</div></div></div>`;
 }
-function renderStats(){const a=tasks.filter(t=>!t.done);const h=a.filter(t=>getRisk(t)==='high').length,m=a.filter(t=>getRisk(t)==='mid').length,l=a.filter(t=>getRisk(t)==='low').length;const tot=a.reduce((s,t)=>s+(parseFloat(t.hours)||0),0);const cap=cfg.h*cfg.d*(1-cfg.buf/100);const pct=cap>0?Math.round(tot/cap*100):0;document.getElementById('stR').textContent=h;document.getElementById('stO').textContent=m;document.getElementById('stG').textContent=l;document.getElementById('stB').textContent=pct+'%';document.getElementById('ovBanner').style.display=a.length>0&&tot>cap?'flex':'none'}
-// graph with weekly/monthly toggle
 function switchGraph(el){document.querySelectorAll('.graph-tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');graphView=el.dataset.gv;renderGraph()}
 function renderGraph(){
   const el=document.getElementById('graphEl');
   if(graphView==='weekly'){
     const weeks=[];for(let i=7;i>=0;i--){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-i*7);const ws=new Date(d);ws.setDate(d.getDate()-d.getDay());const we=new Date(ws);we.setDate(ws.getDate()+6);weeks.push({start:ws,end:we,count:0,lbl:i===0?'今週':i===1?'先週':`-${i}w`})}
-    const allD=[...history.map(h=>h.date),...tasks.filter(t=>t.done&&t.completedAt).map(t=>t.completedAt.split('T')[0])];
-    allD.forEach(ds=>{const d=new Date(ds);d.setHours(0,0,0,0);const w=weeks.find(w=>d>=w.start&&d<=w.end);if(w)w.count++});
-    const max=Math.max(...weeks.map(w=>w.count),1),total=allD.length,thisW=weeks[weeks.length-1].count;
-    let streak=0;const dset=new Set(allD);const now=new Date();now.setHours(0,0,0,0);
-    for(let i=0;i<52;i++){const ws2=new Date(now);ws2.setDate(now.getDate()-now.getDay()-i*7);const we2=new Date(ws2);we2.setDate(ws2.getDate()+6);const has=[...dset].some(ds=>{const d=new Date(ds);d.setHours(0,0,0,0);return d>=ws2&&d<=we2});if(has)streak++;else if(i>0)break}
-    const bars=weeks.map((w,i)=>{const p=Math.round(w.count/max*100);return`<div class="graph-bar-wrap"><div class="graph-val">${w.count>0?w.count:''}</div><div class="graph-bar-inner"><div class="graph-bar ${w.count===0?'empty':''}${i===weeks.length-1?' cur':''}" style="height:${p}%"></div></div><div class="graph-lbl">${w.lbl}</div></div>`}).join('');
-    el.innerHTML=`<div class="graph-bars">${bars}</div><div class="graph-summary"><div class="gs-item"><div class="gs-val">${total}</div><div class="gs-lbl">総完了数</div></div><div class="gs-item"><div class="gs-val">${thisW}</div><div class="gs-lbl">今週完了</div></div><div class="gs-item"><div class="gs-val" style="color:var(--ora)">${streak}</div><div class="gs-lbl">連続達成週</div></div></div>`;
+    const allD=[...history.map(h=>h.date),...tasks.filter(t=>t.done&&t.completedAt).map(t=>t.completedAt.split('T')[0])];allD.forEach(ds=>{const d=new Date(ds);d.setHours(0,0,0,0);const w=weeks.find(w=>d>=w.start&&d<=w.end);if(w)w.count++});
+    const max=Math.max(...weeks.map(w=>w.count),1),total=allD.length,thisW=weeks[weeks.length-1].count;let streak=0;const dset=new Set(allD);const now=new Date();now.setHours(0,0,0,0);for(let i=0;i<52;i++){const ws2=new Date(now);ws2.setDate(now.getDate()-now.getDay()-i*7);const we2=new Date(ws2);we2.setDate(ws2.getDate()+6);if([...dset].some(ds=>{const d=new Date(ds);d.setHours(0,0,0,0);return d>=ws2&&d<=we2}))streak++;else if(i>0)break}
+    el.innerHTML=`<div class="graph-bars">${weeks.map((w,i)=>{const p=Math.round(w.count/max*100);return`<div class="graph-bar-wrap"><div class="graph-val">${w.count>0?w.count:''}</div><div class="graph-bar-inner"><div class="graph-bar ${w.count===0?'empty':''}${i===weeks.length-1?' cur':''}" style="height:${p}%"></div></div><div class="graph-lbl">${w.lbl}</div></div>`}).join('')}</div><div class="graph-summary"><div class="gs-item"><div class="gs-val">${total}</div><div class="gs-lbl">総完了数</div></div><div class="gs-item"><div class="gs-val">${thisW}</div><div class="gs-lbl">今週完了</div></div><div class="gs-item"><div class="gs-val" style="color:var(--ora)">${streak}</div><div class="gs-lbl">連続達成週</div></div></div>`;
   }else{
-    // monthly - last 12 months
-    const months=[];for(let i=11;i>=0;i--){const d=new Date();const yr=d.getFullYear(),mo=d.getMonth()-i;const dt=new Date(yr,mo,1);months.push({yr:dt.getFullYear(),mo:dt.getMonth(),count:0,lbl:`${dt.getMonth()+1}月`})}
-    const allD=[...history.map(h=>h.date),...tasks.filter(t=>t.done&&t.completedAt).map(t=>t.completedAt.split('T')[0])];
-    allD.forEach(ds=>{const d=new Date(ds);const m=months.find(m=>m.yr===d.getFullYear()&&m.mo===d.getMonth());if(m)m.count++});
-    const max=Math.max(...months.map(m=>m.count),1);
-    const bars=months.map((m,i)=>{const p=Math.round(m.count/max*100);return`<div class="graph-bar-wrap"><div class="graph-val">${m.count>0?m.count:''}</div><div class="graph-bar-inner"><div class="graph-bar ${m.count===0?'empty':''}${i===months.length-1?' cur':''}" style="height:${p}%"></div></div><div class="graph-lbl">${m.lbl}</div></div>`}).join('');
-    const totalM=months.reduce((s,m)=>s+m.count,0);const avg=Math.round(totalM/12*10)/10;
-    el.innerHTML=`<div class="graph-bars">${bars}</div><div class="graph-summary"><div class="gs-item"><div class="gs-val">${totalM}</div><div class="gs-lbl">12ヶ月合計</div></div><div class="gs-item"><div class="gs-val">${avg}</div><div class="gs-lbl">月平均</div></div></div>`;
+    const months=[];for(let i=11;i>=0;i--){const d=new Date();const dt=new Date(d.getFullYear(),d.getMonth()-i,1);months.push({yr:dt.getFullYear(),mo:dt.getMonth(),count:0,lbl:`${dt.getMonth()+1}月`})}
+    const allD=[...history.map(h=>h.date),...tasks.filter(t=>t.done&&t.completedAt).map(t=>t.completedAt.split('T')[0])];allD.forEach(ds=>{const d=new Date(ds);const m=months.find(m=>m.yr===d.getFullYear()&&m.mo===d.getMonth());if(m)m.count++});
+    const max=Math.max(...months.map(m=>m.count),1),totalM=months.reduce((s,m)=>s+m.count,0),avg=Math.round(totalM/12*10)/10;
+    el.innerHTML=`<div class="graph-bars">${months.map((m,i)=>{const p=Math.round(m.count/max*100);return`<div class="graph-bar-wrap"><div class="graph-val">${m.count>0?m.count:''}</div><div class="graph-bar-inner"><div class="graph-bar ${m.count===0?'empty':''}${i===months.length-1?' cur':''}" style="height:${p}%"></div></div><div class="graph-lbl">${m.lbl}</div></div>`}).join('')}</div><div class="graph-summary"><div class="gs-item"><div class="gs-val">${totalM}</div><div class="gs-lbl">12ヶ月合計</div></div><div class="gs-item"><div class="gs-val">${avg}</div><div class="gs-lbl">月平均</div></div></div>`;
   }
 }
 function renderGauge(){
-  const el=document.getElementById('gaugeEl');const a=tasks.filter(t=>!t.done);
-  if(!a.length){el.innerHTML='<div style="color:var(--mut);font-size:12px;text-align:center;padding:16px 0;">NO TASKS</div>';return}
+  const el=document.getElementById('gaugeEl');const a=tasks.filter(t=>!t.done);if(!a.length){el.innerHTML='<div style="color:var(--mut);font-size:12px;text-align:center;padding:16px 0;">NO TASKS</div>';return}
   const tot=a.reduce((s,t)=>s+(parseFloat(t.hours)||0),0);const cap=cfg.h*cfg.d*(1-cfg.buf/100);const pct=Math.min(Math.round(tot/Math.max(cap,0.1)*100),150);const cls=pct>=100?'r':pct>=70?'o':'g';const clr=pct>=100?'var(--red)':pct>=70?'var(--ora)':'var(--grn)';const hh=k=>a.filter(t=>t.imp===k).reduce((s,t)=>s+(parseFloat(t.hours)||0),0);const row=(lbl,h,c)=>{const p=cap>0?Math.min(h/cap*100,100):0;return`<div class="g-row"><div class="g-h"><div class="g-lbl">${lbl}</div><div class="g-val">${h}h</div></div><div class="g-bar"><div class="g-fill ${c}" style="width:${p}%"></div></div></div>`};
   el.innerHTML=`<div class="g-row"><div class="g-h"><div class="g-lbl">TOTAL LOAD</div><div class="g-val" style="color:${clr}">${pct}%</div></div><div class="g-bar"><div class="g-fill ${cls}" style="width:${Math.min(pct,100)}%"></div></div><div class="g-sub">必要 ${tot}h ／ キャパ ${cap.toFixed(1)}h（バッファ${cfg.buf}%含む）</div></div>${row('HIGH PRIORITY',hh('high'),'r')}${row('MID PRIORITY',hh('mid'),'o')}${row('LOW PRIORITY',hh('low'),'g')}`;
 }
-function renderCatLoad(){
-  const el=document.getElementById('catLoadEl');const a=tasks.filter(t=>!t.done);
-  if(!categories.length||!a.length){el.innerHTML='<div style="color:var(--mut);font-size:12px;text-align:center;padding:16px 0;">カテゴリが未設定です</div>';return}
-  const cap=cfg.h*cfg.d*(1-cfg.buf/100);const rows=categories.map(c=>{const h=a.filter(t=>t.catId===c.id).reduce((s,t)=>s+(parseFloat(t.hours)||0),0);const p=cap>0?Math.min(h/cap*100,100):0;return`<div class="cl-row"><div class="cl-dot" style="background:${c.color}"></div><div class="cl-name">${esc(c.name)}</div><div class="cl-bar-wrap"><div class="cl-bar" style="width:${p}%;background:${c.color}"></div></div><div class="cl-val">${h}h</div></div>`});const nch=a.filter(t=>!t.catId).reduce((s,t)=>s+(parseFloat(t.hours)||0),0);if(nch>0){const p=cap>0?Math.min(nch/cap*100,100):0;rows.push(`<div class="cl-row"><div class="cl-dot" style="background:var(--mut)"></div><div class="cl-name">未分類</div><div class="cl-bar-wrap"><div class="cl-bar" style="width:${p}%;background:var(--mut)"></div></div><div class="cl-val">${nch}h</div></div>`)}el.innerHTML=rows.join('')}
 function renderTL(){
-  const el=document.getElementById('tlEl');const a=tasks.filter(t=>!t.done).sort((a,b)=>new Date(a.deadline)-new Date(b.deadline));
-  if(!a.length){el.innerHTML='<div style="color:var(--mut);font-size:12px;text-align:center;padding:16px 0;">NO TASKS</div>';return}
-  el.innerHTML=a.slice(0,8).map((t,i)=>{const r=getRisk(t),d=daysLeft(t.deadline);const dtxt=d<0?`${Math.abs(d)}日超過`:d===0?'TODAY!':`あと${d}日`;const dc=d<=1?'u':d<=4?'w':'s';const cat=categories.find(c=>c.id===t.catId);return`<div class="tl-item"><div class="tl-g"><div class="tl-dot ${r}"></div>${i<a.length-1?'<div class="tl-ln"></div>':''}</div><div class="tl-i"><div class="tl-n">${cat?`<span style="color:${cat.color}">●</span> `:''}${esc(t.name)}</div><div class="tl-m">${t.deadline} <span class="tl-d ${dc}">· ${dtxt}</span>${t.rec&&t.rec!=='none'?` · <span style="color:var(--pur)">${REC_LBL[t.rec]}</span>`:''}</div></div></div>`}).join('')}
+  const el=document.getElementById('tlEl');const a=tasks.filter(t=>!t.done).sort((a,b)=>new Date(getDeadline(a)||'9999')-new Date(getDeadline(b)||'9999'));if(!a.length){el.innerHTML='<div style="color:var(--mut);font-size:12px;text-align:center;padding:16px 0;">NO TASKS</div>';return}
+  el.innerHTML=a.slice(0,8).map((t,i)=>{const r=getRisk(t),dl=getDeadline(t),d=dl?daysLeft(dl):null;const dtxt=d===null?'':d<0?`${Math.abs(d)}日超過`:d===0?'TODAY!':`あと${d}日`;const dc=d===null?'s':d<=1?'u':d<=4?'w':'s';const cat=categories.find(c=>c.id===t.catId);return`<div class="tl-item"><div class="tl-g"><div class="tl-dot ${r==='wip'?'wip':r}"></div>${i<a.length-1?'<div class="tl-ln"></div>':''}</div><div class="tl-i"><div class="tl-n">${cat?`<span style="color:${cat.color}">●</span> `:''}${t.wip?'▶ ':''}${esc(t.name)}</div><div class="tl-m">${dl||''} ${dtxt?`<span class="tl-d ${dc}">· ${dtxt}</span>`:''}</div></div></div>`}).join('')}
+
 // ── CALENDAR ──
-function renderCal(){const el=document.getElementById('calWrap');const y=calYear,m=calMonth;const lastDay=new Date(y,m+1,0).getDate();const startDow=new Date(y,m,1).getDay();const today=new Date().toISOString().split('T')[0];const taskMap={};tasks.filter(t=>!t.done).forEach(t=>{if(!taskMap[t.deadline])taskMap[t.deadline]=[];taskMap[t.deadline].push(t)});const dows=DOW.map(d=>`<div class="cal-dow">${d}</div>`).join('');let cells='';for(let i=0;i<startDow;i++){const pd=new Date(y,m,-(startDow-i-1));cells+=`<div class="cal-day other-month" onclick="selectCalDate('${pd.toISOString().split('T')[0]}')"><div class="cal-dn">${pd.getDate()}</div></div>`}for(let d=1;d<=lastDay;d++){const ds=new Date(y,m,d).toISOString().split('T')[0];const isT=ds===today,isSel=ds===calSelDate;const dt=taskMap[ds]||[];const dots=dt.slice(0,4).map(t=>`<div class="cal-dot ${getRisk(t)}"></div>`).join('');cells+=`<div class="cal-day${isT?' today':''}${isSel?' selected':''}" onclick="selectCalDate('${ds}')" style="${isSel?'border:1px solid var(--acc);':''}" ><div class="cal-dn">${d}</div><div class="cal-dots">${dots}</div></div>`}const rem=(7-((startDow+lastDay)%7))%7;for(let d=1;d<=rem;d++){const nd=new Date(y,m+1,d);cells+=`<div class="cal-day other-month" onclick="selectCalDate('${nd.toISOString().split('T')[0]}')"><div class="cal-dn">${d}</div></div>`}el.innerHTML=`<div class="cal-nav"><div class="cal-btn" onclick="calMove(-1)">‹</div><div class="cal-month">${y}年${m+1}月</div><div class="cal-btn" onclick="calMove(1)">›</div></div><div class="cal-grid">${dows}${cells}</div>`;renderCalDetail()}
+function getTaskColor(t){if(t.wip)return'var(--yel)';const r=getRisk(t);if(r==='high')return'var(--red)';if(r==='mid')return'var(--ora)';return'var(--grn)'}
+function renderCal(){
+  const el=document.getElementById('calWrap');
+  const y=calYear,m=calMonth,lastDay=new Date(y,m+1,0).getDate(),startDow=new Date(y,m,1).getDay(),today=new Date().toISOString().split('T')[0];
+  const allDays=[];
+  for(let i=0;i<startDow;i++){const pd=new Date(y,m,-(startDow-i-1));allDays.push({ds:pd.toISOString().split('T')[0],d:pd.getDate(),cur:false})}
+  for(let d=1;d<=lastDay;d++)allDays.push({ds:new Date(y,m,d).toISOString().split('T')[0],d,cur:true});
+  const rem=(7-((startDow+lastDay)%7))%7;
+  for(let d=1;d<=rem;d++){const nd=new Date(y,m+1,d);allDays.push({ds:nd.toISOString().split('T')[0],d,cur:false})}
+  const active=tasks.filter(t=>!t.done);
+  const sorted=[...active].sort((a,b)=>{
+    const as=a.startDate||getDeadline(a)||'9999',ae=a.endDate||a.startDate||getDeadline(a)||'9999';
+    const bs=b.startDate||getDeadline(b)||'9999',be=b.endDate||b.startDate||getDeadline(b)||'9999';
+    const da=Math.max(1,(new Date(ae)-new Date(as))/(86400000));
+    const db=Math.max(1,(new Date(be)-new Date(bs))/(86400000));
+    return db-da;
+  });
+  const MAX_LANES=3;const dayBars={};
+  const weeks=[];for(let w=0;w<allDays.length;w+=7)weeks.push(allDays.slice(w,w+7));
+  weeks.forEach(week=>{
+    const laneEnd=new Array(MAX_LANES).fill('');
+    sorted.forEach(t=>{
+      const sd=t.startDate||getDeadline(t)||'',ed=t.endDate||t.startDate||getDeadline(t)||'';
+      if(!sd)return;
+      const wS=week[0].ds,wE=week[week.length-1].ds;
+      if(ed<wS||sd>wE)return;
+      const vS=sd<wS?wS:sd,vE=ed>wE?wE:ed;
+      let lane=-1;for(let l=0;l<MAX_LANES;l++){if(laneEnd[l]<vS){lane=l;break}}
+      if(lane===-1)return;
+      laneEnd[lane]=vE;
+      week.forEach(({ds})=>{
+        if(ds<vS||ds>vE)return;
+        const pos=ds===vS&&ds===vE?'single':ds===vS?'start':ds===vE?'end':'mid';
+        if(!dayBars[ds])dayBars[ds]=[];
+        dayBars[ds].push({id:t.id,pos,color:getTaskColor(t),name:t.name,lane,wip:t.wip});
+      });
+    });
+  });
+  const dows='日月火水木金土'.split('').map(d=>`<div class="cal-dow">${d}</div>`).join('');
+  let html=`<div class="cal-nav"><div class="cal-btn" onclick="calMove(-1)">‹</div><div class="cal-month">${y}年${m+1}月</div><div class="cal-btn" onclick="calMove(1)">›</div></div><div class="cal-dow-row">${dows}</div>`;
+  weeks.forEach(week=>{
+    html+=`<div class="cal-week-row">`;
+    week.forEach(({ds,d,cur})=>{
+      const isT=ds===today,isSel=ds===calSelDate;
+      const bars=dayBars[ds]||[];
+      const slots=Array(MAX_LANES).fill(null);
+      bars.forEach(b=>{if(b.lane<MAX_LANES)slots[b.lane]=b});
+      const barsHtml=slots.map(b=>{
+        if(!b)return`<div style="height:7px;margin-bottom:2px"></div>`;
+        const br=b.pos==='single'?'4px':b.pos==='start'?'4px 1px 1px 4px':b.pos==='end'?'1px 4px 4px 1px':'1px';
+        return`<div style="height:7px;margin-bottom:2px;background:${b.color};opacity:${b.wip?0.75:0.88};border-radius:${br}" title="${esc(b.name)}"></div>`;
+      }).join('');
+      html+=`<div class="cal-day${!cur?' other-month':''}${isT?' today':''}" onclick="selectCalDate('${ds}')" style="${isSel?'border:1px solid var(--acc);':''}"><div class="cal-dn">${d}</div><div class="cal-bars">${barsHtml}</div></div>`;
+    });
+    html+=`</div>`;
+  });
+  html+=`<div class="cal-legend"><div class="cal-legend-item"><div class="cal-legend-bar" style="background:var(--red)"></div>URGENT</div><div class="cal-legend-item"><div class="cal-legend-bar" style="background:var(--ora)"></div>WARN</div><div class="cal-legend-item"><div class="cal-legend-bar" style="background:var(--grn)"></div>SAFE</div><div class="cal-legend-item"><div class="cal-legend-bar" style="background:var(--yel)"></div>進捗中</div></div>`;
+  el.innerHTML=html;renderCalDetail();
+}
 function calMove(dir){calMonth+=dir;if(calMonth<0){calMonth=11;calYear--}if(calMonth>11){calMonth=0;calYear++}renderCal()}
 function selectCalDate(ds){calSelDate=calSelDate===ds?null:ds;renderCal()}
-function renderCalDetail(){const el=document.getElementById('calDetail');if(!calSelDate){el.innerHTML='';return}const all=[...tasks.filter(t=>t.deadline===calSelDate&&!t.done),...tasks.filter(t=>t.deadline===calSelDate&&t.done)];if(!all.length){el.innerHTML=`<div class="cal-detail"><div class="cal-detail-title">${calSelDate}</div><div style="font-size:12px;color:var(--mut);text-align:center;padding:8px 0;">この日のタスクはありません</div></div>`;return}el.innerHTML=`<div class="cal-detail"><div class="cal-detail-title">📅 ${calSelDate}</div>${all.map(t=>{const r=t.done?'done':getRisk(t);const icon={high:'🔴',mid:'🟡',low:'🟢',done:'✅'}[r];const cat=categories.find(c=>c.id===t.catId);return`<div class="cal-detail-item">${icon} <div style="flex:1;min-width:0"><div style="font-weight:500">${cat?`<span style="color:${cat.color}">●</span> `:''}${esc(t.name)}</div><div style="font-size:10px;color:var(--mut2);font-family:'DM Mono',monospace">${t.hours?t.hours+'h':''}${t.rec&&t.rec!=='none'?' · '+REC_LBL[t.rec]:''}</div></div></div>`}).join('')}</div>`}
-// ── TASK LIST with SWIPE & PIN ──
+function renderCalDetail(){
+  const el=document.getElementById('calDetail');if(!calSelDate){el.innerHTML='';return}
+  const all=tasks.filter(t=>{
+    const s=t.startDate||getDeadline(t)||'';const e=t.endDate||t.startDate||getDeadline(t)||'';
+    return s&&calSelDate>=s&&calSelDate<=e;
+  });
+  if(!all.length){el.innerHTML=`<div class="cal-detail"><div class="cal-detail-title">${calSelDate}</div><div style="font-size:12px;color:var(--mut);text-align:center;padding:8px 0;">この日のタスクはありません</div></div>`;return}
+  el.innerHTML=`<div class="cal-detail"><div class="cal-detail-title">📅 ${calSelDate}</div>${all.map(t=>{
+    const r=t.done?'done':t.wip?'wip':getRisk(t);
+    const icon={high:'🔴',mid:'🟡',low:'🟢',wip:'▶',done:'✅'}[r]||'🟢';
+    const cat=categories.find(c=>c.id===t.catId);const proj=projects.find(p=>p.id===t.projId);
+    const sd=t.startDate||getDeadline(t)||'',ed=t.endDate||t.startDate||getDeadline(t)||'';
+    const period=sd===ed?sd:`${sd} → ${ed}`;
+    const timeStr=t.allday===false&&t.startTime?` ${t.startTime}〜${t.endTime||''}`:' 終日';
+    return`<div class="cal-detail-item">${icon}<div style="flex:1;min-width:0">
+      <div style="font-weight:500;margin-bottom:3px">${cat?`<span style="color:${cat.color}">●</span> `:''}${esc(t.name)}</div>
+      <div style="font-size:10px;color:var(--mut2);font-family:'DM Mono',monospace;line-height:1.7">
+        📅 ${period}${timeStr}${t.hours?`　⏱ ${t.hours}h`:''}${proj?`　📁 ${esc(proj.name)}`:''}
+      </div>
+    </div></div>`;
+  }).join('')}</div>`;
+}
+
+
+// ── TASK LIST ──
 function renderCatFilter(){const el=document.getElementById('catFilterRow');if(!categories.length){el.innerHTML='';return}el.innerHTML=categories.map(c=>{const on=catFilt===c.id;return`<div class="cat-chip" style="${on?`background:color-mix(in srgb,${c.color} 20%,var(--sur));border-color:${c.color};color:${c.color}`:''}" onclick="setCatFilt('${c.id}')"><div class="cat-dot" style="background:${c.color}"></div>${esc(c.name)}</div>`}).join('')}
 function renderEstList(){const el=document.getElementById('estList');const tracked=tasks.filter(t=>t.done&&t.hours&&t.actualHours).slice(-6).reverse();if(!tracked.length){el.innerHTML='<div style="color:var(--mut);font-size:12px;text-align:center;padding:16px 0;">完了タスクの実作業時間を記録すると表示されます</div>';return}const maxH=Math.max(...tracked.map(t=>Math.max(parseFloat(t.hours),parseFloat(t.actualHours))));el.innerHTML=tracked.map(t=>{const est=parseFloat(t.hours),act=parseFloat(t.actualHours);const ep=Math.min(est/maxH*100,100),ap=Math.min(act/maxH*100,100);const over=act>est;const diff=over?`+${(act-est).toFixed(1)}h 超過`:`-${(est-act).toFixed(1)}h 短縮`;return`<div class="est-item"><div class="est-name">${esc(t.name)}</div><div class="est-bar-row"><div class="est-bar-lbl">見積</div><div class="est-bar-track"><div class="est-bar-fill estimated" style="width:${ep}%"></div></div><div style="font-size:10px;color:var(--mut2);margin-left:4px;width:32px">${est}h</div></div><div class="est-bar-row"><div class="est-bar-lbl">実際</div><div class="est-bar-track"><div class="est-bar-fill ${over?'over':'actual'}" style="width:${ap}%"></div></div><div style="font-size:10px;color:${over?'var(--red)':'var(--grn)'};margin-left:4px;width:32px">${act}h</div></div><div class="est-diff" style="color:${over?'var(--red)':'var(--grn)'}">${diff}</div></div>`}).join('')}
 function renderTasks(){
   const el=document.getElementById('tlistEl');const q=(document.getElementById('searchInp')||{}).value?.toLowerCase()||'';
   let list=[...tasks];
-  if(filt==='high')list=list.filter(t=>getRisk(t)==='high');else if(filt==='mid')list=list.filter(t=>getRisk(t)==='mid');else if(filt==='active')list=list.filter(t=>!t.done);else if(filt==='done')list=list.filter(t=>t.done);else if(filt==='pinned')list=list.filter(t=>t.pinned&&!t.done);
+  if(filt==='high')list=list.filter(t=>getRisk(t)==='high');
+  else if(filt==='wip')list=list.filter(t=>t.wip&&!t.done);
+  else if(filt==='active')list=list.filter(t=>!t.done);
+  else if(filt==='done')list=list.filter(t=>t.done);
+  else if(filt==='pinned')list=list.filter(t=>t.pinned&&!t.done);
   if(catFilt)list=list.filter(t=>t.catId===catFilt);
   if(q)list=list.filter(t=>t.name.toLowerCase().includes(q)||(t.note||'').toLowerCase().includes(q));
-  // Sort: pinned first, then risk
-  if(!q&&!catFilt&&filt==='all')list.sort((a,b)=>{if(a.pinned&&!b.pinned)return-1;if(!a.pinned&&b.pinned)return 1;const o={high:0,mid:1,low:2,done:3};const ra=a.done?'done':getRisk(a),rb=b.done?'done':getRisk(b);return o[ra]!==o[rb]?o[ra]-o[rb]:new Date(a.deadline)-new Date(b.deadline)});
-  if(!list.length){el.innerHTML='<div class="empty"><div class="ei">📋</div><p>タスクがありません。<br>「追加」タブから登録してください。</p></div>';return}
+  if(!q&&!catFilt&&filt==='all')list.sort((a,b)=>{if(a.pinned&&!b.pinned)return-1;if(!a.pinned&&b.pinned)return 1;if(a.wip&&!b.wip&&!a.done)return-1;if(!a.wip&&b.wip&&!b.done)return 1;const o={high:0,mid:1,low:2,wip:0,done:3};const ra=a.done?'done':getRisk(a),rb=b.done?'done':getRisk(b);return o[ra]!==o[rb]?o[ra]-o[rb]:new Date(getDeadline(a)||'9999')-new Date(getDeadline(b)||'9999')});
+  if(!list.length){el.innerHTML='<div class="empty"><div class="ei">📋</div><p>タスクがありません。</p></div>';return}
   const pL={high:'高',mid:'中',low:'低'},pC={high:'ph',mid:'pm',low:'pl'};
   el.innerHTML=list.map((t,idx)=>{
-    const r=t.done?'done':getRisk(t),d=daysLeft(t.deadline);const dep=tasks.find(x=>x.id===t.depId),cat=categories.find(c=>c.id===t.catId);
+    const r=t.done?'done':getRisk(t),dl=getDeadline(t),d=dl?daysLeft(dl):null;
+    const dep=tasks.find(x=>x.id===t.depId),cat=categories.find(c=>c.id===t.catId),proj=projects.find(p=>p.id===t.projId);
+    const period=t.startDate?`${t.startDate}${t.endDate&&t.endDate!==t.startDate?` → ${t.endDate}`:''}`:dl||'';
     const catBadge=cat?`<div class="cat-badge-lg" style="background:color-mix(in srgb,${cat.color} 15%,transparent);color:${cat.color};border:1px solid color-mix(in srgb,${cat.color} 30%,transparent)"><div class="cat-badge-icon" style="background:${cat.color}"></div>${esc(cat.name)}</div>`:'';
     return`<div class="tc-wrap">
-      <div class="tc-swipe-bg tc-swipe-done" id="sbg-done-${t.id}"><div class="tc-swipe-icon">✓</div></div>
-      <div class="tc-swipe-bg tc-swipe-del" id="sbg-del-${t.id}"><div class="tc-swipe-icon">🗑</div></div>
+      <div class="tc-swipe-bg tc-swipe-done" id="sbgd-${t.id}"><div class="tc-swipe-icon">✓</div></div>
+      <div class="tc-swipe-bg tc-swipe-del" id="sbgx-${t.id}"><div class="tc-swipe-icon">🗑</div></div>
       <div class="tc ${RC[r]}${t.pinned?' pinned':''}" id="tc-${t.id}" data-id="${t.id}" data-idx="${idx}"
         draggable="true" ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="dragDrop(event)" ondragend="dragEnd(event)">
-        <div class="drag-handle" title="ドラッグで並び替え">⠿</div>
-        <div class="ck ${t.done?'on':''}" onclick="toggle('${t.id}')"></div>
+        <div class="drag-handle">⠿</div>
+        <div class="ck ${t.done?'on':t.wip?'wip':''}" onclick="toggleStatus('${t.id}')"></div>
         <div class="tb2">
-          <div class="tn ${t.done?'done':''}">${t.pinned?'<span class="pin-badge">📌</span> ':''}${esc(t.name)}</div>
+          <div class="tn ${t.done?'done':''}">
+            ${t.pinned?'<span style="font-size:11px">📌</span>':''}
+            ${t.wip&&!t.done?`<span class="wip-badge">▶ 進捗中</span>`:''}
+            ${esc(t.name)}
+          </div>
           <div class="chips">
-            <span class="chip dl">📅 ${t.deadline}（${d<0?'超過':d+'日後'}）</span>
+            ${period?`<span class="chip period">📅 ${period}</span>`:''}
             ${t.hours?`<span class="chip hr">⏱ ${t.hours}h${t.actualHours?` / 実${t.actualHours}h`:''}</span>`:''}
             <span class="chip ${pC[t.imp]}">重要 ${pL[t.imp]}</span>
+            ${proj?`<span class="chip" style="color:${proj.color};border-color:color-mix(in srgb,${proj.color} 30%,var(--bdr2))">📁 ${esc(proj.name)}</span>`:''}
             ${t.rec&&t.rec!=='none'?`<span class="chip rec">🔁 ${REC_LBL[t.rec]}</span>`:''}
             ${dep?`<span class="chip">→${esc(dep.name)}</span>`:''}
             ${r!=='done'?`<span class="rtag ${RC[r]}">${RL[r]}</span>`:''}
@@ -971,108 +1239,142 @@ function renderTasks(){
           ${t.note?`<div class="tnote">${parseMarkdown(t.note)}</div>`:''}
         </div>
         <div class="tc-actions">
-          <button class="tc-btn pinbtn ${t.pinned?'active':''}" onclick="togglePin('${t.id}')" title="${t.pinned?'ピン解除':'ピン留め'}">📌</button>
+          <button class="tc-btn pinbtn ${t.pinned?'active':''}" onclick="togglePin('${t.id}')">📌</button>
           <button class="tc-btn" onclick="openEdit('${t.id}')">✏️</button>
           <button class="tc-btn del" onclick="del('${t.id}')">🗑</button>
         </div>
       </div>
     </div>`;
   }).join('');
-  // Attach swipe listeners
   list.forEach(t=>attachSwipe(t.id));
 }
 
-// ── SWIPE TO COMPLETE / DELETE ──
+// ── SWIPE ──
 function attachSwipe(id){
   const el=document.getElementById('tc-'+id);if(!el)return;
-  let startX=0,curX=0,swiping=false;
-  const THRESH=80;
-  const onStart=e=>{const touch=e.touches?e.touches[0]:e;startX=touch.clientX;curX=startX;swiping=true};
-  const onMove=e=>{if(!swiping)return;const touch=e.touches?e.touches[0]:e;curX=touch.clientX;const dx=curX-startX;if(Math.abs(dx)<8)return;if(e.cancelable)e.preventDefault();el.style.transform=`translateX(${dx}px)`;const doneBg=document.getElementById('sbg-done-'+id);const delBg=document.getElementById('sbg-del-'+id);if(doneBg)doneBg.style.opacity=dx>0?Math.min(dx/THRESH,1):0;if(delBg)delBg.style.opacity=dx<0?Math.min(-dx/THRESH,1):0};
-  const onEnd=()=>{if(!swiping)return;swiping=false;const dx=curX-startX;el.style.transition='transform .2s';el.style.transform='translateX(0)';const doneBg=document.getElementById('sbg-done-'+id);const delBg=document.getElementById('sbg-del-'+id);if(doneBg)doneBg.style.opacity=0;if(delBg)delBg.style.opacity=0;setTimeout(()=>el.style.transition='',200);if(dx>THRESH){toggle(id)}else if(dx<-THRESH){if(confirm('このタスクを削除しますか？'))del(id)}};
-  el.addEventListener('touchstart',onStart,{passive:true});
-  el.addEventListener('touchmove',onMove,{passive:false});
-  el.addEventListener('touchend',onEnd);
+  let sx=0,cx=0,sw=false;const TH=80;
+  el.addEventListener('touchstart',e=>{const t=e.touches[0];sx=t.clientX;cx=sx;sw=true},{passive:true});
+  el.addEventListener('touchmove',e=>{if(!sw)return;const t=e.touches[0];cx=t.clientX;const dx=cx-sx;if(Math.abs(dx)<8)return;if(e.cancelable)e.preventDefault();el.style.transform=`translateX(${dx}px)`;const d=document.getElementById('sbgd-'+id);const x=document.getElementById('sbgx-'+id);if(d)d.style.opacity=dx>0?Math.min(dx/TH,1):0;if(x)x.style.opacity=dx<0?Math.min(-dx/TH,1):0},{passive:false});
+  el.addEventListener('touchend',()=>{if(!sw)return;sw=false;const dx=cx-sx;el.style.transition='transform .2s';el.style.transform='translateX(0)';['sbgd-'+id,'sbgx-'+id].forEach(i=>{const e2=document.getElementById(i);if(e2)e2.style.opacity=0});setTimeout(()=>el.style.transition='',200);if(dx>TH)toggleStatus(id);else if(dx<-TH){if(confirm('このタスクを削除しますか？'))del(id)}});
 }
 
-// ── DRAG & DROP ──
-function dragStart(e){dragSrcIdx=parseInt(e.currentTarget.dataset.idx);e.currentTarget.classList.add('dragging');e.dataTransfer.effectAllowed='move'}
-function dragOver(e){e.preventDefault();e.dataTransfer.dropEffect='move'}
-function dragDrop(e){
-  e.preventDefault();const destIdx=parseInt(e.currentTarget.dataset.idx);if(dragSrcIdx===null||dragSrcIdx===destIdx){dragEnd(e);return}
-  const fv=filt==='all'&&!catFilt&&!(document.getElementById('searchInp')?.value);if(!fv){toast('フィルターなし・全表示のときのみ並び替えができます');dragEnd(e);return}
-  const list=[...tasks];const[removed]=list.splice(dragSrcIdx,1);list.splice(destIdx,0,removed);tasks=list;saveEnc();renderTasks();dragEnd(e);
-}
-function dragEnd(e){dragSrcIdx=null}
+// ── DRAG ──
+function dragStart(e){dragSrcIdx=parseInt(e.currentTarget.dataset.idx);e.dataTransfer.effectAllowed='move'}
+function dragOver(e){e.preventDefault()}
+function dragDrop(e){e.preventDefault();const destIdx=parseInt(e.currentTarget.dataset.idx);if(dragSrcIdx===null||dragSrcIdx===destIdx){dragEnd(e);return}const fv=filt==='all'&&!catFilt&&!(document.getElementById('searchInp')?.value);if(!fv){toast('フィルターなし・全表示のときのみ並び替えができます');dragEnd(e);return}const list=[...tasks];const[rm]=list.splice(dragSrcIdx,1);list.splice(destIdx,0,rm);tasks=list;saveEnc();renderTasks();dragEnd(e)}
+function dragEnd(){dragSrcIdx=null}
 
 // ── TEMPLATES ──
 function renderTplGrid(){const el=document.getElementById('tplGrid');el.innerHTML=TEMPLATES.map(t=>`<div class="tpl-card" onclick="applyTemplate('${t.id}')"><div class="tpl-icon">${t.icon}</div><div class="tpl-name">${t.name}</div><div class="tpl-desc">${t.desc}</div></div>`).join('')}
 function applyTemplate(id){const t=TEMPLATES.find(x=>x.id===id);if(!t)return;document.getElementById('fName').value=t.name;document.getElementById('fHr').value=t.hours;document.getElementById('fImp').value=t.imp;document.getElementById('fRec').value=t.rec;document.getElementById('fName').focus();toast(`テンプレート「${t.name}」を適用しました`)}
 
-// ══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 //  TASK ACTIONS
-// ══════════════════════════════════════════════
-function addTask(){const name=document.getElementById('fName').value.trim(),deadline=document.getElementById('fDl').value;if(!name||!deadline){toast('タスク名と締め切りを入力してください');return}tasks.push({id:uid(),name,deadline,hours:document.getElementById('fHr').value||'0',imp:document.getElementById('fImp').value,catId:document.getElementById('fCat').value,rec:document.getElementById('fRec').value,depId:document.getElementById('fDep').value,note:document.getElementById('fNote').value.trim(),done:false,pinned:false,actualHours:null,createdAt:new Date().toISOString()});saveEnc();renderAll();clearForm();toast('タスクを追加しました ✓');go('tasks')}
-function toggle(id){
-  const t=tasks.find(x=>x.id===id);if(!t)return;t.done=!t.done;
-  if(t.done){t.completedAt=new Date().toISOString();t.pinned=false;history.push({date:new Date().toISOString().split('T')[0],name:t.name,catId:t.catId});if(t.rec&&t.rec!=='none'){const next=calcNext(t.deadline,t.rec);tasks.push({...t,id:uid(),done:false,completedAt:null,actualHours:null,pinned:false,deadline:next,lastGenerated:next,createdAt:new Date().toISOString()})}if(parseFloat(t.hours)>0){actualTaskId=id;document.getElementById('actualHr').value='';document.getElementById('actualModal').classList.add('open');return}}else{t.completedAt=null}
+// ═══════════════════════════════════════════════
+function addTask(){
+  const name=document.getElementById('fName').value.trim();if(!name){toast('タスク名を入力してください');return}
+  const startDate=document.getElementById('fStart').value;const endDate=document.getElementById('fEnd').value;const allday=!document.getElementById('fTimeBtn').classList.contains('on');
+  const startTime=allday?'':document.getElementById('fStartTime').value;const endTime=allday?'':document.getElementById('fEndTime').value;
+  const today=new Date().toISOString().split('T')[0];
+  const t={id:uid(),name,startDate:startDate||today,endDate:endDate||startDate||today,allday,startTime,endTime,deadline:endDate||startDate||today,hours:document.getElementById('fHr').value||'0',imp:document.getElementById('fImp').value,catId:document.getElementById('fCat').value,projId:document.getElementById('fProj').value,rec:document.getElementById('fRec').value,depId:document.getElementById('fDep').value,note:document.getElementById('fNote').value.trim(),done:false,wip:false,pinned:false,actualHours:null,createdAt:new Date().toISOString()};
+  // auto wip if startDate <= today
+  if(t.startDate<=today)t.wip=true;
+  tasks.push(t);saveEnc();renderAll();clearForm();toast('タスクを追加しました ✓');go('tasks');
+}
+function toggleStatus(id){
+  const t=tasks.find(x=>x.id===id);if(!t)return;
+  if(t.done){t.done=false;t.wip=false;t.completedAt=null;saveEnc();renderAll();return}
+  if(!t.wip){t.wip=true;saveEnc();renderAll();toast('▶ 進捗中にしました');return}
+  // wip → done
+  t.done=true;t.wip=false;t.completedAt=new Date().toISOString();t.pinned=false;
+  history.push({date:new Date().toISOString().split('T')[0],name:t.name,catId:t.catId});
+  if(t.rec&&t.rec!=='none'){const base=t.endDate||t.deadline||'';if(base){const next=calcNext(base,t.rec);const nt={...t,id:uid(),done:false,wip:false,completedAt:null,actualHours:null,startDate:next,endDate:next,deadline:next,lastGenerated:next,createdAt:new Date().toISOString()};tasks.push(nt)}}
+  if(parseFloat(t.hours)>0){actualTaskId=id;document.getElementById('actualHr').value='';document.getElementById('actualModal').classList.add('open');return}
   saveEnc();renderAll();
 }
+function toggle(id){toggleStatus(id)}
 function togglePin(id){const t=tasks.find(x=>x.id===id);if(!t)return;t.pinned=!t.pinned;saveEnc();renderTasks();toast(t.pinned?'📌 ピン留めしました':'ピン留めを解除しました')}
 function closeActual(){document.getElementById('actualModal').classList.remove('open');actualTaskId=null;saveEnc();renderAll()}
 function saveActual(){const h=parseFloat(document.getElementById('actualHr').value);if(h>0&&actualTaskId){const t=tasks.find(x=>x.id===actualTaskId);if(t)t.actualHours=h}closeActual()}
 function del(id){tasks=tasks.filter(x=>x.id!==id);tasks.forEach(t=>{if(t.depId===id)t.depId=''});saveEnc();renderAll();toast('削除しました')}
-function clearForm(){['fName','fHr','fNote'].forEach(id=>document.getElementById(id).value='');document.getElementById('fImp').value='mid';document.getElementById('fDep').value='';document.getElementById('fCat').value='';document.getElementById('fRec').value='none';document.getElementById('fDl').value=new Date().toISOString().split('T')[0]}
+function clearForm(){
+  ['fName','fHr','fNote'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fImp').value='mid';document.getElementById('fDep').value='';document.getElementById('fCat').value='';document.getElementById('fRec').value='none';document.getElementById('fProj').value='';
+  const t=new Date().toISOString().split('T')[0];document.getElementById('fStart').value=t;document.getElementById('fEnd').value=t;setPeriodMode('allday');
+}
 function refreshDepSel(){const sel=document.getElementById('fDep'),cur=sel.value;sel.innerHTML='<option value="">なし</option>';tasks.filter(t=>!t.done).forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.name;sel.appendChild(o)});sel.value=cur}
 function refreshCatSel(){const sel=document.getElementById('fCat'),cur=sel.value;sel.innerHTML='<option value="">なし</option>';categories.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.name;sel.appendChild(o)});sel.value=cur}
-function openEdit(id){editId=id;const t=tasks.find(x=>x.id===id);if(!t)return;document.getElementById('eName').value=t.name;document.getElementById('eDl').value=t.deadline;document.getElementById('eHr').value=t.hours||'';document.getElementById('eImp').value=t.imp;document.getElementById('eRec').value=t.rec||'none';document.getElementById('eNote').value=t.note||'';const sel=document.getElementById('eCat');sel.innerHTML='<option value="">なし</option>';categories.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.name;sel.appendChild(o)});sel.value=t.catId||'';document.getElementById('editModal').classList.add('open')}
+function openEdit(id){
+  editId=id;const t=tasks.find(x=>x.id===id);if(!t)return;
+  document.getElementById('eName').value=t.name;document.getElementById('eHr').value=t.hours||'';document.getElementById('eImp').value=t.imp;document.getElementById('eRec').value=t.rec||'none';document.getElementById('eNote').value=t.note||'';
+  document.getElementById('eStart').value=t.startDate||t.deadline||'';document.getElementById('eEnd').value=t.endDate||t.deadline||'';
+  const allday=t.allday!==false;
+  document.getElementById('eStartTime').value=t.startTime||'09:00';document.getElementById('eEndTime').value=t.endTime||'18:00';
+  setPeriodModeEdit(allday?'allday':'time');
+  const ecat=document.getElementById('eCat');ecat.innerHTML='<option value="">なし</option>';categories.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.name;ecat.appendChild(o)});ecat.value=t.catId||'';
+  refreshProjSel('eProj');document.getElementById('eProj').value=t.projId||'';
+  document.getElementById('editModal').classList.add('open');
+}
 function closeEdit(){document.getElementById('editModal').classList.remove('open');editId=null}
-function saveEdit(){if(!editId)return;const t=tasks.find(x=>x.id===editId);if(!t)return;const name=document.getElementById('eName').value.trim(),dl=document.getElementById('eDl').value;if(!name||!dl){toast('タスク名と締め切りは必須です');return}t.name=name;t.deadline=dl;t.hours=document.getElementById('eHr').value||'0';t.imp=document.getElementById('eImp').value;t.catId=document.getElementById('eCat').value;t.rec=document.getElementById('eRec').value;t.note=document.getElementById('eNote').value.trim();saveEnc();renderAll();closeEdit();toast('タスクを更新しました ✓')}
-// ══════════════════════════════════════════════
+function saveEdit(){
+  if(!editId)return;const t=tasks.find(x=>x.id===editId);if(!t)return;
+  const name=document.getElementById('eName').value.trim();if(!name){toast('タスク名は必須です');return}
+  t.name=name;t.hours=document.getElementById('eHr').value||'0';t.imp=document.getElementById('eImp').value;
+  t.catId=document.getElementById('eCat').value;t.projId=document.getElementById('eProj').value;t.rec=document.getElementById('eRec').value;t.note=document.getElementById('eNote').value.trim();
+  t.startDate=document.getElementById('eStart').value;t.endDate=document.getElementById('eEnd').value;t.deadline=t.endDate||t.startDate||'';
+  t.allday=!document.getElementById('eTimeBtn').classList.contains('on');t.startTime=document.getElementById('eStartTime').value;t.endTime=document.getElementById('eEndTime').value;
+  const today=new Date().toISOString().split('T')[0];if(!t.done&&t.startDate&&t.startDate<=today)t.wip=true;
+  saveEnc();renderAll();closeEdit();toast('タスクを更新しました ✓');
+}
+
+// ═══════════════════════════════════════════════
 //  CATEGORIES
-// ══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 function renderColorPick(){const el=document.getElementById('colorPick');el.innerHTML=COLORS.map(c=>`<div class="color-opt ${c===selColor?'sel':''}" style="background:${c}" onclick="selColor='${c}';renderColorPick()"></div>`).join('')}
 function addCategory(){const name=document.getElementById('newCatName').value.trim();if(!name){toast('カテゴリ名を入力してください');return}categories.push({id:uid(),name,color:selColor});saveEnc();document.getElementById('newCatName').value='';renderCatMgr();renderCatFilter();toast('カテゴリを追加しました ✓')}
 function delCategory(id){if(!confirm('このカテゴリを削除しますか？'))return;categories=categories.filter(c=>c.id!==id);tasks.forEach(t=>{if(t.catId===id)t.catId=''});saveEnc();renderCatMgr();renderCatFilter();renderTasks()}
 function renderCatMgr(){const el=document.getElementById('catMgrList');if(!categories.length){el.innerHTML='<div style="font-size:12px;color:var(--mut);text-align:center;padding:8px 0;">カテゴリがまだありません</div>';return}el.innerHTML=categories.map(c=>`<div class="cat-item"><div class="cat-color-dot" style="background:${c.color}"></div><div class="cat-name-lbl">${esc(c.name)}</div><button class="cat-del-btn" onclick="delCategory('${c.id}')">✕</button></div>`).join('')}
-// ══════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════
 //  DIAGNOSIS
-// ══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 function runDiag(){
   const el=document.getElementById('diagResult');const active=tasks.filter(t=>!t.done);if(!active.length){el.innerHTML='<div class="empty"><div class="ei">📊</div><p>タスクがありません。</p></div>';return}
-  const cap=cfg.h*cfg.d*(1-cfg.buf/100);const tot=active.reduce((s,t)=>s+(parseFloat(t.hours)||0),0);const loadPct=cap>0?Math.round(tot/cap*100):0;const highCount=active.filter(t=>getRisk(t)==='high').length;const midCount=active.filter(t=>getRisk(t)==='mid').length;const overdue=active.filter(t=>daysLeft(t.deadline)<0).length;const slack=Math.max(cap-tot,0);
+  const cap=cfg.h*cfg.d*(1-cfg.buf/100);const tot=active.reduce((s,t)=>s+(parseFloat(t.hours)||0),0);const loadPct=cap>0?Math.round(tot/cap*100):0;const highCount=active.filter(t=>getRisk(t)==='high').length;const midCount=active.filter(t=>getRisk(t)==='mid').length;const overdue=active.filter(t=>{const dl=getDeadline(t);return dl&&daysLeft(dl)<0}).length;const slack=Math.max(cap-tot,0);
   let vClass,vIcon,vTitle,vBody;
   if(overdue>0||highCount>=2||loadPct>110){vClass='v-danger';vIcon='🚨';vTitle='危険：スケジュールが破綻しています';vBody=`<strong>緊急タスクが${highCount}件</strong>あり${overdue>0?`、${overdue}件が期限超過中`:''}。週キャパに対して<strong>${loadPct}%</strong>の負荷。`}
   else if(highCount===1||loadPct>80||midCount>=3){vClass='v-warn';vIcon='⚠️';vTitle='注意：一部に無理が生じています';vBody=`全体的にこなせる範囲ですが<strong>緊急タスクが${highCount}件</strong>。負荷は<strong>${loadPct}%</strong>で余裕${slack.toFixed(1)}hあります。`}
-  else{vClass='v-ok';vIcon='✅';vTitle='良好：スケジュールは現実的です';vBody=`負荷は<strong>${loadPct}%</strong>で余裕${slack.toFixed(1)}hあります。新タスクにも対応できる状態です。`}
-  const sorted=[...active].sort((a,b)=>{const o={high:0,mid:1,low:2};return o[getRisk(a)]-o[getRisk(b)]||new Date(a.deadline)-new Date(b.deadline)});
-  const diagItems=sorted.map(t=>{const r=getRisk(t),rs=getRiskReasons(t);const icon={high:'🔴',mid:'🟡',low:'🟢'}[r],cls={high:'dh',mid:'dm',low:'dl'}[r];const cat=categories.find(c=>c.id===t.catId);return`<div class="diag-item ${cls}"><div class="di-icon">${icon}</div><div class="di-body"><div class="di-name">${cat?`<span style="color:${cat.color}">●</span> `:''}${esc(t.name)}</div><div class="di-reasons">${rs.map(rx=>`<div class="di-reason ${rx.bad?'bad':'ok'}">${esc(rx.text)}</div>`).join('')}</div></div></div>`}).join('');
+  else{vClass='v-ok';vIcon='✅';vTitle='良好：スケジュールは現実的です';vBody=`負荷は<strong>${loadPct}%</strong>で余裕${slack.toFixed(1)}hあります。`}
+  const sorted=[...active].sort((a,b)=>{const o={high:0,mid:1,low:2,wip:0};return(o[getRisk(a)]||0)-(o[getRisk(b)]||0)||new Date(getDeadline(a)||'9999')-new Date(getDeadline(b)||'9999')});
+  const diagItems=sorted.map(t=>{const r=getRisk(t),rs=getRiskReasons(t);const icon={high:'🔴',mid:'🟡',low:'🟢',wip:'▶'}[r]||'🟢',cls={high:'dh',mid:'dm',low:'dl',wip:'dl'}[r]||'dl';const cat=categories.find(c=>c.id===t.catId);return`<div class="diag-item ${cls}"><div class="di-icon">${icon}</div><div class="di-body"><div class="di-name">${cat?`<span style="color:${cat.color}">●</span> `:''}${esc(t.name)}</div><div class="di-reasons">${rs.map(rx=>`<div class="di-reason ${rx.bad?'bad':'ok'}">${esc(rx.text)}</div>`).join('')}</div></div></div>`}).join('');
   const reordered=[],placed=new Set();const place=t=>{if(placed.has(t.id))return;if(t.depId){const d=sorted.find(x=>x.id===t.depId);if(d&&!placed.has(d.id))place(d)}placed.add(t.id);reordered.push(t)};sorted.forEach(place);
   let runH=0;const dayH=cfg.h*(1-cfg.buf/100);const today=new Date();today.setHours(0,0,0,0);
-  const schedRows=reordered.map((t,i)=>{const need=parseFloat(t.hours)||0;runH+=need;const dn=dayH>0?Math.ceil(runH/dayH):99;const tgt=new Date(today);tgt.setDate(today.getDate()+dn-1);const ts=tgt.toLocaleDateString('ja-JP',{month:'numeric',day:'numeric'});const tight=dn>daysLeft(t.deadline);const dep=tasks.find(x=>x.id===t.depId);return`<div class="sched-item"><div class="sched-num">${String(i+1).padStart(2,'0')}</div><div class="sched-info"><div class="sched-name">${esc(t.name)}</div><div class="sched-meta">着手目安: <span class="sched-by ${tight?'sched-warn':''}">${ts}までに完了</span>　締切:${t.deadline}${dep?`　※「${esc(dep.name)}」後`:''}${tight?'　⚠タイト':''}</div></div></div>`}).join('');
+  const schedRows=reordered.map((t,i)=>{const need=parseFloat(t.hours)||0;runH+=need;const dn=dayH>0?Math.ceil(runH/dayH):99;const tgt=new Date(today);tgt.setDate(today.getDate()+dn-1);const ts=tgt.toLocaleDateString('ja-JP',{month:'numeric',day:'numeric'});const dl=getDeadline(t);const tight=dl&&dn>daysLeft(dl);const dep=tasks.find(x=>x.id===t.depId);return`<div class="sched-item"><div class="sched-num">${String(i+1).padStart(2,'0')}</div><div class="sched-info"><div class="sched-name">${t.wip?'▶ ':''}${esc(t.name)}</div><div class="sched-meta">着手目安: <span class="sched-by ${tight?'sched-warn':''}">${ts}までに完了</span>${dl?`　締切:${dl}`:''}${dep?`　※「${esc(dep.name)}」後`:''}${tight?'　⚠タイト':''}</div></div></div>`}).join('');
   const freeH=Math.max(cap-tot,0),capCls=loadPct>=100?'bad':loadPct>=70?'warn':'ok';
   el.innerHTML=`<div class="verdict ${vClass}"><div class="v-head"><div class="v-icon">${vIcon}</div><div class="v-title">${vTitle}</div></div><div class="v-body">${vBody}</div></div>
     <div class="sh" style="margin-top:0">CAPACITY</div>
-    <div class="cap-summary"><div class="cap-row"><div class="cap-label">週のキャパ</div><div class="cap-val">${cap.toFixed(1)}h</div></div><div class="cap-row"><div class="cap-label">現在の必要時間</div><div class="cap-val ${capCls}">${tot}h（${loadPct}%）</div></div><div class="cap-row"><div class="cap-label">空き時間</div><div class="cap-val ok">${freeH.toFixed(1)}h</div></div><div class="cap-row"><div class="cap-label">追加タスクの受入余力</div><div class="cap-val ${freeH>0?'ok':'bad'}">${freeH>0?`約${Math.floor(freeH/3)}件（目安）`:'なし'}</div></div></div>
+    <div class="cap-summary"><div class="cap-row"><div class="cap-label">週のキャパ</div><div class="cap-val">${cap.toFixed(1)}h</div></div><div class="cap-row"><div class="cap-label">現在の必要時間</div><div class="cap-val ${capCls}">${tot}h（${loadPct}%）</div></div><div class="cap-row"><div class="cap-label">空き時間</div><div class="cap-val ok">${freeH.toFixed(1)}h</div></div><div class="cap-row"><div class="cap-label">追加受入余力</div><div class="cap-val ${freeH>0?'ok':'bad'}">${freeH>0?`約${Math.floor(freeH/3)}件（目安）`:'なし'}</div></div></div>
     <div class="sh">TASK DIAGNOSIS</div><div class="diag-list">${diagItems}</div>
     <div class="sh">RECOMMENDED ORDER</div><div class="card" style="padding:4px 16px 8px"><div class="sched-list">${schedRows}</div></div>`;
 }
-// ══════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════
 //  SETTINGS
-// ══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 function simTask(){const addH=parseFloat(document.getElementById('simH').value)||0,addD=parseInt(document.getElementById('simD').value)||0;const el=document.getElementById('simResult');if(!addH||!addD){el.className='sim-result';return}const active=tasks.filter(t=>!t.done);const cap=cfg.h*cfg.d*(1-cfg.buf/100);const tot=active.reduce((s,t)=>s+(parseFloat(t.hours)||0),0);const newTot=tot+addH,newPct=cap>0?Math.round(newTot/cap*100):999;const lc=Math.max(addD,0)*cfg.h*(1-cfg.buf/100);if(newPct>100||addH>lc){el.className='sim-result bad show';el.innerHTML=`⚠ <strong>追加は厳しい状態です</strong><br>週負荷が${newPct}%になります。`}else if(newPct>75){el.className='sim-result warn show';el.innerHTML=`△ <strong>追加はできますが余裕が減ります</strong><br>週負荷が${newPct}%になります。`}else{el.className='sim-result ok show';el.innerHTML=`✅ <strong>問題なく追加できます</strong><br>週負荷は${newPct}%で余裕をもってこなせます。`}}
 function loadCfgForm(){document.getElementById('sH').value=cfg.h;document.getElementById('sD').value=cfg.d;document.getElementById('sB').value=cfg.buf}
 function saveCfg(){cfg={h:parseFloat(document.getElementById('sH').value)||8,d:parseInt(document.getElementById('sD').value)||5,buf:parseInt(document.getElementById('sB').value)||20};saveEnc();renderAll();toast('設定を保存しました ✓')}
-function exportData(){navigator.clipboard.writeText(JSON.stringify({tasks,cfg,categories,history},null,2)).then(()=>toast('クリップボードにコピーしました')).catch(()=>toast('コピーに失敗しました'))}
+function exportData(){navigator.clipboard.writeText(JSON.stringify({tasks,cfg,categories,history,projects},null,2)).then(()=>toast('クリップボードにコピーしました')).catch(()=>toast('コピーに失敗しました'))}
 function toggleImport(){const s=document.getElementById('importSec'),a=document.getElementById('impArr');const o=s.style.display==='none';s.style.display=o?'block':'none';a.textContent=o?'∧':'›'}
-function importData(){try{const d=JSON.parse(document.getElementById('importArea').value.trim());if(!Array.isArray(d.tasks))throw new Error('invalid');tasks=d.tasks||[];cfg=d.cfg||{h:8,d:5,buf:20};categories=d.categories||[];history=d.history||[];saveEnc();loadCfgForm();renderAll();document.getElementById('importArea').value='';toggleImport();toast('インポートしました ✓')}catch{toast('JSONの形式が正しくありません')}}
-function clearAll(){if(!confirm('全データを削除しますか？'))return;if(!confirm('本当に削除しますか？'))return;tasks=[];cfg={h:8,d:5,buf:20};categories=[];history=[];localStorage.removeItem(DK);saveEnc();loadCfgForm();renderAll();toast('削除しました')}
-function exportICS(){const active=tasks.filter(t=>!t.done);if(!active.length){toast('タスクがありません');return}let ics='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//TaskSense//JP\r\n';active.forEach(t=>{const dl=t.deadline.replace(/-/g,'');const now=new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';ics+=`BEGIN:VEVENT\r\nUID:${t.id}@tasksense\r\nDTSTAMP:${now}\r\nSUMMARY:${t.name}\r\nDTSTART;VALUE=DATE:${dl}\r\nDTEND;VALUE=DATE:${dl}\r\nEND:VEVENT\r\n`});ics+='END:VCALENDAR';const blob=new Blob([ics],{type:'text/calendar'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='tasksense.ics';a.click();URL.revokeObjectURL(url);toast('ICSファイルをダウンロードしました')}
-function shareTask(){const active=tasks.filter(t=>!t.done).slice(0,20);if(!active.length){toast('共有するタスクがありません');return}const data=active.map(t=>({n:t.name,d:t.deadline,i:t.imp,h:t.hours}));const encoded=btoa(encodeURIComponent(JSON.stringify(data)));const url=`${location.origin}${location.pathname}?share=${encoded}`;navigator.clipboard.writeText(url).then(()=>toast('共有URLをコピーしました')).catch(()=>toast('コピーに失敗しました'))}
-function handleShareView(encoded){try{const data=JSON.parse(decodeURIComponent(atob(encoded)));document.getElementById('lockScreen').style.display='none';document.body.innerHTML=`<div style="font-family:'Noto Sans JP',sans-serif;padding:24px;max-width:600px;margin:0 auto;background:#f4f6fb;min-height:100vh"><h1 style="font-size:20px;margin-bottom:16px;color:#1a1d28">📋 TaskSense — 共有タスク一覧</h1>${data.map(t=>`<div style="background:#fff;border:1px solid #d0d4e4;border-radius:10px;padding:12px 14px;margin-bottom:10px"><div style="font-weight:700;margin-bottom:4px;color:#1a1d28">${esc(t.n)}</div><div style="font-size:12px;color:#5a6280">📅 ${t.d}　重要度:${{high:'高',mid:'中',low:'低'}[t.i]}${t.h?`　⏱ ${t.h}h`:''}</div></div>`).join('')}</div>`}catch{history.replaceState({},'',location.pathname)}}
-// ══════════════════════════════════════════════
+function importData(){try{const d=JSON.parse(document.getElementById('importArea').value.trim());if(!Array.isArray(d.tasks))throw new Error('invalid');tasks=d.tasks||[];cfg=d.cfg||{h:8,d:5,buf:20};categories=d.categories||[];history=d.history||[];projects=d.projects||[];saveEnc();loadCfgForm();renderAll();document.getElementById('importArea').value='';toggleImport();toast('インポートしました ✓')}catch{toast('JSONの形式が正しくありません')}}
+function clearAll(){if(!confirm('全データを削除しますか？'))return;if(!confirm('本当に削除しますか？'))return;tasks=[];cfg={h:8,d:5,buf:20};categories=[];history=[];projects=[];localStorage.removeItem(DK);saveEnc();loadCfgForm();renderAll();toast('削除しました')}
+function exportICS(){const active=tasks.filter(t=>!t.done);if(!active.length){toast('タスクがありません');return}let ics='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//TaskSense//JP\r\n';active.forEach(t=>{const dl=(t.endDate||t.deadline||'').replace(/-/g,'');if(!dl)return;const now=new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';ics+=`BEGIN:VEVENT\r\nUID:${t.id}@tasksense\r\nDTSTAMP:${now}\r\nSUMMARY:${t.name}\r\nDTSTART;VALUE=DATE:${dl}\r\nDTEND;VALUE=DATE:${dl}\r\nEND:VEVENT\r\n`});ics+='END:VCALENDAR';const blob=new Blob([ics],{type:'text/calendar'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='tasksense.ics';a.click();URL.revokeObjectURL(url);toast('ICSファイルをダウンロードしました')}
+function shareTask(){const active=tasks.filter(t=>!t.done).slice(0,20);if(!active.length){toast('共有するタスクがありません');return}const data=active.map(t=>({n:t.name,d:getDeadline(t)||'',i:t.imp,h:t.hours,w:t.wip}));const encoded=btoa(encodeURIComponent(JSON.stringify(data)));const url=`${location.origin}${location.pathname}?share=${encoded}`;navigator.clipboard.writeText(url).then(()=>toast('共有URLをコピーしました')).catch(()=>toast('コピーに失敗しました'))}
+function handleShareView(encoded){try{const data=JSON.parse(decodeURIComponent(atob(encoded)));document.getElementById('lockScreen').style.display='none';document.body.innerHTML=`<div style="font-family:'Noto Sans JP',sans-serif;padding:24px;max-width:600px;margin:0 auto;background:#f4f6fb;min-height:100vh"><h1 style="font-size:20px;margin-bottom:16px;color:#1a1d28">📋 TaskSense — 共有タスク一覧</h1>${data.map(t=>`<div style="background:#fff;border:1px solid #d0d4e4;border-radius:10px;padding:12px 14px;margin-bottom:10px"><div style="font-weight:700;margin-bottom:4px;color:#1a1d28">${t.w?'▶ ':''}${esc(t.n)}</div><div style="font-size:12px;color:#5a6280">📅 ${t.d}　重要度:${{high:'高',mid:'中',low:'低'}[t.i]}${t.h?`　⏱ ${t.h}h`:''}</div></div>`).join('')}</div>`}catch{history.replaceState({},'',location.pathname)}}
+
+// ═══════════════════════════════════════════════
 //  UTILS
-// ══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5)}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function toast(msg){const el=document.getElementById('toastEl');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500)}
